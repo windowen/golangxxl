@@ -1,8 +1,6 @@
 module queueJob
 
-go 1.22
-
-toolchain go1.22.1
+go 1.24.4
 
 require (
 	github.com/apache/rocketmq-client-go/v2 v2.1.2
