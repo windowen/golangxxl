@@ -141,6 +141,11 @@ var Config struct {
 		GrowthBaseURL string `yaml:"growthBaseURL"`
 		ActiveBaseURL string `yaml:"activeBaseURL"`
 	} `yaml:"openInstall"`
+	Apk struct {
+		UId     int    `yaml:"uid"`
+		User    string `yaml:"user"`
+		ComName string `yaml:"comName"`
+	} `yaml:"apk"`
 }
 
 func GetServiceNames() []string {

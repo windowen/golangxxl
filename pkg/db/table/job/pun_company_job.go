@@ -7,12 +7,12 @@ type PunCompanyJob struct {
 	Name          string `gorm:"column:name" json:"name"`                               // 职位名称
 	ComName       string `gorm:"column:com_name" json:"com_name"`                       // 公司名称
 	Hy            int    `gorm:"column:hy" json:"hy"`                                   // 行业ID
-	Job1          int    `gorm:"column:job1" json:"job1"`                               // 一级职位分类ID
-	Job1Son       int    `gorm:"column:job1_son" json:"job1_son"`                       // 二级职位分类ID
-	JobPost       int    `gorm:"column:job_post" json:"job_post"`                       // 三级职位分类ID（最细分类）
-	ProvinceId    int    `gorm:"column:provinceid" json:"provinceid"`                   // 工作省份ID
-	CityId        int    `gorm:"column:cityid" json:"cityid"`                           // 工作城市ID
-	ThreeCityId   int    `gorm:"column:three_cityid" json:"three_cityid"`               // 工作区县ID
+	Job1          int    `gorm:"column:job1;default:45" json:"job1"`                    // 一级职位分类ID
+	Job1Son       int    `gorm:"column:job1_son;default:101" json:"job1_son"`           // 二级职位分类ID
+	JobPost       int    `gorm:"column:job_post;default:806" json:"job_post"`           // 三级职位分类ID（最细分类）
+	ProvinceId    int    `gorm:"column:provinceid;default:3409" json:"provinceid"`      // 工作省份ID
+	CityId        int    `gorm:"column:cityid;default:3410" json:"cityid"`              // 工作城市ID
+	ThreeCityId   int    `gorm:"column:three_cityid;default:3410" json:"three_cityid"`  // 工作区县ID
 	Cert          string `gorm:"column:cert" json:"cert"`                               // 企业是否已认证（1是，0否）
 	Type          int    `gorm:"column:type" json:"type"`                               // 职位性质（如全职、兼职）
 	Number        int    `gorm:"column:number" json:"number"`                           // 招聘人数
@@ -49,7 +49,7 @@ type PunCompanyJob struct {
 	AutoTime      int    `gorm:"column:autotime" json:"autotime"`                       // 自动刷新时间戳
 	IsLink        int    `gorm:"column:is_link" json:"is_link"`                         // 是否使用公司联系方式（1是，0否）
 	LinkType      int    `gorm:"column:link_type;default:1" json:"link_type"`           // 联系方式类型（1默认，2自定义）
-	Source        int    `gorm:"column:source;default:3" json:"source"`                 // 职位来源（10平台，1API，2采集，3apk）
+	Source        int    `gorm:"column:source;default:4" json:"source"`                 // 职位来源（10平台，1API，2采集，3apk，4telegram_bot）
 	RecTime       int    `gorm:"column:rec_time" json:"rec_time"`                       // 推荐截止时间
 	SNum          int    `gorm:"column:snum" json:"snum"`                               // 已投递人数
 	OperaTime     int    `gorm:"column:operatime" json:"operatime"`                     // 后台操作时间
