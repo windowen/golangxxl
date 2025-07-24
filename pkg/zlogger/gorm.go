@@ -4,133 +4,146 @@ import (
 	ctx "context"
 	"errors"
 	"fmt"
-	"os"
-	"path"
+	"path/filepath"
 	"runtime"
-	"strconv"
 	"strings"
 	"time"
 
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-
-	"queueJob/pkg/common/config"
 )
 
-type dbLog struct {
+type DbLog struct {
 	logger.Config
 	traceSwitch bool
 }
 
-func NewDBLog(config logger.Config) *dbLog {
-	return &dbLog{Config: config, traceSwitch: true}
+func NewDBLog(config logger.Config) *DbLog {
+	return &DbLog{
+		Config:      config,
+		traceSwitch: true,
+	}
 }
 
-func (l *dbLog) LogMode(level logger.LogLevel) logger.Interface {
+func (l *DbLog) LogMode(level logger.LogLevel) logger.Interface {
 	newLogger := *l
 	newLogger.LogLevel = level
 	newLogger.traceSwitch = true
 	return &newLogger
 }
 
-func (l *dbLog) Info(ctx ctx.Context, s string, i ...interface{}) {
+func (l *DbLog) Info(ctx ctx.Context, msg string, args ...interface{}) {
 	if l.LogLevel >= logger.Info {
-		Info(fmt.Sprintf("DBLOG |"+s+"\n", i...))
+		Infof(msg, args...)
 	}
 }
 
-func (l *dbLog) Warn(ctx ctx.Context, s string, i ...interface{}) {
+func (l *DbLog) Warn(ctx ctx.Context, msg string, args ...interface{}) {
 	if l.LogLevel >= logger.Warn {
-		Warn(fmt.Sprintf("DBLOG |"+s+"\n", i...))
+		Warnf(msg, args...)
 	}
 }
 
-func (l *dbLog) Error(ctx ctx.Context, s string, i ...interface{}) {
+func (l *DbLog) Error(ctx ctx.Context, msg string, args ...interface{}) {
 	if l.LogLevel >= logger.Error {
-		Error(fmt.Sprintf("DBLOG |"+s+"\n", i...))
+		Errorf(msg, args...)
 	}
 }
 
-func (l *dbLog) Trace(ctx ctx.Context, begin time.Time, fc func() (sql string, rowsAffected int64), err error) {
+func (l *DbLog) Trace(ctx ctx.Context, begin time.Time, fc func() (sql string, rowsAffected int64), err error) {
 	if l.LogLevel <= logger.Silent || !l.traceSwitch {
 		return
 	}
 
-	// 耗时
-	timestamp := time.Since(begin)
+	// 计算执行耗时
+	duration := time.Since(begin)
 
 	sql, rows := fc()
 
-	// 如果报错直接打印日志
+	// 如果出现错误且不是记录未找到，直接记录错误日志
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
-		Errorf("DBLOG | pos=%s |err=%v |sql=%s |rows=%d |timestamp=%.2fs", funcName4Gorm(), err, sql, rows, timestamp.Seconds())
+		Errorw("trace",
+			zap.String("pos", funcName4Gorm()),
+			zap.Error(err),
+			zap.String("sql", sql),
+			zap.Int64("rows", rows),
+			zap.Float64("timestamp", duration.Seconds()),
+		)
 		return
 	}
 
-	// 产生慢查询
-	if timestamp > l.SlowThreshold {
-		// 记录不同标准的慢sql
-		var standard = "PURPLE"
+	// 慢查询日志处理
+	if duration > l.SlowThreshold {
+		standard := "PURPLE"
 		switch {
-		case timestamp > l.SlowThreshold*8:
+		case duration > l.SlowThreshold*8:
 			standard = "RED"
-		case timestamp > l.SlowThreshold*4:
+		case duration > l.SlowThreshold*4:
 			standard = "ORANGE"
-		case timestamp > l.SlowThreshold*2:
+		case duration > l.SlowThreshold*2:
 			standard = "YELLOW"
 		}
 
-		if timestamp > l.SlowThreshold*4 {
-			Warnf("DBLOG | pos=%s |SLOW |standard=%s |sql=%s |rows=%d |timestamp=%.2fs", funcName4Gorm(), standard, sql, rows, timestamp.Seconds())
+		// 对慢查询分级别记录 WARN 日志
+		if duration > l.SlowThreshold*4 {
+			Warnw("trace",
+				zap.String("pos", funcName4Gorm()),
+				zap.String("standard", standard),
+				zap.String("sql", sql),
+				zap.Int64("rows", rows),
+				zap.Float64("timestamp", duration.Seconds()),
+			)
 			return
 		}
 
-		Warnf("DBLOG | pos=%s |SLOW |standard=%s |sql=%s |rows=%d |timestamp=%.2fs", funcName4Gorm(), standard, sql, rows, timestamp.Seconds())
-
+		Warnw("trace slow",
+			zap.String("pos", funcName4Gorm()),
+			zap.String("standard", standard),
+			zap.String("sql", sql),
+			zap.Int64("rows", rows),
+			zap.Float64("timestamp", duration.Seconds()),
+		)
 		return
 	}
 
-	// 如果不是慢日志，只有数据变更操作的日志才记录
+	// 非慢查询，只有数据变更操作才记录日志
 	if rows > 0 && (strings.Contains(sql, "INSERT") || strings.Contains(sql, "UPDATE")) {
-		Infof("DBLOG | pos=%s |sql=%s |rows=%d |timestamp=%.2fs", funcName4Gorm(), sql, rows, timestamp.Seconds())
+		Infow("trace",
+			zap.String("pos", funcName4Gorm()),
+			zap.String("sql", sql),
+			zap.Int64("rows", rows),
+			zap.Float64("timestamp", duration.Seconds()),
+		)
 		return
 	}
 
-	// 更新0的日志额外重点记录
+	// 对更新但影响0行的日志重点记录
 	if strings.Contains(sql, "UPDATE") {
-		Warnf("DBLOG | pos=%s | sql=%s |rows=%d |timestamp=%.2fs", funcName4Gorm(), sql, rows, timestamp.Seconds())
+		Warnw("trace",
+			zap.String("pos", funcName4Gorm()),
+			zap.String("sql", sql),
+			zap.Int64("rows", rows),
+			zap.Float64("timestamp", duration.Seconds()),
+		)
 		return
 	}
 
-	// 开发环境打开SQL日志，方便查看SQL
-	if strings.ToLower(config.Config.App.Env) == "dev" {
-		Infof("DBLOG | pos=%s｜sql=%s |timestamp=%.2fs", funcName4Gorm(), sql, timestamp.Seconds())
-		return
-	}
+	// 其他情况记录普通信息日志
+	Infow("trace",
+		zap.String("pos", funcName4Gorm()),
+		zap.String("sql", sql),
+		zap.Float64("timestamp", duration.Seconds()),
+	)
 }
 
 func funcName4Gorm() string {
-	pc, f, line, _ := runtime.Caller(4)
-	funcName := runtime.FuncForPC(pc).Name()
-
-	// 获取上一层的stack
-	index := lastIndexByte(f, os.PathSeparator)
-	if index != -1 {
-		f = f[index+1:]
+	_, file, line, ok := runtime.Caller(4)
+	if !ok {
+		return "unknown:0"
 	}
-	return path.Base(funcName) + " " + f + ":" + strconv.Itoa(line) + " "
-}
 
-func lastIndexByte(s string, c byte) int {
-	var count int
-	for i := len(s) - 1; i >= 0; i-- {
-		if s[i] == c {
-			count++
-		}
+	file = filepath.ToSlash(file)
 
-		if count == 2 {
-			return i
-		}
-	}
-	return -1
+	return fmt.Sprintf("%s:%d", file, line)
 }

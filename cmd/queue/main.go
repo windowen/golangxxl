@@ -20,8 +20,6 @@ import (
 	"queueJob/pkg/tools/component"
 	"queueJob/pkg/tools/utils"
 	"queueJob/pkg/zlogger"
-
-	"github.com/google/uuid"
 )
 
 func main() {
@@ -49,11 +47,6 @@ func main() {
 	utils.SetGlobalTimeZone(utils.GetBjTimeLoc())
 
 	// 初始化日志
-	svcID := uuid.NewString()
-	zlogger.SetGlobalFields(map[string]string{
-		"ssid": svcID,
-		"snm":  "queue",
-	})
 	zlogger.InitLogConfig(logFile)
 
 	// 检测 ETCD
