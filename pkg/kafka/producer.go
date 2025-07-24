@@ -11,9 +11,9 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"
 
-	"liveJob/pkg/common/config"
-	"liveJob/pkg/safego"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/common/config"
+	"queueJob/pkg/safego"
+	"queueJob/pkg/zlogger"
 )
 
 // Producer kafka生产者

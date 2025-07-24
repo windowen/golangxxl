@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"queueJob/internal/kafkaconsumer"
+	"queueJob/pkg/kafka"
 	"runtime"
 	"syscall"
 
@@ -77,6 +79,12 @@ func main() {
 
 	// 初始化 RocketMQ 消费者
 	consumer.Init()
+
+	// 初始化 kafka 消费者
+	kafkaconsumer.Init()
+
+	// 初始化kafka生产者
+	kafka.Init()
 
 	// 初始化全局客户端
 	service.RegisterService(liveRpc.NewServiceClients())

@@ -3,9 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+	"queueJob/pkg/kafka"
 	"runtime"
-
-	"github.com/google/uuid"
 
 	"queueJob/internal/tasks"
 	"queueJob/pkg/common/config"
@@ -42,11 +41,6 @@ func main() {
 	utils.SetGlobalTimeZone(utils.GetBjTimeLoc())
 
 	// 初始化日志
-	svcID := uuid.NewString()
-	zlogger.SetGlobalFields(map[string]string{
-		"ssid": svcID,
-		"snm":  "queueJob",
-	})
 	zlogger.InitLogConfig(logFile)
 
 	// 初始化redis
@@ -72,6 +66,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	// 初始化kafka生产者
+	kafka.Init()
 
 	execute := xxl.CreateExecutor(
 		xxl.ServerAddr(config.Config.XXLJob.AdminServer),    // xxl-job-admin 服务器地址
