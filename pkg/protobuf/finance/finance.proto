@@ -1,0 +1,184 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/finance";
+
+// 代收
+message PayInReq {
+    string company = 1; // 第三方支付平台编码
+    string money = 2; // 货币数量
+    string randomCode = 3; // 随机号码
+}
+
+message PayInResp {
+    string payCode = 1;
+    string url = 2; // 支付链接
+    string qrCode = 3; // 支付二维码
+}
+
+// 代收订单查询
+message PayInQueryReq {
+    string company = 1; // 第三方支付平台编码
+    string order = 2; // 订单编号
+}
+
+message PayInQueryResp {
+    int32 result = 1;
+    string jsonString = 2; // 返回数据
+}
+
+// 代付订单查询
+message PayOutQueryReq {
+    string company = 1; // 第三方支付平台编码
+    string order = 2; // 订单编号
+}
+
+message PayOutQueryResp {
+    int32 result = 1;
+    string jsonString = 2; // 返回数据
+}
+
+message PayOutAccount {
+    string bankCode = 1; // 账号类型
+    string accountNo = 2; // 账号
+    string accountName = 3; // 持卡人姓名
+    string document = 4; //
+}
+
+// 代付
+message PayOutReq {
+    string company = 1; // 第三方支付平台编码
+    string area = 2; // 国家id
+    string currency = 3; // 货币类型
+    string money = 4; // 货币数量
+    PayOutAccount account = 5; // 代付账号信息
+}
+
+message PayOutResp {
+    int32 result = 1;
+    string payCode = 2;
+}
+
+// 第三方回调数据
+message PayNotificationReq {
+    bytes jsonResult = 1;
+    string timestampResult = 2;
+    string signatureResult = 3;
+    string company = 4; // 第三方支付平台编码
+}
+
+message PayNotificationResp {
+    int32 result = 1;
+}
+
+// 第三方回调数据
+message PayOutNotifyReq {
+    bytes jsonResult = 1;
+    string timestampResult = 2;
+    string signatureResult = 3;
+    string company = 4; // 第三方支付平台编码
+}
+
+message PayOutNotifyResp {
+    int32 result = 1;
+}
+
+// 余额查询
+message BalanceReq {
+    string company = 1; // 第三方支付平台编码
+}
+
+message BalanceResp {
+    int32 result = 1;
+    string jsonString = 2; // 返回数据
+}
+
+// 提现
+message WithdrawReq {
+    string payType = 1; // 支付方式 "EWALLET", "USDT"
+    string amount = 2; // 提现数量
+    int32 bindId = 3; // finance_withdraw_bind 表里的id
+    string uAddress = 4; // USDT 钱包地址 当前只支持TRC20
+}
+
+// 提现返回
+message WithdrawResp {
+    int32 result = 1; // 1 待审核; 2 重复提交
+}
+
+// 平台打款
+message PlatPayReq {
+    string orderId = 1; // 订单id
+    string userId = 2; // 用户id
+}
+
+// 提现返回
+message PlatPayResp {
+    int32 result = 1; // 1 成功; 2 余额不足
+    string payCode = 2;
+}
+
+// 平台驳回
+message PlatRejectPayReq {
+    string orderId = 1; // 订单id
+    string userId = 2; // 用户id
+    string remark = 3; // 备注
+}
+
+// 返回
+message PlatRejectPayResp {
+    int32 result = 1; // 1 成功;
+}
+
+// 平台冻结直播间钻石消费记录打款
+message PlatFreezeLiveRoomDetailReq {
+    int32 detailId = 1; // live_room_income_details的 id 字段
+    string userId = 2; // 用户id
+}
+
+// 平台冻结直播间钻石消费记录打款返回
+message PlatFreezeLiveRoomDetailResp {
+    int32 result = 1; // 1 成功; 2 出现错误
+}
+
+// 代付设置
+message WithdrawBindReq {
+    string bankCode = 1; // 账号类型
+    string accountNo = 2; // 账号
+    string accountName = 3; // 持卡人姓名
+    string document = 4; //
+}
+
+// 代付设置返回
+message WithdrawBindResp {
+    int32 result = 1; // 1 成功; 2 绑定失败
+}
+
+// 获取提现配置列表
+message WithdrawListReq {
+}
+
+message WithdrawInfo {
+    string payTypeCode = 1; // 支付类型名称
+    string payTypeIcon = 2; // 支付类型icon
+    string serverFee = 3; // 支付服务费
+}
+
+// 提现配置列表
+message WithdrawListResp {
+    repeated WithdrawInfo list = 1; // 支付列表
+}
+
+// 获取提现类型列表
+message WithdrawTypeListReq {
+    string payTypeCode = 1; // 支付类型名称
+}
+
+message WithdrawTypeInfo {
+    int32 bindId = 1; // 绑定表的id
+    PayOutAccount account = 2; // 绑定的账号信息
+}
+
+// 提现类型列表
+message WithdrawTypeListResp {
+    repeated WithdrawTypeInfo list = 1; // 支付类型列表
+}

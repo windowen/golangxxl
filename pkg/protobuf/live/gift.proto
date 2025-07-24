@@ -1,0 +1,74 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/live";
+
+message GiftsResp {
+  repeated GiftItem list = 1;
+}
+
+message GiftItem {
+  int32 giftId = 1; // 礼物id
+  string giftName = 2; // 礼物名称国际化
+  int32 category = 3; // 礼物类型
+  int32 price = 4; // 礼物价格
+  string icon = 5; // 礼物图标
+  string animation = 6; // 礼物动画
+}
+
+// 用户坐骑列表响应
+message MountResp {
+  repeated MountItem list = 1; // 坐骑列表
+  message MountItem {
+    int32 mountId = 1; // 坐骑id
+    string mountName = 2; // 坐骑名称
+    int32 buyPrice = 3; // 购买价格/月
+    int32 renewalPrice = 4; // 续费价格/月
+    string icon = 5; // 图标
+    string animation = 6; // 动画
+    int32 isHave = 7; // 是否拥有
+    int32 expiredTime = 8; // 过期时间
+    int32 isUse = 9; // 是否使用
+  }
+}
+
+// 购买续费坐骑
+message BuyRenewalMountReq {
+  int32 mountId = 1; // 坐骑id
+}
+
+// 使用坐骑
+message UesMountReq {
+  int32 mountId = 1; // 坐骑id
+}
+
+// 跳蛋列表响应
+message ListVibratorResp {
+  repeated ListVibratorItem list = 1;
+}
+
+message ListVibratorItem {
+  int32 vibratorId = 1; // 跳蛋id
+  string vibratorName = 2; // 跳蛋名称国际化
+  int32 category = 3; // 礼物类型
+  int32 price = 4; // 跳蛋价格
+  string icon = 5; // 跳蛋图标
+  string animation = 6; // 跳蛋动画
+  int32 duration = 7; // 时长
+  int32 strength = 8; // 强度
+}
+
+// 坐骑列表响应
+message MountListResp {
+  repeated MountItem list = 1; // 坐骑列表
+  message MountItem {
+    int32 mountId = 1; // 坐骑id
+    string mountName = 2; // 坐骑名称
+    string icon = 3; // 图标
+    string animation = 4; // 动画
+  }
+}
+
+// 使用坐骑
+message UnUesMountReq {
+  int32 mountId = 1; // 坐骑id
+}

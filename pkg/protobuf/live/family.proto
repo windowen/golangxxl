@@ -1,0 +1,60 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/live";
+
+// 家族主播列表
+message FamilyListAnchorResp {
+  repeated Item list = 1;
+  message Item {
+    int32 id = 1;
+    int32 anchorId = 2; // 主播id
+    string nickname = 3; // 昵称
+    string avatar = 4; // 头像
+    int32  sex = 5; // 性别
+    int32  platformRatio = 6; // 平台抽成
+    int32  familyRatio = 7; // 家族抽成
+    int32  anchorRatio = 8; // 主播抽成
+    int32 paidPurviewStatus = 9; // 付费权限 0/1
+  }
+}
+
+// 新增主播
+message FamilyAddAnchorReq {
+  int32 anchorId = 1; // 主播id
+  string areaCode = 2; // 地区码
+  string mobile = 3; // 手机号
+}
+
+// 取消主播
+message FamilyCancelAnchorReq {
+  int32 anchorId = 1; // 主播id
+}
+
+// 修改家族主播数据
+message FamilyModifyAnchorScaleReq {
+  int32 anchorId = 1; // 主播id
+  int32 anchorRatio = 2; // 主播抽成
+  int32 familyRatio = 3; // 家族抽成
+  int32 platformRatio = 4; // 平台抽成
+  int32 paidPurviewStatus = 5; // 付费权限 0/1
+}
+
+// 家族详情
+message FamilyDetailResp {
+  int32 familyId = 1;
+  int32 platformRatio = 2; // 平台抽成
+  string familyName = 3; // 家族名称
+  string income = 4; // 收益
+  string addUpIncome = 5; // 累计收益
+}
+
+// 家族主播收益请求
+message FamilyAnchorIncomeReq {
+  int32 anchorId = 1; // 主播id
+}
+
+// 家族主播收益响应
+message FamilyAnchorIncomeResp {
+  string income = 1; // 收益
+  string cumulativeIncome = 2; // 累计收益
+}

@@ -1,0 +1,111 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/live";
+
+import "live/room.proto";
+import "live/chat_room.proto";
+import "live/gift.proto";
+import "live/family.proto";
+import "live/callback.proto";
+import "live/config.proto";
+import "live/user.proto";
+import "live/label.proto";
+import "live/pay.proto";
+import "live/rank.proto";
+import "common/common.proto";
+
+message RoomIdReq{
+  int32 roomId = 1; // 平台直播间id
+}
+
+message JoinLiveRoomReq {
+  int32 roomId = 1;
+}
+
+// 加入房间响应
+message JoinLiveRoomResp {
+  string token = 1;
+  int32  isTrial = 2;
+  string chatRoomId = 3;
+  int32  userId = 4;
+}
+
+service LiveServer {
+  rpc Configs(Empty) returns (ConfigResp); // app配置
+  rpc AnchorRank(AnchorRankReq) returns (AnchorRankResp); // 主播排行榜
+  rpc UserRank(UserRankReq) returns (UserRankResp); // 用户排行榜
+
+  // live
+  rpc GetRTCServerList(NotificationServerReq) returns (NotificationServer);
+  rpc LiveCallBack(LiveCallBackReq) returns (Empty);
+
+  // im
+  rpc ChatCallBack(chatCallBackReq) returns (chatCallBackResp);
+  rpc CreateChatRooms(CreateChatRoomReq) returns (CreateChatRoomResp);
+  rpc CreateUser(CreateUserReq) returns (CreateUserResp);
+  // chatroom
+  rpc GetChatRoomInfo(GetChatRoomInfoReq) returns (GetChatRoomInfoResp);
+  rpc JoinRoom(JoinRoomReq) returns (JoinRoomResp); //进入房间
+  rpc RobotJoinRoom(RobotJoinRoomReq) returns (JoinRoomResp); //机器人进入房间
+  rpc SendGift(SendGiftReq) returns (SendGiftResp); //送礼物
+  rpc SendMess(SendMessReq) returns (SendMessResp); //发消息
+  rpc ToggleLike(ToggleLikeReq) returns (ToggleLikeResp);//点赞
+  rpc LeaveRoom(LeaveRoomReq) returns (LeaveRoomResp); //离开房间
+  rpc InternalLeaveRoom(LeaveRoomReq) returns (LeaveRoomResp);
+  rpc FollowUser(FollowUserReq) returns (FollowUserResp); //关注
+  rpc IncomeNotify(IncomeNotifyReq) returns (IncomeNotifyResp); //收益
+  rpc SystemNotify(SystemNotifyReq) returns (SystemNotifyResp); //系统通知
+  rpc UpgradeNotify(UpgradeNotifyReq) returns (UpgradeNotifyResp); //升级通知
+  rpc InsufficientBalanceNotice(InsufficientBalanceNoticeReq) returns (InsufficientBalanceNoticeResp);
+  rpc GetChatRoomOnlineUsers(GetChatRoomOnlineUserReq)returns (GetChatRoomOnlineUserResp); //在线用户列表
+  rpc GetSDKOnlineUserStatus(GetSDKOnlineUserStatusReq)returns (GetSDKOnlineUserStatusResp); //在线用记状态
+  rpc GetSDKChatRoomUsers(GetSDKChatRoomUsersReq)returns (GetSDKChatRoomUsersResp); //在线用户
+
+  // 主播
+  rpc FindLiveRoomInfo(Empty) returns (LiveRoomsDetailsResp); // 查询直播间信息
+  rpc RoomStartBroadcast(RoomStartBroadcastReq) returns (RoomStartBroadcastResp); // 开播
+  rpc RoomManageList(RoomManageListReq) returns (RoomOpListResp); // 主播房间管理列表
+  rpc RoomManageChange(RoomManageChangeReq) returns (Empty); // 主播房间管理操作
+  rpc RoomCloseBroadcast(Empty) returns (CloseBroadcastResp); // 下播
+  rpc GmCloseBroadcast(RoomIdReq) returns (Empty); // 后台下播
+  rpc RoomListManage(Empty) returns (RoomListManageResp); // 房管列表
+  rpc RoomAddManage(RoomAddManageReq) returns (Empty); // 新增房管
+  rpc RoomCancelManage(RoomCancelManageReq) returns (Empty); // 取消房管
+  rpc FamilyListAnchor(Empty) returns (FamilyListAnchorResp); // 家族主播列表
+  rpc FamilyAddAnchor(FamilyAddAnchorReq) returns (Empty); // 新增家族主播
+  rpc FamilyCancelAnchor(FamilyCancelAnchorReq) returns (Empty); // 移除家族主播
+  rpc FamilyModifyAnchorScale(FamilyModifyAnchorScaleReq) returns (Empty); // 修改主播抽成
+  rpc FamilyDetail(Empty) returns (FamilyDetailResp); // 家族详情
+  rpc FamilyAnchorIncome(FamilyAnchorIncomeReq) returns (FamilyAnchorIncomeResp); // 家族主播收益
+  rpc RoomSceneHistory(Empty) returns (RoomSceneHistoryResp); // 直播历史
+  rpc RoomSceneHistoryIncome(RoomSceneHistoryIncomeReq) returns (RoomSceneHistoryIncomeResp); // 直播历史场次收益纪录
+  rpc RoomReceiveGiftList(RoomReceiveGiftListReq) returns (RoomReceiveGiftListResp); // 直播间收到礼物列表
+  rpc RoomReceiveBarrageList(Empty) returns (RoomReceiveBarrageListResp); // 直播间弹幕列表
+  rpc AnchorTodayBarrageInfo(Empty) returns (AnchorTodayBarrageInfoResp); // 主播今日直播信息
+  rpc LiveMinutePaidIncome(LiveMinutePaidIncomeReq) returns (Empty); // 分钟扣费收益通知
+  rpc GmRoomStartBroadcast(GMRoomStartBroadcastReq) returns (Empty); // 后台开播
+  rpc AnchorRoomTransferPay(AnchorRoomTransferPayReq) returns (Empty); // 主播开播转付费
+
+  // 用户
+  rpc JoinLiveRoom(JoinLiveRoomReq) returns (JoinLiveRoomResp); // 加入直播间
+  rpc QuitLiveRoom(RoomIdReq) returns (Empty); // 退出直播间
+  rpc ListLiveRooms(ListLiveRoomsReq) returns (ListLiveRoomsResp); // 首页直播间
+  rpc SearchAnchor(SearchAnchorReq) returns (SearchAnchorResp); // 搜索主播
+  rpc LiveRoomsDetails(LiveRoomsDetailsReq) returns (LiveRoomsDetailsResp); // 直播间详情
+  rpc Gifts(Empty) returns (GiftsResp); // 礼物列表
+  rpc RoomManageStatus(RoomManageStatusReq) returns (RoomManageStatusResp); // 获房间管理状态
+  rpc BillsList(BillsListReq) returns (BillsListResp); // 流水
+  rpc ListMount(Empty) returns (MountResp); // 用户坐骑列表
+  rpc Mount(Empty) returns (MountListResp); // 坐骑列表
+  rpc BuyRenewalMount(BuyRenewalMountReq) returns (Empty); // 购买续费坐骑
+  rpc UesMount(UesMountReq) returns (Empty); // 使用坐骑
+  rpc UnUesMount(UnUesMountReq) returns (Empty); // 停用坐骑
+  rpc ListVibrator(Empty) returns (ListVibratorResp); // 跳蛋列表
+  rpc SiteLabel(SiteLabelReq) returns(SiteLabelResp); // 站点标签
+  rpc HomeTopLiveRooms(Empty) returns(HomeTopLiveRoomsResp); // 首页推荐直播间
+  rpc TopLiveRoom(TopLiveRoomReq) returns(TopLiveRoomResp); // 推荐位直播间
+  rpc FollowLiveRoom(Empty) returns(FollowLiveRoomResp); // 关注的直播间
+  rpc LivePay(LivePayReq) returns(Empty); // 直播间付费
+  rpc HomeManageList(HomeManageListReq) returns (RoomOpListResp); // 房管操作列表
+  rpc HomeManageChange(HomeManageChangeReq) returns (Empty); // 房管操作
+}

@@ -1,0 +1,274 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/finance";
+
+// 充值中心支付类型列表
+message PayTypeItem {
+    // 支付类型编码
+    string payTypeCode = 1;
+    // 支付类型名称
+    string payTypeName = 2;
+    // 支付类型图标
+    string payTypeIcon = 3;
+    // 支付类描述Title
+    string describeTitle = 4;
+    // 支付类描述内容
+    string describeContent = 5;
+}
+
+// 充值中心支付区间
+message PayChannel {
+    // 支付商编码
+    string channelCode = 1;
+    // 支付区间
+    string zone = 2;
+
+}
+
+// 获取充值中心响应
+message GetRechargeCenterResp {
+    // 币种编码
+    string coinCode = 1;
+    // 国家编码
+    string countryCode = 2;
+    // 余额
+    string balance = 3;
+    // 钻石
+    string diamond = 4;
+    // 兑换金额(约等于)
+    string exchangeAmount = 6;
+    // 支付类型列表
+    repeated PayTypeItem payTypeList = 7;
+    // 支付区间
+    repeated PayChannel channelList = 8;
+}
+
+// 通过支付类型编码国家编码获取渠道商请求
+message GetZoneByPayTypeCodeReq {
+    // 支付类型编码
+    string payTypeCode = 1;
+}
+
+// 通过支付类型编码国家编码获取渠道商响应
+message GetZoneByPayTypeCodeResp {
+    // 支付区间
+    repeated PayChannel channelList = 8;
+}
+
+// 充值中心随机码响应
+message GetPayRandomCodeResp{
+    string code = 1;
+}
+
+// 钻石兑换项
+message DiamondExchangeItem{
+    int32 USD = 1;
+    int32 Diamond = 2;
+}
+
+// 获取钻石响应
+message GetDiamondResp{
+    // 余额
+    string balance = 1;
+    // 钻石
+    string diamond = 2;
+    // 兑换金额(约等于)
+    string exchangeAmount = 3;
+    // VIP等级
+    int32 levelId = 4;
+    // 钻石兑换项列表
+    repeated  DiamondExchangeItem list = 5;
+}
+
+// 钻石兑换请求
+message DiamondExchangeReq{
+    // 兑换美元
+    int32 USD = 1;
+    // 兑换钻石
+    int32 diamond = 2;
+}
+
+// 充值记录列表请求
+message RechargeRecordListReq {
+    // 页码
+    int32 pageNumber = 1;
+    // 页大小
+    int32 pageSize = 2;
+}
+
+// 充值记录列表项
+message RechargeRecordItem {
+    // 订单Id
+    int32 id = 1;
+    // 账单号
+    string billNo = 2;
+    // 充值金额
+    string orderAmount = 3;
+    // 充值时间
+    string createdAt = 4;
+    // 状态
+    string status = 5;
+}
+
+// 充值记录列表响应
+message RechargeRecordListResp {
+    // 总记录数
+    int32 totalRecord = 1;
+    // 总页数
+    int32 totalPage = 2;
+    // 页面大小
+    int32 pageSize = 3;
+    // 页码
+    int32 pageNum = 4;
+    // 充值记录列表项
+    repeated RechargeRecordItem list = 5;
+}
+
+// 提现列表请求
+message WithdrawRecordListReq {
+    // 页码
+    int32 pageNumber = 1;
+    // 页大小
+    int32 pageSize = 2;
+}
+
+// 提现列表项
+message WithdrawRecordItem {
+    // 订单Id
+    int32 id = 1;
+    // 账单号
+    string billNo = 2;
+    // 充值金额
+    string orderAmount = 3;
+    // 充值时间
+    string createdAt = 4;
+    // 状态
+    string status = 5;
+}
+
+// 提现列表响应
+message WithdrawRecordListResp {
+    // 总记录数
+    int32 totalRecord = 1;
+    // 总页数
+    int32 totalPage = 2;
+    // 页面大小
+    int32 pageSize = 3;
+    // 页码
+    int32 pageNum = 4;
+    // 充值记录列表项
+    repeated WithdrawRecordItem list = 5;
+}
+
+// 查看提现失败详情请求
+message CheckWithdrawDetailReq {
+    int32 id = 1;
+}
+
+// 查看提现失败详情响应
+message CheckWithdrawDetailResp {
+    string remark = 1;
+}
+
+// 我的资产响应(用户端)
+message MyAssetResp {
+    // 余额
+    string balance = 1;
+    // 钻石
+    string diamond = 2;
+    // 已赠送钻石
+    string sendDiamond = 3;
+}
+
+// 收入明细列表请求
+message GetIncomeDetailListReq {
+    // 查询类型1消费明细列表 2收入明细列表
+    int32 queryType = 1;
+    // 日期
+    string date = 2;
+    // 页码
+    int32 pageNumber = 3;
+    // 页大小
+    int32 pageSize = 4;
+    // 用户手机的时区
+    string timeZone = 5;
+}
+
+// 收入明细列表项
+message IncomeDetailItem {
+    // 主键Id
+    int32 id = 1;
+    // 消费项目名(弹幕、道具等)
+    string consumeName = 2;
+    // 钻石
+    int32 diamond = 3;
+    // 时间
+    string createdAt = 4;
+}
+
+// 收入明细列表响应
+message GetIncomeDetailListResp {
+    // 总记录数
+    int32 totalRecord = 1;
+    // 总页数
+    int32 totalPage = 2;
+    // 页面大小
+    int32 pageSize = 3;
+    // 页码
+    int32 pageNum = 4;
+    // 总钻石
+    int32 totalDiamond = 5;
+    // 收入明细列表请求
+    repeated IncomeDetailItem list = 6;
+}
+
+// 查看收支明细详情请求
+message CheckIncomeDetailReq{
+    // 查询类型1消费明细列表 2收入明细列表
+    int32 queryType = 1;
+    int32 id = 2;
+}
+
+// 查看收支明细详情响应
+message CheckIncomeDetailResp{
+    // 钻石
+    int32 diamond = 1;
+    // 主播id
+    int32 anchorId = 2;
+    // 主播昵称
+    string anchorNickName = 3;
+    // 消费类型名称
+    string consumeTypeName = 4;
+    // 创建时间
+    string createdAt = 5;
+}
+
+// 我的钱包(主播端)
+message MyWalletReq {
+    // 用户手机今天的日期
+    string date = 1;
+    // 用户手机的时区
+    string timeZone = 2;
+}
+
+// 我的钱包(主播端)
+message MyWalletResp {
+    // 总资产(主播收到的所有钻石等值的可提USD)
+    string totalUSD = 1;
+    // 约等于当地币种
+    string approximately = 2;
+    // 今日收入钻石
+    string todayIncomeDiamond = 3;
+    // 今日收入钻石换算成美元
+    string todayIncomeUSD = 4;
+    // 直播间资产
+    string roomAsset = 5;
+    // 家族资产
+    string familyAsset = 6;
+}
+
+
+
+
+
+

@@ -1,0 +1,63 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/finance";
+
+// 直播间数据
+message LiveRoomItem {
+    int32 id= 1;            // 主键Id
+    int32 userId = 2;       // 消费者用户id
+    int32 category = 3;     // 类别
+    string createTime = 4;  // 创建时间
+    int32 total = 5;        // 消费总数量
+    int32 incomeRatio = 6;  // 主播抽成比例
+    int32 incomeDiamond = 7;// 主播收入
+}
+
+// 家族抽成数据
+message FamilyCutItem {
+    int32 id = 1;           // 主键Id
+    int32 category = 2;     // 类别
+    int32 userId = 3;       // 消费者用户id (抽取时是主播的id，被抽取时是家族长的id)
+    string createTime = 4;  // 创建时间
+    int32 total = 5;        // 消费总数量
+    int32 familyRatio = 7;  // 主播抽成比例
+    int32 cutDiamond = 8;   // 抽取金额
+}
+
+// 收入详情查询
+message StreamerIncomeReq {
+    int32 tab = 1;          // 1-all, 2-live room, 3-family
+    string date = 2;        // 日期
+    int32 pageNumber = 3;   // 页码
+    int32 pageSize = 4;     // 页大小
+}
+
+// 收入详情查询
+message StreamerIncomeResp {
+    int32 tab = 1;              // 1-all, 2-live room, 3-family
+    int32 fansDiamond = 2;      // 粉丝贡献的钻石数量 (当在全部页签上时显示)
+    int32 profitShare = 3;      // 分成 (当在全部页签上时显示)
+    int32 pageNum = 4;          // 页码
+    string queryTime = 5;       // 时间
+    repeated LiveRoomItem liveRoomList = 6; // 直播间数据
+    repeated FamilyCutItem familyCutList = 7; // 家族抽成数据
+}
+
+// 结算详情查询
+message StreamerSettleReq {
+    int32 tab           = 1;        // 1-all, 2-live room, 3-family
+    string date         = 2;        // 日期
+    int32 pageNumber    = 3;        // 页码
+    int32 pageSize      = 4;        // 页大小
+}
+
+// 结算详情查询
+message StreamerSettleResp {
+    int32 tab = 1;              // 1-all, 2-live room, 3-family
+    int32 fansDiamond = 2;      // 粉丝贡献的钻石数量 (当在全部页签上时显示)
+    int32 profitShare = 3;      // 分成 (当在全部页签上时显示)
+    int32 pageNum = 4;          // 页码
+    string queryTime = 5;       // 时间
+    repeated LiveRoomItem liveRoomList = 6; // 直播间数据
+    repeated FamilyCutItem familyCutList = 7; // 家族抽成数据
+}

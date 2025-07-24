@@ -1,0 +1,56 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/finance";
+
+enum PaymentType {
+    PT_Error = 0;                   // 错误类型
+    PT_Gift = 1;                    // 礼物
+    PT_Barrage = 2;                 // 弹幕
+    PT_Game = 3;                    // 游戏
+    PT_LiveCharge = 4;              // 直播收费
+    PT_Item = 5;                    // 道具
+    PT_Mounts = 6;                  // 坐骑
+    PT_SubscribeMounts = 7;         // 续订坐骑
+    PT_Noble = 8;                   // 购买贵族
+    PT_SubscribeNoble = 9;          // 续订贵族
+    PT_Guard = 10;                  // 购买守护
+    PT_SubscribeGuard = 11;         // 守护
+    PT_Exchange = 100;              // 美金兑换钻石
+    PT_UpDiamond = 111;             // 系统上分
+    PT_DownDiamond = 112;           // 系统下分
+}
+
+// 扣费扩展信息
+message ExtInfo {
+    int32 id = 1;                   // id
+    string name = 2;                // 名称
+    int32 number = 3;               // 数量
+    int32 price = 4;                // 单价
+    string i18nJson = 5;            // 国际化配置 如：{"en":"kiss","zh":"飞吻"}
+}
+
+// 扣费
+message PayDiamondReq {
+    int32 userId = 1;               // 用户id
+    int32 diamond = 2;              // 钻石数量
+    PaymentType changeType = 3;     // 扣费类型
+    int32 roomId = 4;               // 费用发生的直播间id
+    int32 streamerId = 5;           // 主播id
+    ExtInfo extInfo = 6;            // 扩展信息
+}
+
+// 扣费返回
+message PayDiamondResp {
+    int32 balance = 1; // 剩余钻石
+}
+
+// 钻石操作
+message DiamondReq {
+    int32 userId = 1;               // 用户id
+    int32 diamond = 2;              // 钻石数量 (正数表示增加钻石, 负数表示减少钻石)
+}
+
+// 钻石操作返回
+message DiamondResp {
+    int32 balance = 1; // 剩余钻石
+}

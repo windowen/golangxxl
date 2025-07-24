@@ -1,0 +1,53 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/finance";
+import "finance/finance.proto";
+import "finance/pay.proto";
+import "finance/change.proto";
+import "finance/streamer.proto";
+import "common/common.proto";
+
+service FinanceServer {
+    rpc PayIn(PayInReq) returns (PayInResp);
+    rpc PayInQuery(PayInQueryReq) returns (PayInQueryResp);
+    rpc PayOut(PayOutReq) returns (PayOutResp);
+    rpc PayOutQuery(PayOutQueryReq) returns (PayOutQueryResp);
+    rpc PayNotification(PayNotificationReq) returns (PayNotificationResp);
+    rpc PayOutNotify(PayOutNotifyReq) returns (PayOutNotifyResp);
+    rpc Balance(BalanceReq) returns (BalanceResp);
+
+    rpc WithdrawApply(WithdrawReq) returns (WithdrawResp); // 提现申请
+    rpc PlatPay(PlatPayReq) returns (PlatPayResp); // 平台操作提现打款
+    rpc PlatRejectPay(PlatRejectPayReq) returns (PlatRejectPayResp); // 平台驳回提现打款
+    rpc PlatFreezeLiveRoomDetail(PlatFreezeLiveRoomDetailReq) returns (PlatFreezeLiveRoomDetailResp); // 平台冻结直播间钻石消费记录打款
+
+    // 充值中心功能
+    rpc GetLoginRechargeCenter(Empty) returns (GetRechargeCenterResp);   // 获取已登录充值中心页面信息
+    rpc GetUnLoginRechargeCenter(Empty) returns (GetRechargeCenterResp); // 获取未登录充值中心页面信息
+    rpc GetZoneByPayTypeCode(GetZoneByPayTypeCodeReq) returns (GetZoneByPayTypeCodeResp); // 充值中心通过支付类型编码获取区间接口
+    rpc GetPayRandomCode(Empty) returns(GetPayRandomCodeResp); // 充值中心页面获取随机码
+    rpc GetDiamond(Empty) returns(GetDiamondResp); // 充值中心获取钻石页面
+    rpc DiamondExchange(DiamondExchangeReq) returns(Empty); // 钻石兑换
+    rpc RechargeRecordList(RechargeRecordListReq) returns(RechargeRecordListResp); // 充值记录列表
+    rpc WithdrawRecordList(WithdrawRecordListReq) returns(WithdrawRecordListResp); // 提现记录列表
+    rpc CheckWithdrawDetail(CheckWithdrawDetailReq) returns(CheckWithdrawDetailResp); // 查看提现失败详情
+    rpc MyAsset(Empty) returns(MyAssetResp); // 我的资产用户端
+    rpc MyWallet(MyWalletReq) returns(MyWalletResp); // 主播端
+
+    // 我的
+    rpc GetIncomeDetailList(GetIncomeDetailListReq) returns(GetIncomeDetailListResp); // 收入明细列表
+    rpc CheckIncomeDetail(CheckIncomeDetailReq) returns(CheckIncomeDetailResp); // 收入明细详情
+
+
+    rpc WithdrawBind(WithdrawBindReq) returns (WithdrawBindResp); // 代付绑定设置
+    rpc GetWithdrawConfigList(Empty) returns (WithdrawListResp); // 提现配置列表
+    rpc GetWithdrawTypeList(WithdrawTypeListReq) returns (WithdrawTypeListResp); // 提现类型列表
+
+    // 主播直播间
+    rpc GetStreamerIncome(StreamerIncomeReq) returns (StreamerIncomeResp); // 主播收入详情
+    rpc GetStreamerSettle(StreamerSettleReq) returns (StreamerSettleResp); // 主播结算详情
+
+    // 内部服务器钻石操作接口
+    rpc PaymentDiamond(PayDiamondReq) returns (PayDiamondResp); // 扣除钻石
+    rpc SystemDiamond(DiamondReq) returns (DiamondResp); // 增减钻石
+}

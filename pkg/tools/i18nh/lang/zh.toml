@@ -1,0 +1,62 @@
+[success]
+other = "操作成功"
+[frequent_operation_failed]
+other = "操作频繁,请稍后重试"
+[query_failed]
+other = "查询失败,请稍后重试"
+[operation_failed]
+other = "操作失败,请稍后重试"
+
+[empty_country_code_error]
+other = "国家代码不能为空"
+[modify_password_fail]
+other = "修改密码失败"
+[max_send_times_of_24_hours]
+other = "验证码请求次数超限"
+[cool_down_error]
+other = "冷静期间内不允许再次请求验证码"
+[global_areas_fail]
+other = "无法获取地区列表"
+[token_match_fail]
+other = "Token错误"
+[empty_country_code]
+other = "手机国家代码不能为空"
+[user_disabled]
+other = "你已被禁止登陆，请联系客服"
+[no_token]
+other = "您还未登录，请登录后重试"
+[token_not_exists]
+other = "用户令牌已过期或不存在"
+[token_generate_failed]
+other = "token生成失败"
+[404]
+other = "页面未找到"
+[proto_error]
+other = "参数错误"
+[bind_email_send_error]
+other = "发送验证码失败"
+[bind_email_send_success]
+other = "发送验证码成功"
+[one_time_pass_expire]
+other = "验证码已过期"
+[phone_exits]
+other = "号码已被使用"
+[route_timeout]
+other = "请求超时"
+[login_failed]
+other = "登陆失败"
+[upload_please_select_file]
+other = "请选择上传文件"
+[upload_failure]
+other = "upload_failed"
+[upload_exceed_limit]
+other = "file_size_exceeds_limit"
+[unique_user]
+other = "手机号已注册"
+
+# 用户错误
+
+# 直播间错误
+[room_does_not_exist]
+other = "直播间不存在"
+

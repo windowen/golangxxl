@@ -1,0 +1,17 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/live";
+
+// 站点标签请求
+message SiteLabelReq {
+    int32 category = 1; // 标签类型
+}
+
+// 站点标签响应
+message SiteLabelResp {
+    repeated SiteLabelItem list = 1;
+    message SiteLabelItem {
+        int32 id = 1;
+        string name = 2;
+    }
+}

@@ -1,0 +1,351 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/live";
+
+// 开播请求信息
+message RoomStartBroadcastReq {
+  string title = 1; // 直播间标题
+  string cover = 2; // 封面图片
+  int32  videoClarity = 3; // 视屏清晰度 1- 480p 2-540p 3-720p
+  int32  payRules = 4; // 付费规则 1- 免费 2-分钟付费 3-场次付费
+  int32  trialDuration = 5; // 试看时长/秒
+  int32  unitPrice = 6; // 单价 每分钟单价/每场单价，根据付费规则
+  string summary = 7; // 简介
+  int32 gameId = 8; // 快捷游戏id
+  int32 isOpenVibrator = 9; // 是否开启跳蛋
+}
+// 开播响应
+message RoomStartBroadcastResp {
+  string token = 1;
+  string chatRoomId = 2;
+}
+
+
+// 主播添加禁言、踢出、黑名单
+message RoomManageChangeReq {
+  int32 status = 1; // 操作状态 1- 添加 2-移除
+  int32 userId = 2; // 被操作用户id
+  int32  type = 3; // 类型 1-禁言 2-踢出 3-拉黑
+}
+
+// 主播直播间管理列表请求
+message RoomManageListReq {
+  int32  type = 1; // 类型 1-禁言 2-踢出 3-拉黑
+}
+
+// 房管房间管理操作请求
+message HomeManageChangeReq {
+  int32 status = 1; // 操作状态 1- 添加 2-移除
+  int32 roomId = 2; // 直播间id
+  int32 userId = 3; // 被操作用户id
+  int32  type = 4; // 类型 1-禁言 2-踢出 3-拉黑
+}
+
+// 房管房间管理列表请求
+message HomeManageListReq {
+  int32  roomId = 1;
+  int32  type = 2; // 类型 1-禁言 2-踢出 3-拉黑
+}
+
+// 禁言、踢出、黑名单列表响应
+message RoomOpListResp {
+  repeated RoomOpListItem list = 1;
+  message RoomOpListItem {
+    int32 userId = 1;
+    string nickname = 2;
+    int32 levelId = 3;
+    string avatar = 4;
+    int32 sex = 5;
+  }
+}
+
+// 获取首页直播间列表
+message ListLiveRoomsReq {
+  int32 category = 1;
+  int32  lastId = 2;
+  int32  pageSize = 3;
+}
+
+// 首页直播间
+message ListLiveRoomsResp {
+  repeated ListLiveRoomsItem list = 1;
+  message ListLiveRoomsItem {
+    int32 id = 1; // 直播间id
+    string name = 2; // 直播间名称
+    string cover = 3; // 直播间封面
+    string countryCode = 4; // 国家code
+    int32 onlineNum = 5; // 在线人数
+    int32 userId = 6; // 主播id
+    string chatRoomId = 7; // 聊天室id
+    int32 isOpenVibrator = 8; // 是否开启跳蛋
+    int32  payRules = 9; // 付费规则 1- 免费 2-分钟付费 3-场次付费
+    int32  trialDuration = 10; // 试看时长/秒
+    int32  unitPrice = 11; // 单价 每分钟单价/每场单价，根据付费规则
+    int32 heat = 12; // 热度
+  }
+}
+
+// 搜索主播
+message SearchAnchorReq {
+  string nickname = 1; // 搜索主播昵称
+  int32  lastId = 2;
+  int32  pageSize = 3;
+}
+
+// 搜索主播响应
+message SearchAnchorResp {
+  repeated SearchAnchorItem list = 1;
+  message SearchAnchorItem {
+    int32 userId = 1;
+    string countryCode = 2;
+    string  avatar = 3;
+    string  nickname = 4;
+    int32  category = 5; // 类型 1-用户 2-主播 3-机器人
+    int32 status = 6; // 账号状态 1-正常 2-禁用 3-删除
+    string chatUUID = 7; // 聊天室uuid
+    int32  levelId = 8; // 等级id
+    string sign = 9; // 签名
+    int32 sex = 10; // 性别 1-男 2-女
+    int32 setLevelId = 11; // 后台设置等级
+  }
+}
+
+// 直播间详情
+message LiveRoomsDetailsReq {
+  int32 roomId = 1;
+  int32 userId = 2;
+}
+
+// 直播间详情
+message LiveRoomsDetailsResp {
+  int32 Id = 1; // 直播间id
+  string name = 2; // 直播间名称
+  string cover = 3; // 直播间封面
+  string countryCode = 4; // 国家code
+  int32 onlineNum = 5; // 在线人数
+  int32 userId = 6; // 主播id
+  string chatRoomId = 7; // 聊天室id
+  int32 status = 8; // 房间状态 1-正常  2-禁用 3-删除
+  int32 liveStatus = 9; // 直播状态 1-直播 2-下播
+  int32  payRules = 10; // 付费规则 1- 免费 2-分钟付费 3-场次付费
+  int32  trialDuration = 11; // 试看时长/秒
+  int32  unitPrice = 12; // 单价 每分钟单价/每场单价，根据付费规则
+  int32  gameId = 13; // 快捷游戏id
+  string summary = 14; // 简介
+  int32 sceneIncome = 15; // 本场钻石收入
+  string avatar = 16; // 主播头像
+  int32 startLiveTime = 17; // 开播时间
+  int32 paidPurviewStatus = 18; // 是否有可以开启付费直播
+  int32 isOpenVibrator = 19; // 是否开启跳蛋
+  int32 isFollow = 20; // 是否关注
+  int32 isPay = 21; // 是否付费
+  int32 heat = 22; // 热度
+}
+
+// 下播响应
+message CloseBroadcastResp {
+  int32 liveDuration = 1; // 直播时长
+  int32 viewersNum = 2; // 观看人数
+  int32 giftAmount = 3; // 收到礼物金额 /钻石
+  int32 followerNum = 4; // 收到关注数量
+  int32 likeNum = 5; // 收到点赞数量
+  int32 roomId = 6;
+  string chatRoomId = 7;
+}
+
+// 管理员列表
+message RoomListManageResp {
+  repeated RoomListManageItem list = 1;
+  message RoomListManageItem {
+    int32 id = 1;
+    int32 userId = 2; // 用户id
+    string nickname = 3; // 昵称
+    string avatar = 4; // 头像
+    int32 levelId = 5; // 等级id
+    int32  sex = 6; // 性别
+  }
+}
+
+// 新增房管
+message RoomAddManageReq {
+  int32 userId = 1;
+}
+
+// 取消房管
+message RoomCancelManageReq {
+  int32 userId = 1;
+}
+
+// 直播间用户管理状态请求
+message RoomManageStatusReq {
+  int32 roomId = 1;
+}
+
+// 直播间用户管理状态响应
+message RoomManageStatusResp {
+  int32 superManageStatus = 1;
+  int32 roomManageStatus = 2;
+}
+
+// 直播间历史纪录响应
+message RoomSceneHistoryResp {
+  repeated RoomSceneHistoryItem list = 1;
+  message RoomSceneHistoryItem {
+    int32  startTime = 1; // 开播时间
+    int32  endTime = 2; // 下播时间
+    int32  duration = 3; // 时长
+    int32  viewersCount = 4; // 观看人数
+    int32  giftAmount = 5; // 礼物金额
+    int32  followCount = 6; // 礼物金额
+    int32  sceneId = 7; // 场次id
+  }
+}
+
+// 直播间收到礼物列表请求
+message RoomSceneHistoryIncomeReq {
+  int32 sceneId = 1; // 场次id
+}
+
+// 直播间收到礼物列表响应
+message RoomSceneHistoryIncomeResp {
+  repeated RoomSceneHistoryIncomeItem list = 1;
+  message RoomSceneHistoryIncomeItem {
+    string nickname = 1; // 用户昵称
+    int32 category = 2; // 类别 1-礼物 2-弹幕 3-游戏 4-直播收费 5-道具
+    int32 num = 3; // 礼物数量
+    int32 projectTotal = 4; // 金额
+    int32 sendTime = 5; // 收益时间
+  }
+}
+
+// 直播间礼物收益请求
+message RoomReceiveGiftListReq {
+  int32  lastId = 1;
+  int32  pageSize = 2;
+}
+
+// 直播间收到礼物列表
+message RoomReceiveGiftListResp {
+  repeated RoomReceiveGiftListItem list = 1;
+  message RoomReceiveGiftListItem {
+    int32 id = 1;
+    int32 userId = 2; // 用户id
+    string nickname = 3; // 昵称
+    string avatar = 4; // 头像
+    int32 levelId = 5; // 等级id
+    int32  sex = 6; // 性别
+    int32 giftId = 7; // 礼物id
+    int32 giftNum = 8; // 礼物数量
+    int32 giftAmount = 9; // 礼物金额
+    int32 sendTime = 10; // 送礼物时间
+  }
+}
+
+// 直播间弹幕纪录
+message RoomReceiveBarrageListResp {
+  repeated RoomReceiveBarrageListItem list = 1;
+  message RoomReceiveBarrageListItem {
+    int32 userId = 2; // 用户id
+    string nickname = 3; // 昵称
+    string avatar = 4; // 头像
+    int32 levelId = 5; // 等级id
+    int32  sex = 6; // 性别
+    string message = 7; // 消息
+  }
+}
+
+// 首页推荐直播间
+message HomeTopLiveRoomsResp {
+  repeated HomeTopLiveRoomsItem list = 1;
+  message HomeTopLiveRoomsItem {
+    int32 id = 1; // 直播间id
+    string name = 2; // 直播间名称
+    string cover = 3; // 直播间封面
+    string countryCode = 4; // 国家code
+    int32 onlineNum = 5; // 在线人数
+    int32 userId = 6; // 主播id
+    string chatRoomId = 7; // 聊天室id
+    int32 isOpenVibrator = 8; // 是否开启跳蛋
+    int32  payRules = 9; // 付费规则 1- 免费 2-分钟付费 3-场次付费
+    int32  trialDuration = 10; // 试看时长/秒
+    int32  unitPrice = 11; // 单价 每分钟单价/每场单价，根据付费规则
+    int32 heat = 12; // 热度
+  }
+}
+
+// 直播间推荐位
+message TopLiveRoomReq {
+  int32 location = 1; // 位置 默认0 1- 我的关注 2-搜索 3-直播间未开播
+}
+
+// 推荐位直播间响应
+message TopLiveRoomResp {
+  repeated TopLiveRoomItem list = 1;
+  message TopLiveRoomItem {
+    int32 id = 1; // 直播间id
+    string name = 2; // 直播间名称
+    string cover = 3; // 直播间封面
+    string countryCode = 4; // 国家code
+    int32 onlineNum = 5; // 在线人数
+    int32 userId = 6; // 主播id
+    string chatRoomId = 7; // 聊天室id
+    int32 isOpenVibrator = 8; // 是否开启跳蛋
+    int32  payRules = 9; // 付费规则 1- 免费 2-分钟付费 3-场次付费
+    int32  trialDuration = 10; // 试看时长/秒
+    int32  unitPrice = 11; // 单价 每分钟单价/每场单价，根据付费规则
+    int32 heat = 12; // 热度
+  }
+}
+
+// 我关注的主播直播间
+message FollowLiveRoomResp {
+  repeated FollowLiveRoomItem list = 1;
+  message FollowLiveRoomItem {
+    int32 id = 1; // 直播间id
+    string name = 2; // 直播间名称
+    string cover = 3; // 直播间封面
+    string countryCode = 4; // 国家code
+    int32 onlineNum = 5; // 在线人数
+    int32 userId = 6; // 主播id
+    string chatRoomId = 7; // 聊天室id
+    int32 isOpenVibrator = 8; // 是否开启跳蛋
+    int32  payRules = 9; // 付费规则 1- 免费 2-分钟付费 3-场次付费
+    int32  trialDuration = 10; // 试看时长/秒
+    int32  unitPrice = 11; // 单价 每分钟单价/每场单价，根据付费规则
+    int32 heat = 12; // 热度
+  }
+}
+
+// 主播今日直播信息
+message AnchorTodayBarrageInfoResp {
+  int32 duration = 1; // 时长
+  string countryCode = 2; // 直播间国家编码
+}
+
+// 分钟扣费收益通知
+message LiveMinutePaidIncomeReq {
+  int32 roomId = 1; // 直播间id
+  string chatRoomId = 2; // 聊天室id
+  int32 userId = 3; // 用户id
+  int32 anchorId = 4; // 主播id
+  int32 amount = 5; // 钻石金额
+}
+
+// 后台开播请求信息
+message GMRoomStartBroadcastReq {
+  string title = 1; // 直播间标题
+  string cover = 2; // 封面图片
+  int32  payRules = 3; // 付费规则 1- 免费 2-分钟付费 3-场次付费
+  int32  trialDuration = 4; // 试看时长/秒
+  int32  unitPrice = 5; // 单价 每分钟单价/每场单价，根据付费规则
+  string summary = 6; // 简介
+  string  streamUrl = 7; // 流地址
+  int32 roomId = 8; // 直播间id
+}
+
+// 主播开播转付费
+message AnchorRoomTransferPayReq {
+  int32  payRules = 1; // 付费规则 1- 免费 2-分钟付费 3-场次付费
+  int32  unitPrice = 2; // 单价 每分钟单价/每场单价，根据付费规则
+  int32  trialDuration = 3; // 试看时长/秒
+}

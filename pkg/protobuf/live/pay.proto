@@ -1,0 +1,8 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/live";
+
+// 直播间付费请求
+message LivePayReq {
+  int32 roomId = 1; // 直播间id
+}

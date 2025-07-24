@@ -1,0 +1,53 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/live";
+
+enum ChannelEvent {
+  ChannelEvent_UNSPECIFIED = 0;  // 未指定的默认值
+  ChannelEvent_Create = 101;     // 创建房间事件
+  ChannelEvent_Destroy = 102;       // 销毁房间事件
+  ChannelEvent_AnchorJoin = 103;      // 主播加入房间事件
+  ChannelEvent_AnchorLeave = 104;      // 主播离开房间事件
+  ChannelEvent_AudienceJoin = 105;      // 观众加入房间事件
+  ChannelEvent_AudienceLeave = 106;      // 观众离开房间事件
+}
+
+/*
+  主播退出频道的原因：
+  1：观众正常离开频道。
+  2：客户端与Agora业务服务器连接超时。Agora SD-RTN™超过 10 秒未收到主机发送的任何数据包，或与单个服务器的连接超时 4 秒，且在 1 秒内未完成重连。
+  3：权限问题。例如，操作员可以通过 RESTful API 让某人离开频道。
+  4： Agora业务服务器内部原因，服务器正在调整负载，暂时与客户端断开连接后重新连接。
+  5：主机切换到新设备，强制旧设备下线。
+  9：由于客户端有多个IP，SDK会主动断开与Agora业务服务器的连接并重新建立连接，这个过程对用户是不可见的，请检查用户是否有多个公网IP或使用了VPN。
+  10：由于网络连接问题，例如 SDK超过 4 秒没有收到Agora业务服务器的数据包或者 socket 连接错误，SDK 会主动断开与Agora业务服务器的连接并重新建立连接，此过程对用户不可见，请检查网络连接状态。
+  999：异常用户。例如，某用户在短时间内频繁登录和退出频道，则视为异常用户。应用服务器应在收到设置为 的事件后，60秒内调用踢出接口将用户踢出频道，否则用户再次加入频道后可能无法收到相关事件通知。104reason999
+  0：其他原因。
+*/
+message livePayload {
+  string channelName = 1; // 房间名称/id
+  int32 uid = 2; // 主播id
+  int32 platform = 3; // 平台 0-其他 1-Android 2-iOS 5-Windows 6-Linux 7-Web 8-macOS
+  int32 clientType = 4;
+  int64 clientSeq = 5; // 序号
+  int32 reason = 6; // 离开原因
+  int32 ts = 7; // 时间戳
+  string account = 8; // 用户id
+}
+
+message LiveCallBackReq {
+  string noticeId = 1; // 通知 ID
+  int32  productId = 2; // 业务ID
+  ChannelEvent eventType = 3; // 事件类型
+  int64 notifyMs = 4; // 事件通知时间
+  string sid = 5; // 会话id
+  livePayload payload = 6; // 回调内容
+}
+
+message NotificationServerReq {
+  string token = 1; // 获取通知服务器IP列表Token
+}
+
+message NotificationServer {
+  repeated string list = 1;
+}

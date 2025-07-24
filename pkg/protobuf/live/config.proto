@@ -1,0 +1,7 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/live";
+
+message ConfigResp {
+  string liveAppId = 1; // 直播appId
+}

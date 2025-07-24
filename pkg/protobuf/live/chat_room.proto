@@ -1,0 +1,230 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/live";
+
+message chatCallBackReq {
+  string callId = 1; //消息内容
+  int64 timestamp = 2;
+  string chat_type = 3;
+  string group_id = 4;
+  string from = 5;
+  string to = 6;
+  string msg_id = 7;
+  payload payload = 8;
+  string securityVersion = 9;
+  string security = 10;
+}
+
+message payload {
+
+}
+
+message chatCallBackResp {
+  bool valid = 1;
+  string code = 2;
+  string payload = 3;
+}
+
+message CreateChatRoomReq {
+  int32 anchorId = 1;
+  string anchorName = 2;
+  string roomId = 3;
+}
+
+message CreateChatRoomResp {
+  string chatRoomId = 1;
+}
+
+message CreateUserReq {
+  string username = 1;
+  string password = 2;
+}
+
+message CreateUserResp {
+  string uuid = 1;
+}
+
+message JoinRoomReq {
+  string chatRoomId = 1;
+  string sourceTag = 2;
+}
+
+message RobotJoinRoomReq {
+  int64  userId = 1;
+  string chatRoomId = 2;
+}
+
+message JoinRoomResp {
+  string appId = 1;
+  string appKey = 2;
+  string token = 3;
+  int32 userId = 4;
+  string uuid = 5;
+  int32 likeTally = 6; //点赞数总
+  int32 liked = 7; //是否点过赞 0否 1是
+  repeated  histMess histMess = 8;
+}
+
+message histMess {
+  string nickname  = 1;
+  int32    levelId = 2;
+  int32  userId = 3;
+  string  avatar = 4;
+  string  content = 5;
+  int32  isBarrage = 6;
+  string type = 7;
+}
+
+
+message SendGiftReq {
+  int32 roomId = 1;
+  int32 gifId = 2;
+  int32 num = 3;
+}
+
+message SendGiftResp {
+
+}
+
+message SendMessReq {
+  string chatRoomId = 1;
+  string content = 2;
+  int32  barrage = 3;
+}
+
+message SendMessResp {
+
+}
+
+message ToggleLikeReq{
+  string chatRoomId = 1;
+}
+
+message ToggleLikeResp{
+  int32 userLiked = 1; //-1未点赞 1已点赞
+}
+
+message LeaveRoomReq {
+  string chatRoomId = 1;
+  int32 userId = 2;
+}
+
+message LeaveRoomResp {
+
+}
+
+message FollowUserReq {
+  string chatRoomId = 1;
+  int32  userId = 2;
+  string userName = 3;
+}
+
+message FollowUserResp {
+
+}
+
+message IncomeNotifyReq {
+  string chatRoomId = 1;
+  int32 userId = 2;
+  float Income = 3;
+}
+
+message IncomeNotifyResp {
+
+}
+
+message GiftNotifyReq {
+  string chatRoomId = 1;
+  int32 userId = 2;
+  int32 giftId = 3;
+  int32 num = 4;
+}
+
+message SystemNotifyReq {
+  int32 userId = 1;
+  int32 notifyRange = 2; //1.私发消息 2.通知所有用户
+  string notifyContent = 3;
+  int32 notifyType = 4; // 见常量 SystemNotifyTypeRecharge
+}
+
+message SystemNotifyResp {
+
+}
+
+message GetChatRoomInfoReq {
+
+}
+
+message GetChatRoomInfoResp {
+  string appId = 1;
+  string appKey = 2;
+  string token = 3;
+  int32 userId = 4;
+  string uuid = 5;
+}
+
+message InsufficientBalanceNoticeReq {
+  string chatRoomId = 1;
+  int32 userId = 2;
+}
+
+message InsufficientBalanceNoticeResp {
+
+}
+
+message GetChatRoomOnlineUserReq{
+  string chatRoomId = 1;
+  int32  page = 2;
+  int32  pageSize = 3;
+}
+
+message onlineUser {
+  int32 userId = 1;
+  string avatar = 2;
+  string nickname = 3;
+  int32 levelId = 4;
+  int32 sex = 5;
+  int64 contribution = 6;
+  int32 isManage = 7;
+  int32 isBan = 8;
+}
+
+message GetChatRoomOnlineUserResp{
+  repeated onlineUser list = 1;
+  int64 total = 2;
+}
+
+message UpgradeNotifyReq{
+  string chatRoomId = 1;
+  int32 userId = 2;
+  int32 level = 3;
+}
+
+message UpgradeNotifyResp{
+
+}
+
+message GetSDKOnlineUserStatusReq{
+  int32 userId = 1;
+}
+
+message GetSDKOnlineUserStatusResp{
+  string data = 1;
+}
+
+message GetSDKChatRoomUsersReq {
+  int32 page = 1;
+  int32 pageSize = 2;
+  string chatRoomId = 3;
+}
+
+
+message chatRoomUsers {
+    string owner = 1;
+    string member = 2;
+}
+
+message GetSDKChatRoomUsersResp {
+  repeated chatRoomUsers list = 1;
+  int64 total = 2;
+}

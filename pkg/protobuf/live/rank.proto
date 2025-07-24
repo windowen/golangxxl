@@ -1,0 +1,41 @@
+syntax = "proto3";
+package proto;
+option go_package = "liveJob/pkg/protobuf/live";
+
+// 主播排行榜请求
+message AnchorRankReq {
+  int32 cycle = 1; // 周期 1-日 2-周 3-月 4-昨天 5-上周 6-上月
+}
+
+// 主播排行榜响应
+message AnchorRankResp {
+  repeated Item list = 1;
+  message Item {
+    int32 anchorId = 1; // 主播id
+    string nickname = 2; // 昵称
+    int32 roomId = 3; // 直播间id
+    string avatar = 4; // 头像
+    int32 fans = 5; // 粉丝数量
+    string income = 6; // 累计收益
+    int32 isFollow = 7; // 是否关注
+    int32 anchorLevelId = 8; // 主播直播间等级
+  }
+}
+
+// 用户排行榜请求
+message UserRankReq {
+  int32 cycle = 1; // 周期 1-日 2-周 3-月 4-总榜
+  int32 roomId = 2; // 直播间id
+}
+
+// 用户排行榜响应
+message UserRankResp {
+  repeated Item list = 1;
+  message Item {
+    int32 userId = 1; // 用户id
+    string nickname = 2; // 昵称
+    int32 levelId = 3; // 等级id
+    string avatar = 4; // 头像
+    string contribute = 5; // 贡献值
+  }
+}
