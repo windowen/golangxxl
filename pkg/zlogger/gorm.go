@@ -4,6 +4,10 @@ import (
 	ctx "context"
 	"errors"
 	"fmt"
+	"os"
+	"path"
+	"runtime"
+	"strconv"
 	"strings"
 	"time"
 
@@ -59,7 +63,7 @@ func (l *dbLog) Trace(ctx ctx.Context, begin time.Time, fc func() (sql string, r
 
 	// 如果报错直接打印日志
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
-		Errorf("DBLOG |err=%v |sql=%s |rows=%d |timestamp=%.2fs", err, sql, rows, timestamp.Seconds())
+		Errorf("DBLOG | pos=%s |err=%v |sql=%s |rows=%d |timestamp=%.2fs", funcName4Gorm(), err, sql, rows, timestamp.Seconds())
 		return
 	}
 
@@ -77,30 +81,56 @@ func (l *dbLog) Trace(ctx ctx.Context, begin time.Time, fc func() (sql string, r
 		}
 
 		if timestamp > l.SlowThreshold*4 {
-			Warnf("DBLOG |SLOW |standard=%s |sql=%s |rows=%d |timestamp=%.2fs", standard, sql, rows, timestamp.Seconds())
+			Warnf("DBLOG | pos=%s |SLOW |standard=%s |sql=%s |rows=%d |timestamp=%.2fs", funcName4Gorm(), standard, sql, rows, timestamp.Seconds())
 			return
 		}
 
-		Warnf("DBLOG |SLOW |standard=%s |sql=%s |rows=%d |timestamp=%.2fs", standard, sql, rows, timestamp.Seconds())
+		Warnf("DBLOG | pos=%s |SLOW |standard=%s |sql=%s |rows=%d |timestamp=%.2fs", funcName4Gorm(), standard, sql, rows, timestamp.Seconds())
 
 		return
 	}
 
 	// 如果不是慢日志，只有数据变更操作的日志才记录
 	if rows > 0 && (strings.Contains(sql, "INSERT") || strings.Contains(sql, "UPDATE")) {
-		Infof("DBLOG |sql=%s |rows=%d |timestamp=%.2fs", sql, rows, timestamp.Seconds())
+		Infof("DBLOG | pos=%s |sql=%s |rows=%d |timestamp=%.2fs", funcName4Gorm(), sql, rows, timestamp.Seconds())
 		return
 	}
 
 	// 更新0的日志额外重点记录
 	if strings.Contains(sql, "UPDATE") {
-		Warnf("DBLOG | sql=%s |rows=%d |timestamp=%.2fs", sql, rows, timestamp.Seconds())
+		Warnf("DBLOG | pos=%s | sql=%s |rows=%d |timestamp=%.2fs", funcName4Gorm(), sql, rows, timestamp.Seconds())
 		return
 	}
 
 	// 开发环境打开SQL日志，方便查看SQL
 	if strings.ToLower(config.Config.App.Env) == "dev" {
-		Infof("DBLOG |sql=%s |timestamp=%.2fs", sql, timestamp.Seconds())
+		Infof("DBLOG | pos=%s｜sql=%s |timestamp=%.2fs", funcName4Gorm(), sql, timestamp.Seconds())
 		return
 	}
+}
+
+func funcName4Gorm() string {
+	pc, f, line, _ := runtime.Caller(4)
+	funcName := runtime.FuncForPC(pc).Name()
+
+	// 获取上一层的stack
+	index := lastIndexByte(f, os.PathSeparator)
+	if index != -1 {
+		f = f[index+1:]
+	}
+	return path.Base(funcName) + " " + f + ":" + strconv.Itoa(line) + " "
+}
+
+func lastIndexByte(s string, c byte) int {
+	var count int
+	for i := len(s) - 1; i >= 0; i-- {
+		if s[i] == c {
+			count++
+		}
+
+		if count == 2 {
+			return i
+		}
+	}
+	return -1
 }

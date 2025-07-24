@@ -5,7 +5,7 @@ import (
 	"log"
 	"queueJob/pkg/common/config"
 	"queueJob/pkg/db/mysql"
-	"queueJob/pkg/db/redis"
+	"queueJob/pkg/db/redisdb/redis"
 	"queueJob/pkg/tools/utils"
 	"queueJob/pkg/zlogger"
 	"regexp"
