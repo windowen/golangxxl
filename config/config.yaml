@@ -15,10 +15,10 @@ etcd:
 # Mysql配置
 mysql_master:
   address:
-    - 127.0.0.1:3306
-  username: worlduser
-  password: 7hr56dv3mysql+4
-  database: world_m5
+    - 192.168.60.233:3306
+  username: tone
+  password: 123123
+  database: pun
   maxOpenConn: 1000
   maxIdleConn: 100
   maxLifeTime: 60
@@ -26,11 +26,11 @@ mysql_master:
   slowThreshold: 500
 mysql_slave:
   address:
-    - 127.0.0.1:3306
-    - 127.0.0.1:3306
-  username: worlduser
-  password: 7hr56dv3mysql+4
-  database: world_m5
+    - 192.168.60.233:3306
+    - 192.168.60.233:3306
+  username: tone
+  password: 123123
+  database: pun
   maxOpenConn: 1000
   maxIdleConn: 100
   maxLifeTime: 60
@@ -39,9 +39,10 @@ mysql_slave:
 
 # Redis配置
 redis:
-  address: [ 127.0.0.1:6379 ]
+  address:
+    - 192.168.60.233:6379
   username:
-  password: ws20240726v3+4
+  password:
 
 # XXL-JOB配置
 xxlJob:

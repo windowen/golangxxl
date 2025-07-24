@@ -8,8 +8,8 @@ import (
 	"go.etcd.io/etcd/client/v3"
 	"go.uber.org/zap"
 
-	"liveJob/pkg/common/config"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/common/config"
+	"queueJob/pkg/zlogger"
 )
 
 var (

@@ -9,9 +9,9 @@ import (
 
 	"github.com/redis/go-redis/v9"
 
-	constsR "liveJob/pkg/constant/redis"
-	"liveJob/pkg/tools/cast"
-	"liveJob/pkg/zlogger"
+	constsR "queueJob/pkg/constant/redis"
+	"queueJob/pkg/tools/cast"
+	"queueJob/pkg/zlogger"
 )
 
 type UserCache struct {

@@ -9,11 +9,11 @@ import (
 	"net/http"
 	"time"
 
-	"liveJob/pkg/agora/model"
-	"liveJob/pkg/common/config"
-	"liveJob/pkg/tools/cast"
-	"liveJob/pkg/tools/strhelper"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/agora/model"
+	"queueJob/pkg/common/config"
+	"queueJob/pkg/tools/cast"
+	"queueJob/pkg/tools/strhelper"
+	"queueJob/pkg/zlogger"
 )
 
 var RtcClientInstance *rtcClient

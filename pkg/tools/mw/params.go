@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"liveJob/pkg/constant"
+	"queueJob/pkg/constant"
 )
 
 type Param struct {

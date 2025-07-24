@@ -10,10 +10,10 @@ import (
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"go.uber.org/zap"
 
-	redis2 "liveJob/pkg/constant/redis"
-	"liveJob/pkg/db/redisdb/redis"
-	"liveJob/pkg/queue"
-	"liveJob/pkg/zlogger"
+	redis2 "queueJob/pkg/constant/redis"
+	"queueJob/pkg/db/redisdb/redis"
+	"queueJob/pkg/queue"
+	"queueJob/pkg/zlogger"
 )
 
 // 统计事件

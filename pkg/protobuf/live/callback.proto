@@ -1,6 +1,6 @@
 syntax = "proto3";
 package proto;
-option go_package = "liveJob/pkg/protobuf/live";
+option go_package = "queueJob/pkg/protobuf/live";
 
 enum ChannelEvent {
   ChannelEvent_UNSPECIFIED = 0;  // 未指定的默认值

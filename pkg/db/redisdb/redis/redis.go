@@ -9,7 +9,7 @@ import (
 
 	"github.com/redis/go-redis/v9"
 
-	"liveJob/pkg/common/config"
+	"queueJob/pkg/common/config"
 )
 
 var (

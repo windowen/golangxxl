@@ -5,8 +5,8 @@ import (
 
 	"github.com/go-basic/ipv4"
 
-	"liveJob/pkg/common/config"
-	"liveJob/pkg/context"
+	"queueJob/pkg/common/config"
+	"queueJob/pkg/context"
 )
 
 type Options struct {

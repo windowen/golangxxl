@@ -1,11 +1,11 @@
 package service
 
 import (
-	"liveJob/pkg/gozero/proc"
+	"queueJob/pkg/gozero/proc"
 
-	"liveJob/pkg/gozero/syncx"
-	"liveJob/pkg/gozero/threading"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/syncx"
+	"queueJob/pkg/gozero/threading"
+	"queueJob/pkg/zlogger"
 )
 
 type (

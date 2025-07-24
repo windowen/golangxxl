@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"liveJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/lang"
 )
 
 // errTimeout indicates a timeout.

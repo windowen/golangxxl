@@ -1,4 +1,4 @@
-module liveJob
+module queueJob
 
 go 1.22
 
@@ -9,8 +9,10 @@ require (
 	github.com/aws/aws-sdk-go v1.55.5
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-basic/ipv4 v1.0.0
+	github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/golang/mock v1.3.1
+	github.com/golang/protobuf v1.5.4
 	github.com/google/uuid v1.6.0
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/nicksnyder/go-i18n/v2 v2.4.0
@@ -66,7 +68,6 @@ require (
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.22.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect

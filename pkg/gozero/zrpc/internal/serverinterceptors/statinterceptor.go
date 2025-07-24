@@ -9,13 +9,13 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/peer"
 
-	"liveJob/pkg/gozero/timex"
+	"queueJob/pkg/gozero/timex"
 
-	"liveJob/pkg/gozero/collection"
-	"liveJob/pkg/gozero/lang"
-	stat2 "liveJob/pkg/gozero/stat"
-	"liveJob/pkg/gozero/syncx"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/collection"
+	"queueJob/pkg/gozero/lang"
+	stat2 "queueJob/pkg/gozero/stat"
+	"queueJob/pkg/gozero/syncx"
+	"queueJob/pkg/zlogger"
 )
 
 const defaultSlowThreshold = time.Millisecond * 500

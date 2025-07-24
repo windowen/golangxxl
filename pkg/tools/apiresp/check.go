@@ -3,7 +3,7 @@ package apiresp
 import (
 	"errors"
 
-	"liveJob/pkg/tools/errs"
+	"queueJob/pkg/tools/errs"
 )
 
 type Checker interface {

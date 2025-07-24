@@ -10,8 +10,8 @@ import (
 	"strings"
 	"sync"
 
-	"liveJob/pkg/gozero/lang"
-	"liveJob/pkg/gozero/stringx"
+	"queueJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/stringx"
 )
 
 const (

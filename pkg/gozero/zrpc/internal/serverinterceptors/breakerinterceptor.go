@@ -8,10 +8,10 @@ import (
 	gcodes "google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"liveJob/pkg/gozero/zrpc/internal/codes"
+	"queueJob/pkg/gozero/zrpc/internal/codes"
 
-	breaker2 "liveJob/pkg/gozero/breaker"
-	"liveJob/pkg/gozero/errorx"
+	breaker2 "queueJob/pkg/gozero/breaker"
+	"queueJob/pkg/gozero/errorx"
 )
 
 // StreamBreakerInterceptor is an interceptor that acts as a circuit breaker.

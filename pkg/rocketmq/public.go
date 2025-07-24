@@ -4,8 +4,8 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"
 
-	"liveJob/pkg/service"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/service"
+	"queueJob/pkg/zlogger"
 )
 
 type PublishProducer interface {

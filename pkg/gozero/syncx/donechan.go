@@ -3,7 +3,7 @@ package syncx
 import (
 	"sync"
 
-	"liveJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/lang"
 )
 
 // A DoneChan is used as a channel that can be closed multiple times and wait for done.

@@ -7,14 +7,14 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	"liveJob/pkg/gozero/zrpc"
+	"queueJob/pkg/gozero/zrpc"
 
-	"liveJob/pkg/common/config"
-	"liveJob/pkg/gozero/discov"
-	"liveJob/pkg/tools/errs"
-	"liveJob/pkg/tools/mw"
-	"liveJob/pkg/tools/network"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/common/config"
+	"queueJob/pkg/gozero/discov"
+	"queueJob/pkg/tools/errs"
+	"queueJob/pkg/tools/mw"
+	"queueJob/pkg/tools/network"
+	"queueJob/pkg/zlogger"
 )
 
 func Start(rpcPort int, rpcRegisterName string, prometheusPort int, rpcFn func(server *grpc.Server)) error {

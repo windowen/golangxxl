@@ -3,7 +3,7 @@ package mapping
 import (
 	"io"
 
-	"liveJob/pkg/gozero/encoding"
+	"queueJob/pkg/gozero/encoding"
 )
 
 // UnmarshalYamlBytes unmarshals content into v.

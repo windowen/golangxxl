@@ -5,7 +5,7 @@ import (
 
 	red "github.com/redis/go-redis/v9"
 
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/zlogger"
 )
 
 // ClosableNode interface represents a closable redis node.

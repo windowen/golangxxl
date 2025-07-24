@@ -9,10 +9,10 @@ import (
 
 	"go.uber.org/zap"
 
-	"liveJob/pkg/constant"
-	"liveJob/pkg/tools/apiresp"
-	"liveJob/pkg/tools/errs"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/constant"
+	"queueJob/pkg/tools/apiresp"
+	"queueJob/pkg/tools/errs"
+	"queueJob/pkg/zlogger"
 
 	"github.com/gin-gonic/gin"
 )

@@ -12,8 +12,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 
-	"liveJob/pkg/common/config"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/common/config"
+	"queueJob/pkg/zlogger"
 )
 
 // 默认 ACL

@@ -1,8 +1,8 @@
 package collection
 
 import (
-	"liveJob/pkg/gozero/lang"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/lang"
+	"queueJob/pkg/zlogger"
 )
 
 const (

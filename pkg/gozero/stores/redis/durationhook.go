@@ -13,12 +13,12 @@ import (
 	"go.opentelemetry.io/otel/codes"
 	oteltrace "go.opentelemetry.io/otel/trace"
 
-	"liveJob/pkg/gozero/timex"
+	"queueJob/pkg/gozero/timex"
 
-	"liveJob/pkg/gozero/breaker"
-	"liveJob/pkg/gozero/mapping"
-	"liveJob/pkg/gozero/trace"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/breaker"
+	"queueJob/pkg/gozero/mapping"
+	"queueJob/pkg/gozero/trace"
+	"queueJob/pkg/zlogger"
 )
 
 // spanName is the span name of the redis calls.

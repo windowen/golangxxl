@@ -5,7 +5,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	"liveJob/pkg/gozero/zrpc/internal/auth"
+	"queueJob/pkg/gozero/zrpc/internal/auth"
 )
 
 // StreamAuthorizeInterceptor returns a func that uses given authenticator in processing stream requests.

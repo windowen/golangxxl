@@ -10,11 +10,11 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 
-	"liveJob/pkg/constant"
-	"liveJob/pkg/protobuf/errinfo"
-	"liveJob/pkg/tools/cast"
-	"liveJob/pkg/tools/errs"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/constant"
+	"queueJob/pkg/protobuf/errinfo"
+	"queueJob/pkg/tools/cast"
+	"queueJob/pkg/tools/errs"
+	"queueJob/pkg/zlogger"
 )
 
 func GrpcClient() grpc.DialOption {

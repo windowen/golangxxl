@@ -1,6 +1,6 @@
 package specialerror
 
-import "liveJob/pkg/tools/errs"
+import "queueJob/pkg/tools/errs"
 
 var handlers []func(err error) errs.CodeError
 

@@ -7,13 +7,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"liveJob/pkg/gozero/timex"
+	"queueJob/pkg/gozero/timex"
 
-	"liveJob/pkg/gozero/collection"
-	"liveJob/pkg/gozero/mathx"
-	"liveJob/pkg/gozero/stat"
-	syncx2 "liveJob/pkg/gozero/syncx"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/collection"
+	"queueJob/pkg/gozero/mathx"
+	"queueJob/pkg/gozero/stat"
+	syncx2 "queueJob/pkg/gozero/syncx"
+	"queueJob/pkg/zlogger"
 )
 
 const (

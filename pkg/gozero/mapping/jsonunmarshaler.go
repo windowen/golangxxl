@@ -3,7 +3,7 @@ package mapping
 import (
 	"io"
 
-	"liveJob/pkg/gozero/jsonx"
+	"queueJob/pkg/gozero/jsonx"
 )
 
 const jsonTagKey = "json"

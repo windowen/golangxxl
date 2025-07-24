@@ -1,6 +1,6 @@
 package internal
 
-import "liveJob/pkg/gozero/zrpc/internal/serverinterceptors"
+import "queueJob/pkg/gozero/zrpc/internal/serverinterceptors"
 
 type (
 	// StatConf defines the stat config.

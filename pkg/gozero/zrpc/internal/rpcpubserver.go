@@ -4,8 +4,8 @@ import (
 	"os"
 	"strings"
 
-	discov2 "liveJob/pkg/gozero/discov"
-	"liveJob/pkg/gozero/netx"
+	discov2 "queueJob/pkg/gozero/discov"
+	"queueJob/pkg/gozero/netx"
 )
 
 const (

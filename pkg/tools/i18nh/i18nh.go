@@ -4,9 +4,9 @@ import (
 	"context"
 	"embed"
 	"fmt"
-	"liveJob/pkg/common/mctx"
-	"liveJob/pkg/zlogger"
 	"log"
+	"queueJob/pkg/common/mctx"
+	"queueJob/pkg/zlogger"
 	"strconv"
 	"sync"
 
@@ -14,7 +14,7 @@ import (
 	"github.com/pelletier/go-toml"
 	"golang.org/x/text/language"
 
-	"liveJob/pkg/constant"
+	"queueJob/pkg/constant"
 )
 
 type (

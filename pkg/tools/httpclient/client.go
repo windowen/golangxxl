@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"time"
 
-	"liveJob/pkg/common/config"
+	"queueJob/pkg/common/config"
 )
 
 var (

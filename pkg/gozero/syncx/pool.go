@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"liveJob/pkg/gozero/timex"
+	"queueJob/pkg/gozero/timex"
 )
 
 type (

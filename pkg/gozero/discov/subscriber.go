@@ -4,8 +4,8 @@ import (
 	"sync"
 	"sync/atomic"
 
-	internal2 "liveJob/pkg/gozero/discov/internal"
-	"liveJob/pkg/gozero/syncx"
+	internal2 "queueJob/pkg/gozero/discov/internal"
+	"queueJob/pkg/gozero/syncx"
 )
 
 type (

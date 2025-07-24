@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"time"
 
-	"liveJob/pkg/gozero/timex"
+	"queueJob/pkg/gozero/timex"
 
-	"liveJob/pkg/gozero/lang"
-	threading2 "liveJob/pkg/gozero/threading"
+	"queueJob/pkg/gozero/lang"
+	threading2 "queueJob/pkg/gozero/threading"
 )
 
 const drainWorkers = 8

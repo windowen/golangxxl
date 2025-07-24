@@ -11,11 +11,11 @@ import (
 	"sync"
 	"time"
 
-	"liveJob/pkg/gozero/jsonx"
-	"liveJob/pkg/gozero/lang"
-	"liveJob/pkg/gozero/stringx"
+	"queueJob/pkg/gozero/jsonx"
+	"queueJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/stringx"
 
-	"liveJob/pkg/gozero/proc"
+	"queueJob/pkg/gozero/proc"
 )
 
 const (

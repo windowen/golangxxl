@@ -1,6 +1,6 @@
 package live
 
-import "liveJob/pkg/tools/errs"
+import "queueJob/pkg/tools/errs"
 
 func (req *BillsListReq) Check() error {
 	if req.GetBillType() < 0 {

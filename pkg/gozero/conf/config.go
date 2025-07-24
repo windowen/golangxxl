@@ -8,9 +8,9 @@ import (
 	"reflect"
 	"strings"
 
-	"liveJob/pkg/gozero/encoding"
-	"liveJob/pkg/gozero/jsonx"
-	mapping2 "liveJob/pkg/gozero/mapping"
+	"queueJob/pkg/gozero/encoding"
+	"queueJob/pkg/gozero/jsonx"
+	mapping2 "queueJob/pkg/gozero/mapping"
 )
 
 const (

@@ -8,7 +8,7 @@ import (
 
 	red "github.com/redis/go-redis/v9"
 
-	"liveJob/pkg/gozero/syncx"
+	"queueJob/pkg/gozero/syncx"
 )
 
 const addrSep = ","

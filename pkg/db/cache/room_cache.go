@@ -8,8 +8,8 @@ import (
 
 	"github.com/redis/go-redis/v9"
 
-	constsR "liveJob/pkg/constant/redis"
-	"liveJob/pkg/zlogger"
+	constsR "queueJob/pkg/constant/redis"
+	"queueJob/pkg/zlogger"
 )
 
 type RoomCache struct {

@@ -15,10 +15,10 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
-	redis2 "liveJob/pkg/constant/redis"
-	"liveJob/pkg/db/redisdb/redis"
-	"liveJob/pkg/db/table"
-	"liveJob/pkg/message"
+	redis2 "queueJob/pkg/constant/redis"
+	"queueJob/pkg/db/redisdb/redis"
+	"queueJob/pkg/db/table"
+	"queueJob/pkg/message"
 )
 
 var (

@@ -1,6 +1,6 @@
 syntax = "proto3";
 package proto;
-option go_package = "liveJob/pkg/protobuf/live";
+option go_package = "queueJob/pkg/protobuf/live";
 
 // 家族主播列表
 message FamilyListAnchorResp {

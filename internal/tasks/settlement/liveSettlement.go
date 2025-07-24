@@ -7,16 +7,16 @@ import (
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 
-	"liveJob/pkg/constant"
-	constsR "liveJob/pkg/constant/redis"
-	"liveJob/pkg/context"
-	"liveJob/pkg/db/cache"
-	"liveJob/pkg/db/mysql"
-	"liveJob/pkg/db/table"
-	"liveJob/pkg/tools/cast"
-	"liveJob/pkg/tools/utils"
-	"liveJob/pkg/xxl"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/constant"
+	constsR "queueJob/pkg/constant/redis"
+	"queueJob/pkg/context"
+	"queueJob/pkg/db/cache"
+	"queueJob/pkg/db/mysql"
+	"queueJob/pkg/db/table"
+	"queueJob/pkg/tools/cast"
+	"queueJob/pkg/tools/utils"
+	"queueJob/pkg/xxl"
+	"queueJob/pkg/zlogger"
 )
 
 // DemoRebate 测试任务

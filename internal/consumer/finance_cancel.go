@@ -10,11 +10,11 @@ import (
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"go.uber.org/zap"
 
-	"liveJob/pkg/constant/redis"
-	"liveJob/pkg/db/mysql"
-	"liveJob/pkg/db/table"
-	"liveJob/pkg/queue"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/constant/redis"
+	"queueJob/pkg/db/mysql"
+	"queueJob/pkg/db/table"
+	"queueJob/pkg/queue"
+	"queueJob/pkg/zlogger"
 )
 
 var fCancel = &financeCancel{}

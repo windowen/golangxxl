@@ -5,10 +5,10 @@ import (
 
 	"google.golang.org/grpc/resolver"
 
-	"liveJob/pkg/gozero/zrpc/resolver/internal/targets"
+	"queueJob/pkg/gozero/zrpc/resolver/internal/targets"
 
-	"liveJob/pkg/gozero/discov"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/discov"
+	"queueJob/pkg/zlogger"
 )
 
 type discovBuilder struct{}

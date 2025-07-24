@@ -3,9 +3,9 @@ package executors
 import (
 	"time"
 
-	"liveJob/pkg/gozero/timex"
+	"queueJob/pkg/gozero/timex"
 
-	"liveJob/pkg/gozero/syncx"
+	"queueJob/pkg/gozero/syncx"
 )
 
 // A LessExecutor is an executor to limit execution once within given time interval.

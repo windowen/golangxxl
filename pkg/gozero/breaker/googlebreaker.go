@@ -3,11 +3,11 @@ package breaker
 import (
 	"time"
 
-	"liveJob/pkg/gozero/timex"
+	"queueJob/pkg/gozero/timex"
 
-	"liveJob/pkg/gozero/collection"
-	mathx2 "liveJob/pkg/gozero/mathx"
-	"liveJob/pkg/gozero/syncx"
+	"queueJob/pkg/gozero/collection"
+	mathx2 "queueJob/pkg/gozero/mathx"
+	"queueJob/pkg/gozero/syncx"
 )
 
 const (

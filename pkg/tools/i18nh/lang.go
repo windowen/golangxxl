@@ -1,7 +1,7 @@
 package i18nh
 
 import (
-	"liveJob/pkg/constant"
+	"queueJob/pkg/constant"
 )
 
 func LangToString(langId int) string {

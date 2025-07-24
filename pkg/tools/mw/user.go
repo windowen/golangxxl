@@ -5,7 +5,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	"liveJob/pkg/constant"
+	"queueJob/pkg/constant"
 )
 
 func AddUserType() grpc.DialOption {

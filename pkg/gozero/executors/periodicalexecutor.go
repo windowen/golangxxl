@@ -6,13 +6,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"liveJob/pkg/gozero/proc"
+	"queueJob/pkg/gozero/proc"
 
-	"liveJob/pkg/gozero/timex"
+	"queueJob/pkg/gozero/timex"
 
-	"liveJob/pkg/gozero/lang"
-	"liveJob/pkg/gozero/syncx"
-	"liveJob/pkg/gozero/threading"
+	"queueJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/syncx"
+	"queueJob/pkg/gozero/threading"
 )
 
 const idleRound = 10

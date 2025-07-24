@@ -8,9 +8,9 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 
-	"liveJob/pkg/gozero/stores/redis"
+	"queueJob/pkg/gozero/stores/redis"
 
-	"liveJob/pkg/gozero/collection"
+	"queueJob/pkg/gozero/collection"
 )
 
 const defaultExpiration = 5 * time.Minute

@@ -11,8 +11,8 @@ import (
 
 	red "github.com/redis/go-redis/v9"
 
-	"liveJob/pkg/gozero/stringx"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/stringx"
+	"queueJob/pkg/zlogger"
 )
 
 const (

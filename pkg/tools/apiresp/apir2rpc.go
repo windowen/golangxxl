@@ -5,8 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"liveJob/pkg/tools/errs"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/tools/errs"
+	"queueJob/pkg/zlogger"
 )
 
 func Call[A, B, C any](

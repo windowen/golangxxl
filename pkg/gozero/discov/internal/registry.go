@@ -13,11 +13,11 @@ import (
 	"go.etcd.io/etcd/api/v3/v3rpc/rpctypes"
 	clientv3 "go.etcd.io/etcd/client/v3"
 
-	"liveJob/pkg/gozero/contextx"
-	"liveJob/pkg/gozero/lang"
-	"liveJob/pkg/gozero/syncx"
-	"liveJob/pkg/gozero/threading"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/contextx"
+	"queueJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/syncx"
+	"queueJob/pkg/gozero/threading"
+	"queueJob/pkg/zlogger"
 )
 
 var (

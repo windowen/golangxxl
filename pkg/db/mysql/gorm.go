@@ -9,9 +9,9 @@ import (
 	"gorm.io/gorm/logger"
 	"gorm.io/plugin/dbresolver"
 
-	"liveJob/pkg/common/config"
-	"liveJob/pkg/tools/errs/errors"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/common/config"
+	"queueJob/pkg/tools/errs/errors"
+	"queueJob/pkg/zlogger"
 )
 
 var (

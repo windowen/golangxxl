@@ -4,7 +4,7 @@ import (
 	"io"
 	"sync"
 
-	"liveJob/pkg/gozero/errorx"
+	"queueJob/pkg/gozero/errorx"
 )
 
 // A ResourceManager is a manager that used to manage resources.

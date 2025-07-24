@@ -1,6 +1,6 @@
 package resolver
 
-import "liveJob/pkg/gozero/zrpc/resolver/internal"
+import "queueJob/pkg/gozero/zrpc/resolver/internal"
 
 // Register registers schemes defined zrpc.
 // Keep it in a separated package to let third party register manually.

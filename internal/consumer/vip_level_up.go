@@ -10,13 +10,13 @@ import (
 	redis3 "github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 
-	redis2 "liveJob/pkg/constant/redis"
-	"liveJob/pkg/db/mysql"
-	"liveJob/pkg/db/redisdb/redis"
-	"liveJob/pkg/db/table"
-	"liveJob/pkg/message"
-	rpcClient "liveJob/pkg/rpcclient"
-	"liveJob/pkg/zlogger"
+	redis2 "queueJob/pkg/constant/redis"
+	"queueJob/pkg/db/mysql"
+	"queueJob/pkg/db/redisdb/redis"
+	"queueJob/pkg/db/table"
+	"queueJob/pkg/message"
+	rpcClient "queueJob/pkg/rpcclient"
+	"queueJob/pkg/zlogger"
 )
 
 var (

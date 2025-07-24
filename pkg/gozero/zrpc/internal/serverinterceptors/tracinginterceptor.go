@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 
-	trace2 "liveJob/pkg/gozero/trace"
+	trace2 "queueJob/pkg/gozero/trace"
 )
 
 // UnaryTracingInterceptor is a grpc.UnaryServerInterceptor for opentelemetry.

@@ -9,8 +9,8 @@ import (
 	"syscall"
 	"time"
 
-	"liveJob/pkg/gozero/threading"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/threading"
+	"queueJob/pkg/zlogger"
 )
 
 const (

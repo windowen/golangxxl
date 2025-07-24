@@ -3,7 +3,7 @@ package sysx
 import (
 	"os"
 
-	"liveJob/pkg/gozero/stringx"
+	"queueJob/pkg/gozero/stringx"
 )
 
 var hostname string

@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/zlogger"
 )
 
 const (

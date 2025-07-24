@@ -6,7 +6,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health/grpc_health_v1"
 
-	"liveJob/pkg/gozero/proc"
+	"queueJob/pkg/gozero/proc"
 )
 
 const probeNamePrefix = "zrpc"

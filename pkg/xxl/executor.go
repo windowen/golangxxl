@@ -14,7 +14,7 @@ import (
 	"syscall"
 	"time"
 
-	internal "liveJob/pkg/context"
+	internal "queueJob/pkg/context"
 )
 
 var (

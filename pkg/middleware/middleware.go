@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	internal "liveJob/pkg/context"
-	"liveJob/pkg/xxl"
+	internal "queueJob/pkg/context"
+	"queueJob/pkg/xxl"
 )
 
 // CustomMiddleware 自定义中间件

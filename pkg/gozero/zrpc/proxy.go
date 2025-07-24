@@ -6,10 +6,10 @@ import (
 
 	"google.golang.org/grpc"
 
-	"liveJob/pkg/gozero/zrpc/internal"
-	"liveJob/pkg/gozero/zrpc/internal/auth"
+	"queueJob/pkg/gozero/zrpc/internal"
+	"queueJob/pkg/gozero/zrpc/internal/auth"
 
-	"liveJob/pkg/gozero/syncx"
+	"queueJob/pkg/gozero/syncx"
 )
 
 // A RpcProxy is a rpc proxy.

@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/zlogger"
 )
 
 const (

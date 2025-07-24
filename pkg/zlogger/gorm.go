@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
-	"liveJob/pkg/common/config"
+	"queueJob/pkg/common/config"
 )
 
 type dbLog struct {

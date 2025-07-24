@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"strconv"
 
-	"liveJob/pkg/gozero/rescue"
+	"queueJob/pkg/gozero/rescue"
 )
 
 // GoSafe runs the given fn using another goroutine, recovers if fn panics.

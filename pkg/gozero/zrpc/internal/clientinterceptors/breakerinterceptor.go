@@ -6,9 +6,9 @@ import (
 
 	"google.golang.org/grpc"
 
-	"liveJob/pkg/gozero/zrpc/internal/codes"
+	"queueJob/pkg/gozero/zrpc/internal/codes"
 
-	"liveJob/pkg/gozero/breaker"
+	"queueJob/pkg/gozero/breaker"
 )
 
 // BreakerInterceptor is an interceptor that acts as a circuit breaker.

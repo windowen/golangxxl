@@ -6,9 +6,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"liveJob/pkg/gozero/mathx"
-	"liveJob/pkg/gozero/syncx"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/mathx"
+	"queueJob/pkg/gozero/syncx"
+	"queueJob/pkg/zlogger"
 )
 
 const (

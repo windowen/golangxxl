@@ -10,14 +10,14 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	"liveJob/pkg/common/config"
-	"liveJob/pkg/gozero/discov"
-	"liveJob/pkg/gozero/zrpc"
-	"liveJob/pkg/protobuf/live"
-	"liveJob/pkg/tools/cast"
-	"liveJob/pkg/tools/errs"
-	"liveJob/pkg/tools/mw"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/common/config"
+	"queueJob/pkg/gozero/discov"
+	"queueJob/pkg/gozero/zrpc"
+	"queueJob/pkg/protobuf/live"
+	"queueJob/pkg/tools/cast"
+	"queueJob/pkg/tools/errs"
+	"queueJob/pkg/tools/mw"
+	"queueJob/pkg/zlogger"
 )
 
 type LiveClient struct {

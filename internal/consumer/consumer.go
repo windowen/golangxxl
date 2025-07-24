@@ -6,8 +6,8 @@ import (
 	"github.com/apache/rocketmq-client-go/v2/consumer"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 
-	"liveJob/pkg/rocketmq"
-	"liveJob/pkg/service"
+	"queueJob/pkg/rocketmq"
+	"queueJob/pkg/service"
 )
 
 // Init 初始化消费者

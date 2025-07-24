@@ -2,8 +2,8 @@ package network
 
 import (
 	"errors"
-	"liveJob/pkg/constant"
 	"net"
+	"queueJob/pkg/constant"
 )
 
 func GetRpcRegisterIP(configIP string) (string, error) {

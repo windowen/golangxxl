@@ -10,12 +10,12 @@ import (
 	"github.com/shopspring/decimal"
 	"go.uber.org/zap"
 
-	redis2 "liveJob/pkg/constant/redis"
-	"liveJob/pkg/db/mysql"
-	"liveJob/pkg/db/redisdb/redis"
-	"liveJob/pkg/db/table"
-	"liveJob/pkg/queue"
-	"liveJob/pkg/zlogger"
+	redis2 "queueJob/pkg/constant/redis"
+	"queueJob/pkg/db/mysql"
+	"queueJob/pkg/db/redisdb/redis"
+	"queueJob/pkg/db/table"
+	"queueJob/pkg/queue"
+	"queueJob/pkg/zlogger"
 )
 
 var bChange = &balanceChange{}

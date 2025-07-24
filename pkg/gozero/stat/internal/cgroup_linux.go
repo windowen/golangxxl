@@ -14,8 +14,8 @@ import (
 
 	"golang.org/x/sys/unix"
 
-	"liveJob/pkg/gozero/iox"
-	"liveJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/iox"
+	"queueJob/pkg/gozero/lang"
 )
 
 const (

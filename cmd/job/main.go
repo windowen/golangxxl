@@ -7,16 +7,16 @@ import (
 
 	"github.com/google/uuid"
 
-	"liveJob/internal/tasks"
-	"liveJob/pkg/common/config"
-	internal "liveJob/pkg/context"
-	"liveJob/pkg/db/cache"
-	"liveJob/pkg/db/mysql"
-	"liveJob/pkg/db/redisdb/redis"
-	"liveJob/pkg/middleware"
-	"liveJob/pkg/tools/utils"
-	"liveJob/pkg/xxl"
-	"liveJob/pkg/zlogger"
+	"queueJob/internal/tasks"
+	"queueJob/pkg/common/config"
+	internal "queueJob/pkg/context"
+	"queueJob/pkg/db/cache"
+	"queueJob/pkg/db/mysql"
+	"queueJob/pkg/db/redisdb/redis"
+	"queueJob/pkg/middleware"
+	"queueJob/pkg/tools/utils"
+	"queueJob/pkg/xxl"
+	"queueJob/pkg/zlogger"
 )
 
 func main() {
@@ -29,7 +29,7 @@ func main() {
 		}
 	}()
 	// 初始化配置
-	configFile, logFile, err := config.FlagParse("liveJob")
+	configFile, logFile, err := config.FlagParse("queueJob")
 	if err != nil {
 		panic(err)
 	}
@@ -45,7 +45,7 @@ func main() {
 	svcID := uuid.NewString()
 	zlogger.SetGlobalFields(map[string]string{
 		"ssid": svcID,
-		"snm":  "liveJob",
+		"snm":  "queueJob",
 	})
 	zlogger.InitLogConfig(logFile)
 

@@ -5,7 +5,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/zlogger"
 )
 
 const (

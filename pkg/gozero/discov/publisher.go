@@ -5,13 +5,13 @@ import (
 
 	clientv3 "go.etcd.io/etcd/client/v3"
 
-	"liveJob/pkg/gozero/proc"
+	"queueJob/pkg/gozero/proc"
 
-	internal2 "liveJob/pkg/gozero/discov/internal"
-	"liveJob/pkg/gozero/lang"
-	"liveJob/pkg/gozero/syncx"
-	"liveJob/pkg/gozero/threading"
-	"liveJob/pkg/zlogger"
+	internal2 "queueJob/pkg/gozero/discov/internal"
+	"queueJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/syncx"
+	"queueJob/pkg/gozero/threading"
+	"queueJob/pkg/zlogger"
 )
 
 type (

@@ -3,8 +3,8 @@ package passwordhelper
 import (
 	"bufio"
 	"go.uber.org/zap"
-	"liveJob/pkg/zlogger"
 	"os"
+	"queueJob/pkg/zlogger"
 )
 
 const WEAK_FILE = "weak_password_list.txt"

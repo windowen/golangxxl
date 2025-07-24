@@ -3,13 +3,13 @@ package consumer
 import (
 	"errors"
 
-	"liveJob/pkg/constant"
-	constsR "liveJob/pkg/constant/redis"
-	"liveJob/pkg/db/redisdb/redis"
-	"liveJob/pkg/tools/cast"
-	"liveJob/pkg/tools/strhelper"
-	"liveJob/pkg/utils"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/constant"
+	constsR "queueJob/pkg/constant/redis"
+	"queueJob/pkg/db/redisdb/redis"
+	"queueJob/pkg/tools/cast"
+	"queueJob/pkg/tools/strhelper"
+	"queueJob/pkg/utils"
+	"queueJob/pkg/zlogger"
 )
 
 // User 机器人信息

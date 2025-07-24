@@ -7,7 +7,7 @@ import (
 	"strings"
 	"sync"
 
-	"liveJob/pkg/gozero/iox"
+	"queueJob/pkg/gozero/iox"
 )
 
 // PropertyError represents a configuration error message.

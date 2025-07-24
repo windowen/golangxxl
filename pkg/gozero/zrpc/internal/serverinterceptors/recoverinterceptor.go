@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/zlogger"
 )
 
 // StreamRecoverInterceptor catches panics in processing stream requests and recovers.

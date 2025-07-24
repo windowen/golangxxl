@@ -4,9 +4,9 @@ import (
 	"context"
 	"strconv"
 
-	"liveJob/pkg/constant"
-	"liveJob/pkg/tools/errs"
-	"liveJob/pkg/tools/utils"
+	"queueJob/pkg/constant"
+	"queueJob/pkg/tools/errs"
+	"queueJob/pkg/tools/utils"
 )
 
 func HaveOpUser(ctx context.Context) bool {

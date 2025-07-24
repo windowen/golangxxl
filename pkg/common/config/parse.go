@@ -12,7 +12,7 @@ import (
 
 	"gopkg.in/yaml.v2"
 
-	"liveJob/pkg/constant"
+	"queueJob/pkg/constant"
 )
 
 var (

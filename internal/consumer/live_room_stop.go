@@ -12,10 +12,10 @@ import (
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 
-	"liveJob/pkg/db/mysql"
-	"liveJob/pkg/db/table"
-	"liveJob/pkg/queue"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/db/mysql"
+	"queueJob/pkg/db/table"
+	"queueJob/pkg/queue"
+	"queueJob/pkg/zlogger"
 )
 
 var live = &liveRoomStop{}

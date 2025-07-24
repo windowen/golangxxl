@@ -6,17 +6,17 @@ import (
 	"math"
 	"runtime"
 
-	"liveJob/pkg/constant"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/constant"
+	"queueJob/pkg/zlogger"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 
-	"liveJob/pkg/protobuf/errinfo"
-	"liveJob/pkg/tools/errs"
-	"liveJob/pkg/tools/mw/specialerror"
+	"queueJob/pkg/protobuf/errinfo"
+	"queueJob/pkg/tools/errs"
+	"queueJob/pkg/tools/mw/specialerror"
 )
 
 func rpcString(v interface{}) string {

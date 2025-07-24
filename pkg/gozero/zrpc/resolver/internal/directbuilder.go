@@ -5,7 +5,7 @@ import (
 
 	"google.golang.org/grpc/resolver"
 
-	"liveJob/pkg/gozero/zrpc/resolver/internal/targets"
+	"queueJob/pkg/gozero/zrpc/resolver/internal/targets"
 )
 
 type directBuilder struct{}

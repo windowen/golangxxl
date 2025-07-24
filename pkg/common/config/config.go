@@ -64,7 +64,7 @@ var Config struct {
 		GameRPCPort         int `yaml:"gameRPCPort"`
 		LiveRPCPort         int `yaml:"liveRPCPort"`
 		ServerApiGatePort   int `yaml:"serverApiGatePort"`
-		ActivityApiGatePort int `yaml:"liveJobGatePort"`
+		ActivityApiGatePort int `yaml:"queueJobGatePort"`
 		LiveApiGatePort     int `yaml:"liveApiGatePort"`
 	} `yaml:"rpcPort"`
 	RpcName struct {
@@ -75,7 +75,7 @@ var Config struct {
 		GameRPCName         string `yaml:"gameRPCName"`
 		LiveRPCName         string `yaml:"liveRPCName"`
 		ServerApiGateName   string `yaml:"serverApiGateName"`
-		ActivityApiGateName string `yaml:"liveJobGateName"`
+		ActivityApiGateName string `yaml:"queueJobGateName"`
 		LiveApiGateName     string `yaml:"liveApiGateName"`
 	} `yaml:"rpcName"`
 

@@ -1,7 +1,7 @@
 package stringx
 
 import (
-	"liveJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/lang"
 )
 
 const defaultMask = '*'

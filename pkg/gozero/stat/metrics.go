@@ -5,9 +5,9 @@ import (
 	"sync"
 	"time"
 
-	"liveJob/pkg/gozero/executors"
-	"liveJob/pkg/gozero/syncx"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/executors"
+	"queueJob/pkg/gozero/syncx"
+	"queueJob/pkg/zlogger"
 )
 
 var (

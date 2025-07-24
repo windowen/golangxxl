@@ -1,6 +1,6 @@
 syntax = "proto3";
 package proto;
-option go_package = "liveJob/pkg/protobuf/live";
+option go_package = "queueJob/pkg/protobuf/live";
 
 message GiftsResp {
   repeated GiftItem list = 1;

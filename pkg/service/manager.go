@@ -1,8 +1,8 @@
 package service
 
 import (
-	"liveJob/pkg/gozero/service"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/service"
+	"queueJob/pkg/zlogger"
 )
 
 var group *service.ServiceGroup

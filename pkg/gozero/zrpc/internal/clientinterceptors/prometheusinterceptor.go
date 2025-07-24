@@ -7,9 +7,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/status"
 
-	"liveJob/pkg/gozero/timex"
+	"queueJob/pkg/gozero/timex"
 
-	metric2 "liveJob/pkg/gozero/metric"
+	metric2 "queueJob/pkg/gozero/metric"
 )
 
 const clientNamespace = "rpc_client"

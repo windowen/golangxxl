@@ -6,7 +6,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	red "github.com/redis/go-redis/v9"
 
-	metric2 "liveJob/pkg/gozero/metric"
+	metric2 "queueJob/pkg/gozero/metric"
 )
 
 const namespace = "redis_client"

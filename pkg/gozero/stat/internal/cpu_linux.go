@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	"liveJob/pkg/gozero/iox"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/iox"
+	"queueJob/pkg/zlogger"
 )
 
 const (

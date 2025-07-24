@@ -3,7 +3,7 @@ package metric
 import (
 	prom "github.com/prometheus/client_golang/prometheus"
 
-	"liveJob/pkg/gozero/proc"
+	"queueJob/pkg/gozero/proc"
 )
 
 type (

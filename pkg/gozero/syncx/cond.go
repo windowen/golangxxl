@@ -3,9 +3,9 @@ package syncx
 import (
 	"time"
 
-	"liveJob/pkg/gozero/timex"
+	"queueJob/pkg/gozero/timex"
 
-	"liveJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/lang"
 )
 
 // A Cond is used to wait for conditions.

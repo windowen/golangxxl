@@ -3,7 +3,7 @@ package internal
 import (
 	"google.golang.org/grpc/grpclog"
 
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/zlogger"
 )
 
 // because grpclog.errorLog is not exported, we need to define our own.

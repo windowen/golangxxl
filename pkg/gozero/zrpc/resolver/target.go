@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"liveJob/pkg/gozero/zrpc/resolver/internal"
+	"queueJob/pkg/gozero/zrpc/resolver/internal"
 )
 
 // BuildDirectTarget returns a string that represents the given endpoints with direct schema.

@@ -13,8 +13,8 @@ import (
 	"context"
 	"sync/atomic"
 
-	"liveJob/pkg/common/config"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/common/config"
+	"queueJob/pkg/zlogger"
 )
 
 // errProducerClosed 定义一个全局错误，当生产者关闭时返回该错误

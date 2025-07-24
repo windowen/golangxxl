@@ -13,9 +13,9 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
-	"liveJob/pkg/db/table"
-	"liveJob/pkg/queue"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/db/table"
+	"queueJob/pkg/queue"
+	"queueJob/pkg/zlogger"
 )
 
 func Test_liveRoomStop_handleMessages(t *testing.T) {

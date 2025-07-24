@@ -1,7 +1,7 @@
 package xxldb
 
 import (
-	"liveJob/pkg/db/mysql"
+	"queueJob/pkg/db/mysql"
 )
 
 type JobLog struct {

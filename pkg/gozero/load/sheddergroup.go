@@ -3,7 +3,7 @@ package load
 import (
 	"io"
 
-	"liveJob/pkg/gozero/syncx"
+	"queueJob/pkg/gozero/syncx"
 )
 
 // A ShedderGroup is a manager to manage key-based shedders.

@@ -7,9 +7,9 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"liveJob/pkg/gozero/syncx"
-	"liveJob/pkg/gozero/threading"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/syncx"
+	"queueJob/pkg/gozero/threading"
+	"queueJob/pkg/zlogger"
 )
 
 var (

@@ -9,8 +9,8 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	load2 "liveJob/pkg/gozero/load"
-	"liveJob/pkg/gozero/stat"
+	load2 "queueJob/pkg/gozero/load"
+	"queueJob/pkg/gozero/stat"
 )
 
 const serviceType = "rpc"

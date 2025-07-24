@@ -8,8 +8,8 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
-	"liveJob/pkg/common/config"
-	"liveJob/pkg/safego"
+	"queueJob/pkg/common/config"
+	"queueJob/pkg/safego"
 )
 
 var (

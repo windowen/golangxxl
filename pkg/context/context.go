@@ -10,7 +10,7 @@ import (
 
 	"github.com/rs/xid"
 
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/zlogger"
 )
 
 type Context struct {

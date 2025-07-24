@@ -14,7 +14,7 @@ import (
 	"syscall"
 	"time"
 
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/zlogger"
 )
 
 // DefaultMemProfileRate is the default memory profiling rate.

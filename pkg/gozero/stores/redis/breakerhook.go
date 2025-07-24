@@ -5,8 +5,8 @@ import (
 
 	red "github.com/redis/go-redis/v9"
 
-	"liveJob/pkg/gozero/breaker"
-	"liveJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/breaker"
+	"queueJob/pkg/gozero/lang"
 )
 
 var ignoreCmds = map[string]lang.PlaceholderType{

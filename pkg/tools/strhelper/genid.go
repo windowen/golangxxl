@@ -3,7 +3,7 @@ package strhelper
 import (
 	"crypto/rand"
 
-	"liveJob/pkg/common/config"
+	"queueJob/pkg/common/config"
 )
 
 func GenUserID() string {

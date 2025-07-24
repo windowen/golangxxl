@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"liveJob/pkg/xxl/xxldb"
+	"queueJob/pkg/xxl/xxldb"
 )
 
 /**

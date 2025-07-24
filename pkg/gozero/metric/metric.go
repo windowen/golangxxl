@@ -1,7 +1,7 @@
 package metric
 
 import (
-	"liveJob/pkg/gozero/prometheus"
+	"queueJob/pkg/gozero/prometheus"
 )
 
 // A VectorOpts is a general configuration.

@@ -11,10 +11,10 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/redis/go-redis/v9"
 
-	"liveJob/pkg/common/config"
-	constsR "liveJob/pkg/constant/redis"
-	"liveJob/pkg/db/cache"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/common/config"
+	constsR "queueJob/pkg/constant/redis"
+	"queueJob/pkg/db/cache"
+	"queueJob/pkg/zlogger"
 )
 
 type JWT struct {

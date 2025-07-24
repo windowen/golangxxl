@@ -7,7 +7,7 @@ import (
 	"github.com/pelletier/go-toml/v2"
 	"gopkg.in/yaml.v2"
 
-	"liveJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/lang"
 )
 
 // TomlToJson converts TOML data into its JSON representation.

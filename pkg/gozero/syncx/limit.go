@@ -3,7 +3,7 @@ package syncx
 import (
 	"errors"
 
-	"liveJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/lang"
 )
 
 // ErrLimitReturn indicates that the more than borrowed elements were returned.

@@ -1,7 +1,7 @@
 package discov
 
 import (
-	"liveJob/pkg/gozero/discov/internal"
+	"queueJob/pkg/gozero/discov/internal"
 )
 
 // RegisterAccount registers the username/password to the given etcd cluster.

@@ -17,8 +17,8 @@ import (
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 
-	"liveJob/pkg/gozero/lang"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/lang"
+	"queueJob/pkg/zlogger"
 )
 
 const (

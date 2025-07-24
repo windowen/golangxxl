@@ -7,20 +7,20 @@ import (
 	"math/rand"
 	"time"
 
-	constsR "liveJob/pkg/constant/redis"
-	"liveJob/pkg/db/redisdb/redis"
-	rpcClient "liveJob/pkg/rpcclient"
-	"liveJob/pkg/tools/cast"
+	constsR "queueJob/pkg/constant/redis"
+	"queueJob/pkg/db/redisdb/redis"
+	rpcClient "queueJob/pkg/rpcclient"
+	"queueJob/pkg/tools/cast"
 
 	"github.com/apache/rocketmq-client-go/v2/consumer"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	Rv9 "github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 
-	"liveJob/pkg/constant"
-	"liveJob/pkg/queue"
-	"liveJob/pkg/rocketmq"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/constant"
+	"queueJob/pkg/queue"
+	"queueJob/pkg/rocketmq"
+	"queueJob/pkg/zlogger"
 )
 
 var liveRoomRobot = &liveRoomRobotDelay{}

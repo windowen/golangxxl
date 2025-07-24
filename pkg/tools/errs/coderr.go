@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 
-	"liveJob/pkg/tools/errs/errors"
+	"queueJob/pkg/tools/errs/errors"
 )
 
 type (

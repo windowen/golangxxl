@@ -4,8 +4,8 @@ import (
 	"errors"
 	"sync"
 
-	"liveJob/pkg/gozero/lang"
-	"liveJob/pkg/gozero/rescue"
+	"queueJob/pkg/gozero/lang"
+	"queueJob/pkg/gozero/rescue"
 )
 
 // ErrTaskRunnerBusy is the error that indicates the runner is busy.

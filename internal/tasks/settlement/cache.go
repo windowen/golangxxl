@@ -7,9 +7,9 @@ import (
 
 	"go.uber.org/zap"
 
-	constsR "liveJob/pkg/constant/redis"
-	"liveJob/pkg/db/redisdb/redis"
-	"liveJob/pkg/zlogger"
+	constsR "queueJob/pkg/constant/redis"
+	"queueJob/pkg/db/redisdb/redis"
+	"queueJob/pkg/zlogger"
 )
 
 const (

@@ -4,8 +4,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"liveJob/pkg/gozero/stat"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/stat"
+	"queueJob/pkg/zlogger"
 )
 
 type (

@@ -1,12 +1,12 @@
 package service
 
 import (
-	"liveJob/pkg/gozero/load"
-	prometheus2 "liveJob/pkg/gozero/prometheus"
-	stat2 "liveJob/pkg/gozero/stat"
-	trace2 "liveJob/pkg/gozero/trace"
+	"queueJob/pkg/gozero/load"
+	prometheus2 "queueJob/pkg/gozero/prometheus"
+	stat2 "queueJob/pkg/gozero/stat"
+	trace2 "queueJob/pkg/gozero/trace"
 
-	"liveJob/pkg/gozero/proc"
+	"queueJob/pkg/gozero/proc"
 )
 
 const (

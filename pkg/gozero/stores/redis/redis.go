@@ -9,10 +9,10 @@ import (
 
 	red "github.com/redis/go-redis/v9"
 
-	"liveJob/pkg/gozero/breaker"
-	errorx2 "liveJob/pkg/gozero/errorx"
-	"liveJob/pkg/gozero/mapping"
-	"liveJob/pkg/gozero/syncx"
+	"queueJob/pkg/gozero/breaker"
+	errorx2 "queueJob/pkg/gozero/errorx"
+	"queueJob/pkg/gozero/mapping"
+	"queueJob/pkg/gozero/syncx"
 )
 
 const (

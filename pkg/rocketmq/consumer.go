@@ -9,8 +9,8 @@ import (
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"go.uber.org/zap"
 
-	"liveJob/pkg/common/config"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/common/config"
+	"queueJob/pkg/zlogger"
 )
 
 type Consumer struct {

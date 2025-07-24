@@ -9,14 +9,14 @@ import (
 
 	"go.uber.org/zap"
 
-	redis2 "liveJob/pkg/constant/redis"
-	"liveJob/pkg/context"
-	"liveJob/pkg/db/cache"
-	"liveJob/pkg/db/mysql"
-	"liveJob/pkg/db/redisdb/redis"
-	"liveJob/pkg/db/table"
-	"liveJob/pkg/xxl"
-	"liveJob/pkg/zlogger"
+	redis2 "queueJob/pkg/constant/redis"
+	"queueJob/pkg/context"
+	"queueJob/pkg/db/cache"
+	"queueJob/pkg/db/mysql"
+	"queueJob/pkg/db/redisdb/redis"
+	"queueJob/pkg/db/table"
+	"queueJob/pkg/xxl"
+	"queueJob/pkg/zlogger"
 )
 
 // StatsSyncMysql 统计数据延时同步到mysql

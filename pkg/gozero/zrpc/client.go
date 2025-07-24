@@ -6,11 +6,11 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 
-	"liveJob/pkg/gozero/zrpc/internal"
-	"liveJob/pkg/gozero/zrpc/internal/auth"
-	"liveJob/pkg/gozero/zrpc/internal/clientinterceptors"
+	"queueJob/pkg/gozero/zrpc/internal"
+	"queueJob/pkg/gozero/zrpc/internal/auth"
+	"queueJob/pkg/gozero/zrpc/internal/clientinterceptors"
 
-	"liveJob/pkg/gozero/conf"
+	"queueJob/pkg/gozero/conf"
 )
 
 var (

@@ -3,6 +3,6 @@ syntax = "proto3";
 
 package proto;
 
-option go_package = "liveJob/pkg/protobuf/common";
+option go_package = "queueJob/pkg/protobuf/common";
 
 message Empty {}

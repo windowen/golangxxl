@@ -8,11 +8,11 @@ import (
 	"sync"
 	"time"
 
-	"liveJob/pkg/gozero/proc"
+	"queueJob/pkg/gozero/proc"
 
-	"liveJob/pkg/gozero/mathx"
-	"liveJob/pkg/gozero/stringx"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/mathx"
+	"queueJob/pkg/gozero/stringx"
+	"queueJob/pkg/zlogger"
 )
 
 const (

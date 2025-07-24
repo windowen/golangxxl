@@ -9,12 +9,12 @@ import (
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"go.uber.org/zap"
 
-	"liveJob/pkg/db/mysql"
-	"liveJob/pkg/db/table"
-	"liveJob/pkg/queue"
-	"liveJob/pkg/rocketmq"
-	"liveJob/pkg/tools/utils"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/db/mysql"
+	"queueJob/pkg/db/table"
+	"queueJob/pkg/queue"
+	"queueJob/pkg/rocketmq"
+	"queueJob/pkg/tools/utils"
+	"queueJob/pkg/zlogger"
 )
 
 var (

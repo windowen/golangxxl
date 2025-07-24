@@ -3,13 +3,13 @@ package zrpc
 import (
 	"time"
 
-	discov2 "liveJob/pkg/gozero/discov"
-	"liveJob/pkg/gozero/service"
+	discov2 "queueJob/pkg/gozero/discov"
+	"queueJob/pkg/gozero/service"
 
-	"liveJob/pkg/gozero/stores/redis"
+	"queueJob/pkg/gozero/stores/redis"
 
-	"liveJob/pkg/gozero/zrpc/internal"
-	"liveJob/pkg/gozero/zrpc/resolver"
+	"queueJob/pkg/gozero/zrpc/internal"
+	"queueJob/pkg/gozero/zrpc/resolver"
 )
 
 type (

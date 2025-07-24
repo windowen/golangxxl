@@ -3,17 +3,17 @@ package zrpc
 import (
 	"time"
 
-	"liveJob/pkg/gozero/stores/redis"
+	"queueJob/pkg/gozero/stores/redis"
 
-	"liveJob/pkg/gozero/load"
-	"liveJob/pkg/gozero/stat"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/load"
+	"queueJob/pkg/gozero/stat"
+	"queueJob/pkg/zlogger"
 
 	"google.golang.org/grpc"
 
-	"liveJob/pkg/gozero/zrpc/internal"
-	"liveJob/pkg/gozero/zrpc/internal/auth"
-	"liveJob/pkg/gozero/zrpc/internal/serverinterceptors"
+	"queueJob/pkg/gozero/zrpc/internal"
+	"queueJob/pkg/gozero/zrpc/internal/auth"
+	"queueJob/pkg/gozero/zrpc/internal/serverinterceptors"
 )
 
 // A RpcServer is a rpc server.

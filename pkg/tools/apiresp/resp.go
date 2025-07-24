@@ -4,8 +4,8 @@ import (
 	"errors"
 	"reflect"
 
-	"liveJob/pkg/tools/errs"
-	"liveJob/pkg/tools/i18nh"
+	"queueJob/pkg/tools/errs"
+	"queueJob/pkg/tools/i18nh"
 
 	"github.com/gin-gonic/gin"
 )

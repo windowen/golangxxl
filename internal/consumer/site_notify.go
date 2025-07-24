@@ -11,10 +11,10 @@ import (
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"go.uber.org/zap"
 
-	"liveJob/pkg/db/mysql"
-	"liveJob/pkg/db/table"
-	"liveJob/pkg/message"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/db/mysql"
+	"queueJob/pkg/db/table"
+	"queueJob/pkg/message"
+	"queueJob/pkg/zlogger"
 )
 
 var notify = &siteNotify{}

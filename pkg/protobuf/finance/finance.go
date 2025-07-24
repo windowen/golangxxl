@@ -3,7 +3,7 @@ package finance
 import (
 	"strings"
 
-	"liveJob/pkg/tools/errs"
+	"queueJob/pkg/tools/errs"
 )
 
 func (req *GetZoneByPayTypeCodeReq) Check() error {

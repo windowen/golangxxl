@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"liveJob/pkg/gozero/discov/internal"
+	"queueJob/pkg/gozero/discov/internal"
 )
 
 const (

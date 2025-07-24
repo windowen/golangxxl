@@ -8,12 +8,12 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	"liveJob/pkg/common/config"
-	"liveJob/pkg/gozero/discov"
-	"liveJob/pkg/gozero/zrpc"
-	"liveJob/pkg/protobuf/finance"
-	"liveJob/pkg/tools/cast"
-	"liveJob/pkg/tools/mw"
+	"queueJob/pkg/common/config"
+	"queueJob/pkg/gozero/discov"
+	"queueJob/pkg/gozero/zrpc"
+	"queueJob/pkg/protobuf/finance"
+	"queueJob/pkg/tools/cast"
+	"queueJob/pkg/tools/mw"
 )
 
 type FinanceClient struct {

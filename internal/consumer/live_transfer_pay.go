@@ -10,14 +10,14 @@ import (
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"go.uber.org/zap"
 
-	"liveJob/pkg/agora"
-	"liveJob/pkg/agora/model"
-	"liveJob/pkg/constant"
-	constsR "liveJob/pkg/constant/redis"
-	"liveJob/pkg/db/redisdb/redis"
-	"liveJob/pkg/queue"
-	"liveJob/pkg/tools/cast"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/agora"
+	"queueJob/pkg/agora/model"
+	"queueJob/pkg/constant"
+	constsR "queueJob/pkg/constant/redis"
+	"queueJob/pkg/db/redisdb/redis"
+	"queueJob/pkg/queue"
+	"queueJob/pkg/tools/cast"
+	"queueJob/pkg/zlogger"
 )
 
 var liveRoomTransferPay = &liveTransferPay{}

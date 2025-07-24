@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"liveJob/pkg/gozero/threading"
+	"queueJob/pkg/gozero/threading"
 )
 
 // A DelayExecutor delays a tasks on given delay interval.

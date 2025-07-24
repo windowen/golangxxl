@@ -1,8 +1,8 @@
 package tasks
 
 import (
-	"liveJob/internal/tasks/settlement"
-	"liveJob/pkg/xxl"
+	"queueJob/internal/tasks/settlement"
+	"queueJob/pkg/xxl"
 )
 
 const (

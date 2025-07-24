@@ -11,9 +11,9 @@ import (
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
 
-	"liveJob/pkg/gozero/zrpc/internal/balancer/p2c"
-	"liveJob/pkg/gozero/zrpc/internal/clientinterceptors"
-	"liveJob/pkg/gozero/zrpc/resolver"
+	"queueJob/pkg/gozero/zrpc/internal/balancer/p2c"
+	"queueJob/pkg/gozero/zrpc/internal/clientinterceptors"
+	"queueJob/pkg/gozero/zrpc/resolver"
 )
 
 const (

@@ -13,11 +13,11 @@ import (
 	"google.golang.org/grpc/balancer/base"
 	"google.golang.org/grpc/resolver"
 
-	"liveJob/pkg/gozero/timex"
-	"liveJob/pkg/gozero/zrpc/internal/codes"
+	"queueJob/pkg/gozero/timex"
+	"queueJob/pkg/gozero/zrpc/internal/codes"
 
-	"liveJob/pkg/gozero/syncx"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/gozero/syncx"
+	"queueJob/pkg/zlogger"
 )
 
 const (

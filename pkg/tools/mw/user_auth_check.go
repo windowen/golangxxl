@@ -7,12 +7,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
 
-	"liveJob/pkg/constant"
-	"liveJob/pkg/db/cache"
-	"liveJob/pkg/jwt"
-	"liveJob/pkg/tools/apiresp"
-	"liveJob/pkg/tools/errs"
-	"liveJob/pkg/zlogger"
+	"queueJob/pkg/constant"
+	"queueJob/pkg/db/cache"
+	"queueJob/pkg/jwt"
+	"queueJob/pkg/tools/apiresp"
+	"queueJob/pkg/tools/errs"
+	"queueJob/pkg/zlogger"
 )
 
 func UserAuthCheck(rdb redis.UniversalClient) gin.HandlerFunc {
