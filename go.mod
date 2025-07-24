@@ -6,6 +6,7 @@ require (
 	github.com/IBM/sarama v1.43.1
 	github.com/apache/rocketmq-client-go/v2 v2.1.2
 	github.com/aws/aws-sdk-go v1.55.5
+	github.com/bregydoc/gtranslate v0.0.0-20200913051839-1bd07f6c1fc5
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-basic/ipv4 v1.0.0
 	github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1
@@ -20,7 +21,6 @@ require (
 	github.com/redis/go-redis/v9 v9.6.1
 	github.com/rs/xid v1.6.0
 	github.com/shopspring/decimal v1.4.0
-	github.com/tidwall/gjson v1.13.0
 	go.etcd.io/etcd/api/v3 v3.5.16
 	go.etcd.io/etcd/client/v3 v3.5.16
 	go.opentelemetry.io/otel v1.30.0
@@ -104,7 +104,9 @@ require (
 	github.com/prometheus/common v0.26.0 // indirect
 	github.com/prometheus/procfs v0.6.0 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
+	github.com/robertkrimen/otto v0.5.1 // indirect
 	github.com/sirupsen/logrus v1.6.0 // indirect
+	github.com/tidwall/gjson v1.13.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
@@ -119,6 +121,7 @@ require (
 	golang.org/x/net v0.29.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240903143218-8af14fe29dc1 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1 // indirect
+	gopkg.in/sourcemap.v1 v1.0.5 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	stathat.com/c/consistent v1.0.0 // indirect
 )
