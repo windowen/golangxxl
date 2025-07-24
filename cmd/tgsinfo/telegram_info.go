@@ -131,12 +131,14 @@ func main() {
 				//bot.Send(msg)
 				punCompanyJob := ConvertToPunCompanyJob(update.Message.Text)
 				punCompanyJob.Uid = config.Config.Apk.UId
+				if punCompanyJob.Name != "" && len(punCompanyJob.Name) > 0 {
+					err = mysql.LiveDB.WithContext(ctx).Create(&punCompanyJob).Error
+				}
 
 				if err != nil {
 					zlogger.Warnf("getGameIntegratorByCode query data failed | integratorCode:%v | err:%v", msg, err)
 				}
 
-				err = mysql.LiveDB.WithContext(ctx).Create(&punCompanyJob).Error
 			}
 		}
 
