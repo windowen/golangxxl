@@ -4,6 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"go.uber.org/zap"
+	"gorm.io/gorm"
+	"queueJob/pkg/db/mysql"
+	"queueJob/pkg/db/table"
+	"queueJob/pkg/tools/errs"
+	"queueJob/pkg/zlogger"
 	"strings"
 	"time"
 
@@ -475,4 +481,17 @@ func GetOrSet(key string, f func() (interface{}, error), expire time.Duration) (
 }
 func GetRedisPool() redis.UniversalClient {
 	return rdb.wPool
+}
+
+func GetFinanceCoinExchange(ctx context.Context, query interface{}, args ...interface{}) (*table.FinanceCoinExchange, error) {
+	var coinExchange table.FinanceCoinExchange
+
+	// 查询是否已有该渠道的今日统计数据
+	err := mysql.LiveDB.WithContext(ctx).Where(query, args...).First(&coinExchange).Error
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		zlogger.Errorw("activeData get record error", zap.Error(err))
+		return nil, errs.Wrap(err)
+	}
+
+	return &coinExchange, nil
 }

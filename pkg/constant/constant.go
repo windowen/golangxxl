@@ -1,5 +1,7 @@
 package constant
 
+import "fmt"
+
 const (
 	ConfigPath               = "/config/config.yaml"
 	CtxApiToken              = "api-token"
@@ -74,9 +76,57 @@ const (
 )
 
 const (
-	IncomeTypeGift    = 1 // 礼物
-	IncomeTypeBarrage = 2 // 弹幕
-	IncomeTypeGame    = 3 // 游戏
-	IncomeTypeLive    = 4 // 直播收费
-	IncomeTypeProps   = 5 // 道具
+	GameIntegratorHashKey        = "game_integrator_cache"
+	GameIntegratorAceLotteryCode = "AceLottery"
+	UrlAceGameRecord             = "/third/rest/third/u/openApi/v2/Query/GameRecord"
+
+	AceStatusSuccess  = "200" // 标准错误码定义（HTTP语义兼容） 登录并进入游戏
+	AceStatusSuccess0 = "0"   // 标准错误码定义（HTTP语义兼容） 登录并进入游戏
+	DeviceType        = "WEB"
 )
+
+const (
+	WagerStatusBetStr      = "BET"
+	WagerStatusSettledStr  = "SETTLED"
+	WagerStatusVoidStr     = "VOID"
+	WagerStatusTipStr      = "TIP"
+	WagerStatusROLLBACKStr = "ROLLBACK"
+	WagerStatusCanceledStr = "CANCELED"
+)
+
+const (
+	GameCountryCodeBR = "BR" // 巴西
+	GameCountryCodeIN = "IN" // 印度
+	GameCountryCodeUS = "US" // 美国
+	GameCountryCodeID = "ID" // 印尼
+	GameCountryCodeVN = "VN" // 越南
+	GameCountryCodeTH = "TH" // 泰国
+)
+
+const (
+	CurrencyCodeBRL  = "BRL"  // 巴西雷亚尔
+	CurrencyCodeINR  = "INR"  // 印度卢比
+	CurrencyCodeUSD  = "USD"  // 美元
+	CurrencyCodeIDR  = "IDR"  // 印尼盾
+	CurrencyCodeIDR2 = "IDR2" // 印尼盾 17少*1000的汇率
+	CurrencyCodeVND  = "VND"  // 越南盾
+	CurrencyCodeVND2 = "VND2" // 越南盾25.6的汇率换算
+	CurrencyCodeTHB  = "THB"  // 泰铢
+	CurrencyCodePTV  = "PTV"  // 越南盾 Original Vietnamese đồng PTV (1:1)	原版越南盾 (1:1)
+)
+
+var CountryToCurrency = map[string]string{
+	GameCountryCodeBR: CurrencyCodeBRL,
+	GameCountryCodeIN: CurrencyCodeINR,
+	GameCountryCodeUS: CurrencyCodeUSD,
+	GameCountryCodeID: CurrencyCodeIDR,
+	GameCountryCodeVN: CurrencyCodeVND,
+	GameCountryCodeTH: CurrencyCodeTHB,
+}
+
+func GetCurrencyByCountry(countryCode string) (string, error) {
+	if currency, exists := CountryToCurrency[countryCode]; exists {
+		return currency, nil
+	}
+	return "", fmt.Errorf("currency not found for country code: %s", countryCode)
+}

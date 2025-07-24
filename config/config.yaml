@@ -133,3 +133,12 @@ agora:
 
 rocketMQ:
   rocketMQAddr: [ 127.0.0.1:9876 ]
+
+kafka:
+  kafkaAddr:
+
+openInstall:
+  apiKey: "d88338184e87f7bdb9c3374c8e1dacdbf3f9b5ee59181d2e5a2e31c0"
+  apiSecret: "pkCCiMGpVsyys1i2imB540xO3sFAWn9PkklRGjNQWyM="
+  growthBaseURL: "https://data.openinstall.io/data/event/growth"
+  activeBaseURL: "https://data.openinstall.io/data/event/active"

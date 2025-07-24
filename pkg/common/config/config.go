@@ -132,6 +132,15 @@ var Config struct {
 	RocketMQ struct {
 		RocketMQAddr []string `yaml:"rocketMQAddr"`
 	} `yaml:"rocketMQ"`
+	Kafka struct {
+		KafkaAddr []string `yaml:"kafkaAddr"`
+	} `yaml:"kafka"`
+	OpenInstall struct {
+		ApiKey        string `yaml:"apiKey"`
+		ApiSecret     string `yaml:"apiSecret"`
+		GrowthBaseURL string `yaml:"growthBaseURL"`
+		ActiveBaseURL string `yaml:"activeBaseURL"`
+	} `yaml:"openInstall"`
 }
 
 func GetServiceNames() []string {
