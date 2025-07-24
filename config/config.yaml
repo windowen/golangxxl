@@ -1,0 +1,134 @@
+app:
+  env: dev                               # dev、prod
+  timezone: "Asia/Shanghai"              # 时区(上海)
+  discovery: "etcd"                      # 服务注册发现zookeeper、etcd 二选一
+  proxyURL: ""# 请求三方的代理URL
+
+# ETCD配置
+etcd:
+  schema: worldSvr
+  addr:
+    - 127.0.0.1:2379
+  username: ""
+  password: ""
+
+# Mysql配置
+mysql_master:
+  address:
+    - 127.0.0.1:3306
+  username: worlduser
+  password: 7hr56dv3mysql+4
+  database: world_m5
+  maxOpenConn: 1000
+  maxIdleConn: 100
+  maxLifeTime: 60
+  logLevel: 4
+  slowThreshold: 500
+mysql_slave:
+  address:
+    - 127.0.0.1:3306
+    - 127.0.0.1:3306
+  username: worlduser
+  password: 7hr56dv3mysql+4
+  database: world_m5
+  maxOpenConn: 1000
+  maxIdleConn: 100
+  maxLifeTime: 60
+  logLevel: 4
+  slowThreshold: 500
+
+# Redis配置
+redis:
+  address: [ 127.0.0.1:6379 ]
+  username:
+  password: ws20240726v3+4
+
+# XXL-JOB配置
+xxlJob:
+  adminServer: http://127.0.0.1/xxl-job-admin
+  accessToken:
+  executorName: worldExecutor
+  executorIp: 127.0.0.1
+  executorPort: 9999
+
+# XXL-JOB数据库
+xxlJobDB:
+  address: [ 127.0.0.1:3306 ]
+  username: worlduser
+  password: 7hr56dv3mysql+4
+  database: xxl_job
+  maxOpenConn: 1000
+  maxIdleConn: 100
+  maxLifeTime: 60
+  logLevel: 4
+  slowThreshold: 500
+
+# 日志配置
+log:
+  logLevel: debug #debug, info, warn, error, panic, fatal, trace
+
+# RPC启动端口
+rpcPort:
+  siteRPCPort: 30200            # 站点服务RPC端口
+  agentRPCPort: 30300           # 代理服务RPC端口
+  actRPCPort: 30400             # 活动服务RPC端口
+  financeRPCPort: 30500         # 财务服务RPC端口
+  gameRPCPort: 30600            # 游戏服务RPC端口
+  worldRPCPort: 30700            # 直播服务RPC端口
+  serverApiGatePort: 10001      # 站点和代理服务网关端口
+  worldJobGatePort: 10002    # 活动和财务服务网关端口
+  worldApiGatePort: 10003        # 直播和游戏网关端口
+
+# RPC服务注册名称
+rpcName:
+  siteRpcName: siteRpc               # 站点服务RPC名称
+  agentRPCName: agentRPC             # 代理服务RPC名称
+  actRPCName: actRPC                 # 活动服务RPC名称
+  financeRPCName: financeRPC         # 财务服务RPC名称
+  gameRPCName: gameRPC               # 游戏服务RPC名称
+  worldRPCName: worldRPC               # 直播服务RPC名称
+  serverApiGateName: serverApiGate   # 站点和代理服务网关名称
+  worldJobGateName: worldJobGate # 活动和财务服务网关名称
+  worldApiGateName: worldApiGate       # 直播和游戏网关名称
+
+# 短信配置
+sms:
+  isOpen: true      # 是否开启短信发送
+  validTime: 300    # 验证码有效时间 单位/秒
+  sendCooldown: 60  # 发送冷却时间 单位/秒
+  maxSendTimesOf24Hours: 3 # 相同手机号码24小时最大发送次数，单位次
+  codeLen: 6        # 验证码长度
+  defaultCode: "123456"        # 默认验证码(用于开发或关闭短信时使用)
+  platformName: "paasoo"  # 当前使用的短信平台名字, 如: paasoo
+  platform: # 短信平台
+    paasoo:
+      endpoint: "https://api.paasoo.com/json"
+      key: "xl3n5hei"
+      secret: "c5U4BZbK"
+      from: ""
+
+jwt:
+  key: "QQYnRFerJTSEcrfB89fw8prOaObmrch8"
+
+s3:
+  accessKeyID: "kSTbVXONDAnHcA4QGCys"
+  secretAccessKey: "GUqlyBuTHQjAVhFnscu7oUT5SCVpIb1L8qYZRjnj"
+  region: "automatic"
+  bucket: "world"
+  endpoint: "https://devworld-minioshow.sedp.com"
+
+agora:
+  resetApi: "https://a61.chat.agora.io"
+  appID: "7120a407483541d9b268d5fa23fced50"
+  certificate: "111c0e2957894c83be14060712c7f40d"
+  appKey: "611191858#1379426"
+  orgName: "611191858"
+  appName: "1379426"
+  rtcNotifySecret: "m8197UJFy"
+  rtc:
+    uri: "http://api.sd-rtn.com/dev/v1"
+    customerKey: "66ba0e65f7f54b7b84baad9017d1412b"
+    customerSecret: "2e58344dc4b94c6fbb1cbcdbe1f5e177"
+
+rocketMQ:
+  rocketMQAddr: [ 127.0.0.1:9876 ]
