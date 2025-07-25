@@ -4,13 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"go.uber.org/zap"
-	"gorm.io/gorm"
-	"queueJob/pkg/db/mysql"
-	"queueJob/pkg/db/table"
-	"queueJob/pkg/tools/errs"
-	"queueJob/pkg/zlogger"
-	"strings"
+	"fmt"
 	"time"
 
 	"github.com/redis/go-redis/v9"
@@ -23,12 +17,16 @@ var (
 	Nil = redis.Nil
 )
 
+const (
+	maxRetry = 10 // number of retries
+)
+
 type Db struct {
 	wPool redis.UniversalClient
 }
 
 func InitRedis() error {
-	rwPool, err := initRedis(strings.Join(config.Config.Redis.Address, ","), config.Config.Redis.Password, "", 50)
+	rwPool, err := initRedis()
 	if err != nil {
 		return err
 	}
@@ -39,46 +37,26 @@ func InitRedis() error {
 	return nil
 }
 
-func InitRedisByConfig(address []string, password string) error {
-	rwPool, err := initRedis(strings.Join(address, ","), password, "", 50)
-	if err != nil {
-		return err
+func initRedis() (redis.UniversalClient, error) {
+	if len(config.Config.Redis.Address) == 0 {
+		return nil, errors.New("redis address is empty")
 	}
 
-	rdb = &Db{
-		wPool: rwPool,
-	}
-	return nil
-}
+	var redisClient redis.UniversalClient
+	redisClient = redis.NewUniversalClient(&redis.UniversalOptions{
+		Addrs:      config.Config.Redis.Address,
+		Username:   config.Config.Redis.Username,
+		Password:   config.Config.Redis.Password,
+		PoolSize:   50,
+		DB:         0, // 集群模式忽略，单机模式使用
+		MaxRetries: maxRetry,
+	})
 
-func initRedis(host, auth, master string, poolSize int) (redis.UniversalClient, error) {
-	options := &redis.UniversalOptions{
-		Addrs:           strings.Split(host, ","), // redis地址
-		MaxRedirects:    0,                        // 放弃前最大重试次数,默认是不重试失败的命令,默认是3次
-		ReadOnly:        false,                    // 在从库上打开只读命令
-		RouteByLatency:  false,                    // 允许将只读命令路由到最近的主节点或从节点,自动启用只读
-		RouteRandomly:   false,                    // 允许将只读命令路由到随机主节点或从节点。 它自动启用只读。
-		Password:        auth,
-		MaxRetries:      2,
-		MinRetryBackoff: 8 * time.Millisecond,
-		MaxRetryBackoff: 512 * time.Millisecond,
-		DialTimeout:     5 * time.Second,
-		ReadTimeout:     10 * time.Second,
-		WriteTimeout:    20 * time.Second,
-		PoolSize:        poolSize,
-		PoolTimeout:     30 * time.Second,
+	if err := redisClient.Ping(context.Background()).Err(); err != nil {
+		return nil, fmt.Errorf("redis ping %w", err)
 	}
-	// 哨兵模式
-	if len(master) > 0 {
-		options.SentinelPassword = auth
-		options.MasterName = master
-	}
-	redisPool := redis.NewUniversalClient(options)
-	_, err := redisPool.Ping(context.Background()).Result()
-	if err != nil {
-		return nil, err
-	}
-	return redisPool, nil
+
+	return redisClient, nil
 }
 
 func GetKey(key string) (string, error) {
@@ -87,6 +65,10 @@ func GetKey(key string) (string, error) {
 		return "", err
 	}
 	return value, nil
+}
+
+func Get(key string) (string, error) {
+	return rdb.wPool.Get(context.Background(), key).Result()
 }
 
 func Eval(script string, keys []string, args ...interface{}) error {
@@ -264,6 +246,11 @@ func RPush(key string, values ...interface{}) error {
 	return rdb.wPool.RPush(context.Background(), key, values...).Err()
 }
 
+// RPop 在名称为key的list尾弹出一个元素
+func RPop(key string) (string, error) {
+	return rdb.wPool.RPop(context.Background(), key).Result()
+}
+
 // LPush 在名称为key的list头添加一个值为value的 元素
 func LPush(key string, values ...interface{}) error {
 	return rdb.wPool.LPush(context.Background(), key, values...).Err()
@@ -399,12 +386,21 @@ func HGetBytesByField(key, filed string) ([]byte, error) {
 func SIsMember(key, field string) (bool, error) {
 	return rdb.wPool.SIsMember(context.Background(), key, field).Result()
 }
-func Incr(key string) {
-	rdb.wPool.Incr(context.Background(), key)
+
+func Incr(key string) (int64, error) {
+	return rdb.wPool.Incr(context.Background(), key).Result()
 }
 
 func IncrBy(key string, value int64) (int64, error) {
 	return rdb.wPool.IncrBy(context.Background(), key, value).Result()
+}
+
+func Decr(key string) (int64, error) {
+	return rdb.wPool.Decr(context.Background(), key).Result()
+}
+
+func DecrBy(key string, value int64) (int64, error) {
+	return rdb.wPool.DecrBy(context.Background(), key, value).Result()
 }
 
 func IncrWithResult(key string) (int64, error) {
@@ -421,6 +417,10 @@ func SMembers(key string) ([]string, error) {
 
 func SAdd(key string, members ...interface{}) (int64, error) {
 	return rdb.wPool.SAdd(context.Background(), key, members...).Result()
+}
+
+func SCard(key string) (int64, error) {
+	return rdb.wPool.SCard(context.Background(), key).Result()
 }
 
 func SRem(key string, members ...interface{}) (int64, error) {
@@ -458,7 +458,7 @@ func SetSscan(key string, match string, perCount int64) ([]string, error) {
 	return data, nil
 }
 
-// 获取键值,如不存在 则获取func 存入到键中
+// GetOrSet 获取键值,如不存在 则获取func 存入到键中
 func GetOrSet(key string, f func() (interface{}, error), expire time.Duration) ([]byte, error) {
 	result, err := rdb.wPool.Get(context.Background(), key).Bytes()
 	if err != nil || len(result) == 0 {
@@ -479,19 +479,23 @@ func GetOrSet(key string, f func() (interface{}, error), expire time.Duration) (
 	}
 	return result, nil
 }
+
 func GetRedisPool() redis.UniversalClient {
 	return rdb.wPool
 }
 
-func GetFinanceCoinExchange(ctx context.Context, query interface{}, args ...interface{}) (*table.FinanceCoinExchange, error) {
-	var coinExchange table.FinanceCoinExchange
+func GetBit(key string, offset int64) (int64, error) {
+	return rdb.wPool.GetBit(context.Background(), key, offset).Result()
+}
 
-	// 查询是否已有该渠道的今日统计数据
-	err := mysql.LiveDB.WithContext(ctx).Where(query, args...).First(&coinExchange).Error
-	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
-		zlogger.Errorw("activeData get record error", zap.Error(err))
-		return nil, errs.Wrap(err)
+func SetBit(key string, offset int64, value int) (int64, error) {
+	return rdb.wPool.SetBit(context.Background(), key, offset, value).Result()
+}
+
+func CheckErr(err error) error {
+	if err != nil && errors.Is(err, redis.Nil) {
+		return nil
 	}
 
-	return &coinExchange, nil
+	return err
 }
