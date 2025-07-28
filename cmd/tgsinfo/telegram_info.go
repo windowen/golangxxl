@@ -2,11 +2,13 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"queueJob/pkg/common/config"
 	"queueJob/pkg/db/mysql"
 	"queueJob/pkg/db/redisdb/redis"
+	jobStruct "queueJob/pkg/db/structs/job"
 	"queueJob/pkg/db/table/job"
 	"queueJob/pkg/tools/utils"
 	"queueJob/pkg/zlogger"
@@ -128,9 +130,21 @@ func main() {
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID,
 					text+" En \n"+translatedEn+"\n\n")
 
+				prettyJSON, _ := json.MarshalIndent(update.Message, "", "  ")
+
+				var msgStruct jobStruct.TgMessage
+				_ = json.Unmarshal(prettyJSON, &msgStruct)
+
+				if isBot(msgStruct.ForwardFrom) {
+					// 对于机器人消息 进行过滤
+					continue
+				}
+				log.Printf("Message details:\n%s", string(prettyJSON))
+
 				//bot.Send(msg)
 				punCompanyJob := ConvertToPunCompanyJob(update.Message.Text)
 				punCompanyJob.Uid = config.Config.Apk.UId
+				punCompanyJob.ComName = msgStruct.From.Username
 				if punCompanyJob.Name != "" && len(punCompanyJob.Name) > 0 {
 					err = mysql.LiveDB.WithContext(ctx).Create(&punCompanyJob).Error
 				}
@@ -143,6 +157,11 @@ func main() {
 		}
 
 		log.Printf("中文 → 柬埔寨语翻译后2: %s", text)
+		//log.Printf("中文 → 柬埔寨语翻译后2: %v", update.Message)
+		//log.Printf("翻译结果: ID=%d | Text=%s | Sender=%v",
+		//	update.Message.ID,
+		//	update.Message.Text,
+		//	update.Message.Sender)
 
 		//logger.Println("中文 → 柬埔寨语翻译后:", text)
 	}
@@ -210,6 +229,13 @@ func ConvertToPunCompanyJob(text string) *job.PunCompanyJob {
 	}
 
 	return job
+}
+
+func isBot(user *jobStruct.TgMessageUser) bool {
+	if user == nil {
+		return false
+	}
+	return user.IsBot
 }
 
 //// 更新或插入数据

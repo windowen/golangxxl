@@ -1,0 +1,106 @@
+GOROOT=/Users/coder/sdk/go1.24.4 #gosetup
+GOPATH=/Users/coder/go #gosetup
+/Users/coder/sdk/go1.24.4/bin/go build -o /Users/coder/Library/Caches/JetBrains/GoLand2024.3/tmp/GoLand/___go_build_telegram_info_go /Users/coder/coder/coders/github/golang/goapijob-main/cmd/tgsinfo/telegram_info.go #gosetup
+/Users/coder/Library/Caches/JetBrains/GoLand2024.3/tmp/GoLand/___go_build_telegram_info_go #gosetup
+configfile: ./config/config.yaml
+[init timezone] timezone = "Asia/Shanghai", timeOffsetHours = 8
+init logger
+2025/07/28 11:24:05 中文 → 柬埔寨语翻译后2: &{125 Coder_511 <nil> 1753673045 0x140004a6000  <nil> 0   0 false <nil>  0 false   挂了吗 [] <nil> <nil> <nil> [] <nil> <nil> <nil> <nil>  [] <nil> <nil> <nil> <nil> <nil> <nil> []   [] false false false false <nil> 0 0 <nil> <nil> <nil>  <nil> <nil> <nil> <nil> <nil> <nil> <nil>}
+2025/07/28 11:24:05 Message details:
+{
+"message_id": 125,
+"from": {
+"id": 8079455068,
+"first_name": "Coder Q511",
+"username": "Coder_511",
+"language_code": "zh-hans"
+},
+"date": 1753673045,
+"chat": {
+"id": 8079455068,
+"type": "private",
+"username": "Coder_511",
+"first_name": "Coder Q511",
+"photo": null,
+"location": null
+},
+"text": "挂了吗",
+"message_auto_delete_timer_changed": null,
+"proximity_alert_triggered": null,
+"voice_chat_scheduled": null,
+"voice_chat_started": null,
+"voice_chat_ended": null,
+"voice_chat_participants_invited": null
+}
+2025/07/28 11:24:34 中文 → 柬埔寨语翻译后2: &{126 Coder_511 <nil> 1753673073 0x1400015cf00 Coder_511 <nil> 0   1753673072 false <nil>  0 false   还没醒？ [] <nil> <nil> <nil> [] <nil> <nil> <nil> <nil>  [] <nil> <nil> <nil> <nil> <nil> <nil> []   [] false false false false <nil> 0 0 <nil> <nil> <nil>  <nil> <nil> <nil> <nil> <nil> <nil> <nil>}
+2025/07/28 11:24:34 Message details:
+{
+"message_id": 126,
+"from": {
+"id": 8079455068,
+"first_name": "Coder Q511",
+"username": "Coder_511",
+"language_code": "zh-hans"
+},
+"date": 1753673073,
+"chat": {
+"id": 8079455068,
+"type": "private",
+"username": "Coder_511",
+"first_name": "Coder Q511",
+"photo": null,
+"location": null
+},
+"forward_from": {
+"id": 8079455068,
+"first_name": "Coder Q511",
+"username": "Coder_511",
+"language_code": "zh-hans"
+},
+"forward_date": 1753673072,
+"text": "还没醒？",
+"message_auto_delete_timer_changed": null,
+"proximity_alert_triggered": null,
+"voice_chat_scheduled": null,
+"voice_chat_started": null,
+"voice_chat_ended": null,
+"voice_chat_participants_invited": null
+}
+2025/07/28 11:24:36 中文 → 柬埔寨语翻译后2: &{127 Coder_511 <nil> 1753673076 0x140004a60f0 tran_kh_cn_bot <nil> 0   1753673075 false <nil>  0 false   还没醒？ En
+Not awake yet?
+
+Cambodian:
+មិនយូរទៅ? [] <nil> <nil> <nil> [] <nil> <nil> <nil> <nil>  [] <nil> <nil> <nil> <nil> <nil> <nil> []   [] false false false false <nil> 0 0 <nil> <nil> <nil>  <nil> <nil> <nil> <nil> <nil> <nil> <nil>}
+2025/07/28 11:24:36 Message details:
+{
+"message_id": 127,
+"from": {
+"id": 8079455068,
+"first_name": "Coder Q511",
+"username": "Coder_511",
+"language_code": "zh-hans"
+},
+"date": 1753673076,
+"chat": {
+"id": 8079455068,
+"type": "private",
+"username": "Coder_511",
+"first_name": "Coder Q511",
+"photo": null,
+"location": null
+},
+"forward_from": {
+"id": 7652002179,
+"is_bot": true,
+"first_name": "tran_kh_cn_bot",
+"username": "tran_kh_cn_bot"
+},
+"forward_date": 1753673075,
+"text": "还没醒？ En \nNot awake yet?\n\n Cambodian:\nមិនយូរទៅ?",
+"message_auto_delete_timer_changed": null,
+"proximity_alert_triggered": null,
+"voice_chat_scheduled": null,
+"voice_chat_started": null,
+"voice_chat_ended": null,
+"voice_chat_participants_invited": null
+}
