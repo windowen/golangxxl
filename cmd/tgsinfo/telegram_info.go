@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"log"
+	"os"
 	"queueJob/pkg/common/config"
 	"queueJob/pkg/db/mysql"
 	"queueJob/pkg/db/redisdb/redis"
@@ -152,6 +154,32 @@ func main() {
 				if err != nil {
 					zlogger.Warnf("getGameIntegratorByCode query data failed | integratorCode:%v | err:%v", msg, err)
 				}
+
+				// 3. 加载模板
+				tmpl, err := template.ParseFiles("./template/job.html")
+				if err != nil {
+					log.Fatal("加载模板失败：", err)
+				}
+
+				// 确保目录存在
+				err = os.MkdirAll("public", os.ModePerm)
+				if err != nil {
+					log.Fatal("创建目录失败：", err)
+				}
+
+				// 4. 创建输出文件
+				f, err := os.Create("public/index.html")
+				if err != nil {
+					log.Fatal("创建HTML文件失败：", err)
+				}
+				defer f.Close()
+
+				// 5. 渲染模板
+				err = tmpl.Execute(f, punCompanyJob)
+				if err != nil {
+					log.Fatal("渲染模板失败：", err)
+				}
+				fmt.Println("首页静态HTML生成成功！")
 
 			}
 		}
