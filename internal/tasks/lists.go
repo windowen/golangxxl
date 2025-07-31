@@ -14,6 +14,7 @@ const (
 	userMountExpiredCheck = "userMountExpiredCheck"
 	// 更新redis里的统计数据到mysql
 	statsDataSyncMysql = "statsDataSyncMysql"
+	jobGenerateIndex   = "jobGenerateIndex" //定期生成首页
 )
 
 // RegisterExecutors  注册执行器列表
@@ -26,4 +27,5 @@ func RegisterExecutors(execute *xxl.Executor) {
 	execute.RegTask(userMountExpiredCheck, settlement.UserMountExpiredCheck)
 	// 更新redis里的统计数据到mysql
 	execute.RegTask(statsDataSyncMysql, StatsSyncMysql)
+	execute.RegTask(jobGenerateIndex, JobGenerateIndex)
 }
