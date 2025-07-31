@@ -35,3 +35,8 @@ const (
 const (
 	StatsAceLotteryTime = "ace_lottery:last_updated_date" // 15.查詢玩家遊戲記錄 Query/GameRecord
 )
+
+const (
+	RecentHtmlFilesId = "recent_html_files_id" // 15.查詢玩家遊戲記錄 Query/GameRecord
+	RecentHtmlFiles   = "recent_html_files"    // 15.查詢玩家遊戲記錄 Query/GameRecord
+)

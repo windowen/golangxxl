@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"queueJob/pkg/common/config"
+	redisKey "queueJob/pkg/constant/redis"
 	"queueJob/pkg/db/mysql"
 	"queueJob/pkg/db/redisdb/redis"
 	jobStruct "queueJob/pkg/db/structs/job"
@@ -272,8 +273,6 @@ func isBot(user *jobStruct.TgMessageUser) bool {
 }
 
 func SaveHTMLRecord(ctx context.Context, job *job.PunCompanyJob, path string) error {
-	const key = "recent_html_files_id"
-	const keyId = "recent_html_files"
 
 	record := jobStruct.HTMLRecord{
 		Title:     job.Name,
@@ -291,8 +290,8 @@ func SaveHTMLRecord(ctx context.Context, job *job.PunCompanyJob, path string) er
 	// 使用流水线操作：先 LPUSH，再 LTRIM 保持最多 100 条
 	// 封装调用
 	//data := map[string]string{"name": "Alice", "action": "login"}
-	//err = redis.PushAndTrimList(ctx, key, keyId, record.Id, string(jsonData), 100)
-	err := redis.PushAndTrimList(ctx, key, keyId, record.Id, record, config.Config.Apk.MaxJobIndex, time.Duration(config.Config.Apk.MaxDays)*24*time.Hour)
+	//err = redis.PushAndTrimList(ctx, redisKey.RecentHtmlFilesId, redisKey.RecentHtmlFiles, record.Id, string(jsonData), 100)
+	err := redis.PushAndTrimList(ctx, redisKey.RecentHtmlFilesId, redisKey.RecentHtmlFiles, record.Id, record, config.Config.Apk.MaxJobIndex, time.Duration(config.Config.Apk.MaxDays)*24*time.Hour)
 	if err != nil {
 		fmt.Println("操作失败:", err)
 		return fmt.Errorf("JSON序列化失败: %v", err)

@@ -512,7 +512,8 @@ func PushAndTrimList(ctx context.Context, key, keyInfo, fieldId string, value in
 	pipe := rdb.wPool.TxPipeline()
 
 	// 1. 存储到 Hash（持久化数据）
-	pipe.HSet(ctx, keyInfo, fieldId, jsonData, expire)
+	pipe.HSet(ctx, keyInfo, fieldId, jsonData)
+	pipe.Expire(ctx, keyInfo, expire) //整个 Hash 在 30 天后过期
 
 	// 2. 存储到 List（维护顺序 + 限制长度）
 	pipe.LPush(ctx, key, fieldId)        // 左插入，保证最新数据在头部
