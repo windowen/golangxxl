@@ -3,11 +3,13 @@ package tasks
 import (
 	"errors"
 	"fmt"
+	"html/template"
+	"os"
+	"path/filepath"
 	"time"
 
-	redis2 "queueJob/pkg/constant/redis"
+	redisKey "queueJob/pkg/constant/redis"
 	"queueJob/pkg/context"
-	"queueJob/pkg/db/cache"
 	"queueJob/pkg/db/redisdb/redis"
 	"queueJob/pkg/xxl"
 	"queueJob/pkg/zlogger"
@@ -24,30 +26,62 @@ func JobGenerateIndex(cxt *context.Context, _ *xxl.RunReq) (msg string) {
 	currentDate := time.Now().Format("2006-01-02")
 
 	endDate := BJNowTime()
-	lastDates := endDate - 1000 // 默认从当前时间前推1秒开始
-
 	backGround := *cxt.Ctx
 
 	// 检查 Redis 中存储的日期
-	lastDate, err := cache.RedisClient.Get(backGround, redis2.StatsSyncTime).Result()
+	htmlRecords, err := redis.GetRecentItems(backGround, redisKey.RecentHtmlFilesId, redisKey.RecentHtmlFiles, 2000)
 	if errors.Is(err, redis.Nil) {
 		// 如果 Redis 中没有记录日期，初始化
-		if setStatus := cache.RedisClient.Set(backGround, redis2.StatsSyncTime, currentDate, 0); setStatus.Err() != nil {
-			return "failed"
-		}
-	} else if err != nil {
-		return "failed"
-	} else {
+		return "success"
 	}
-	zlogger.Infof("AceLotteryGameRecord begin %v ", start)
-	zlogger.Infof("AceLotteryGameRecord begin %v ", currentDate)
-	zlogger.Infof("AceLotteryGameRecord begin %v ", lastDate)
-	zlogger.Infof("AceLotteryGameRecord begin %v ", lastDates)
-
 	if err != nil {
 		zlogger.Errorf("request error: %v", err)
 		return "failed"
 	}
+
+	// 获取当前可执行文件所在目录（更适用于生产环境）
+	execPath, err := os.Getwd()
+	if err != nil {
+		panic("获取可执行文件路径失败：" + err.Error())
+	}
+	rootDir := filepath.Dir(execPath)
+
+	// 拼接 public 目录路径
+	publicDir := filepath.Join(rootDir, "../public")
+	// 确保目录存在
+	err = os.MkdirAll(publicDir, os.ModePerm)
+	if err != nil {
+		fmt.Printf("创建目录失败：%v\n", err)
+		return
+	}
+
+	// 加载模板
+	tmplPath := filepath.Join(rootDir, "../template", "job_index.html")
+	tmpl, err := template.ParseFiles(tmplPath)
+	if err != nil {
+		zlogger.Errorf("加载模板失败：%v", err)
+	}
+
+	// 构造文件路径，使用 punCompanyJob.Id 命名
+	filePath := filepath.Join(publicDir, fmt.Sprintf("job_index_%s.html", currentDate))
+	// 创建输出文件
+	f, err := os.Create(filePath)
+	if err != nil {
+		zlogger.Errorf("创建HTML文件失败：%v", err)
+	}
+	defer f.Close()
+
+	// 5. 渲染模板
+	err = tmpl.Execute(f, htmlRecords)
+	if err != nil {
+		zlogger.Errorf("渲染模板失败：", err)
+	}
+
+	zlogger.Infof("JobGenerateIndex start %v ", start)
+	zlogger.Infof("JobGenerateIndex currentDate %v ", currentDate)
+	zlogger.Infof("JobGenerateIndex htmlRecords %v ", htmlRecords)
+	zlogger.Infof("JobGenerateIndex endDate %v ", endDate)
+
 	return "success"
 
 }

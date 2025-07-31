@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"queueJob/pkg/db/structs/job"
 	"time"
 
 	"github.com/redis/go-redis/v9"
@@ -535,9 +536,9 @@ func PushAndTrimList(ctx context.Context, key, keyInfo, fieldId string, value in
 // 返回：
 //   - map[string]string: {field: data} 格式的数据
 //   - error: 错误信息
-func GetRecentItems(ctx context.Context, rdb *redis.Client, listKey, hashKey string, maxCount int64) (map[string]string, error) {
+func GetRecentItems(ctx context.Context, listKey, hashKey string, maxCount int64) ([]job.HTMLRecord, error) {
 	// 1. 从 List 获取最近的 field 列表
-	fields, err := rdb.LRange(ctx, listKey, 0, maxCount-1).Result()
+	fields, err := rdb.wPool.LRange(ctx, listKey, 0, maxCount-1).Result()
 	if err != nil {
 		return nil, errors.New("failed to get recent fields: " + err.Error())
 	}
@@ -548,19 +549,30 @@ func GetRecentItems(ctx context.Context, rdb *redis.Client, listKey, hashKey str
 	}
 
 	// 3. 从 Hash 批量获取数据（HMGet 优化性能）
-	dataSlice, err := rdb.HMGet(ctx, hashKey, fields...).Result()
+	dataSlice, err := rdb.wPool.HMGet(ctx, hashKey, fields...).Result()
 	if err != nil {
 		return nil, errors.New("failed to get hash data: " + err.Error())
 	}
 
-	// 4. 组装数据成 map
-	result := make(map[string]string)
+	// 4. 组装数据成HTMLRecord切片
+	var records []job.HTMLRecord
 	for i, field := range fields {
 		if dataSlice[i] == nil {
 			continue // 跳过不存在的字段
 		}
-		result[field] = dataSlice[i].(string) // 断言为 string
+
+		// 解析JSON到结构体
+		var record job.HTMLRecord
+		jsonStr := dataSlice[i].(string)
+		if err := json.Unmarshal([]byte(jsonStr), &record); err != nil {
+			return nil, fmt.Errorf("failed to unmarshal record %s: %w", field, err)
+		}
+
+		// 确保ID与field一致（可选）
+		record.Id = field
+
+		records = append(records, record)
 	}
 
-	return result, nil
+	return records, nil
 }

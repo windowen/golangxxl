@@ -184,3 +184,12 @@ func getEnvIntPoint(key string, fallback *int64) (*int64, error) {
 	}
 	return fallback, nil
 }
+
+func FlagParsePath(env string, filePath string) (configFile string, logFileName string, err error) {
+	configFile = filePath
+
+	// log file
+	logFileName = fmt.Sprintf("../logs/%s", env)
+	configFile, err = findConfigPath(configFile)
+	return
+}

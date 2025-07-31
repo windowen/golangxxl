@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>常用网站导航</title>
+    <style>
+        .site-item { list-style: none; margin: 10px 0; }
+        .inline-block-wrapper { display: inline-block; }
+        .sitelink {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #333;
+            background-repeat: no-repeat;
+            background-size: 20px 20px;
+            background-position: 8px center;
+            padding-left: 36px;
+        }
+        .icon-site {
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    {{ range $id, $record := . }}
+    <li class="js_site-item site-item" data-status="1" title="{{ $record.Title}}" data-id="{{ $record.Id}}">
+        <div class="inline-block-wrapper">
+            <a class="sitelink js_text icon-site"
+               href="{{ $record.Path}}"
+               style="background-image:url('{{ $record.Author}}')"
+               hidefocus="true">
+                {{ $record.Title}}
+            </a>
+        
+        </div>
+    </li>
+    {{end}}
+</ul>
+</body>
+</html>
