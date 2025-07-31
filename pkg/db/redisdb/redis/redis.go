@@ -499,3 +499,67 @@ func CheckErr(err error) error {
 
 	return err
 }
+
+// PushAndTrimList 原子操作：LPUSH + LTRIM（限制列表长度） 具体的内容保存30天
+func PushAndTrimList(ctx context.Context, key, keyInfo, fieldId string, value interface{}, maxLength int64, expire time.Duration) error {
+	// 序列化数据（如果非字符串类型）
+	jsonData, err := json.Marshal(value)
+	if err != nil {
+		return err
+	}
+
+	// 开启事务
+	pipe := rdb.wPool.TxPipeline()
+
+	// 1. 存储到 Hash（持久化数据）
+	pipe.HSet(ctx, keyInfo, fieldId, jsonData, expire)
+
+	// 2. 存储到 List（维护顺序 + 限制长度）
+	pipe.LPush(ctx, key, fieldId)        // 左插入，保证最新数据在头部
+	pipe.LTrim(ctx, key, 0, maxLength-1) // 裁剪，只保留最近的 maxLength 条
+
+	// 执行事务
+	_, err = pipe.Exec(ctx)
+	return err
+}
+
+// GetRecentItems 获取最近的 N 条数据
+// 参数：
+//   - ctx: context.Context
+//   - rdb: *redis.Client
+//   - listKey: 存储顺序的 List key（如 "recent_items"）
+//   - hashKey: 存储数据的 Hash key（如 "items_data"）
+//   - maxCount: 最大返回数量（如 10）
+//
+// 返回：
+//   - map[string]string: {field: data} 格式的数据
+//   - error: 错误信息
+func GetRecentItems(ctx context.Context, rdb *redis.Client, listKey, hashKey string, maxCount int64) (map[string]string, error) {
+	// 1. 从 List 获取最近的 field 列表
+	fields, err := rdb.LRange(ctx, listKey, 0, maxCount-1).Result()
+	if err != nil {
+		return nil, errors.New("failed to get recent fields: " + err.Error())
+	}
+
+	// 2. 如果 List 为空，直接返回
+	if len(fields) == 0 {
+		return nil, nil
+	}
+
+	// 3. 从 Hash 批量获取数据（HMGet 优化性能）
+	dataSlice, err := rdb.HMGet(ctx, hashKey, fields...).Result()
+	if err != nil {
+		return nil, errors.New("failed to get hash data: " + err.Error())
+	}
+
+	// 4. 组装数据成 map
+	result := make(map[string]string)
+	for i, field := range fields {
+		if dataSlice[i] == nil {
+			continue // 跳过不存在的字段
+		}
+		result[field] = dataSlice[i].(string) // 断言为 string
+	}
+
+	return result, nil
+}

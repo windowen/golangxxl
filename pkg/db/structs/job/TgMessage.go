@@ -17,3 +17,11 @@ type TgMessage struct {
 
 	// 其他字段...
 }
+
+type HTMLRecord struct {
+	Title     string `json:"title,omitempty"`
+	Id        string `json:"id"`
+	Path      string `json:"path"`
+	Author    string `json:"author"`
+	CreatedAt string `json:"created_at"`
+}

@@ -167,10 +167,13 @@ func main() {
 					log.Fatal("创建目录失败：", err)
 				}
 
-				// 4. 创建输出文件
-				f, err := os.Create("public/index.html")
+				// 构造文件路径，使用 punCompanyJob.Id 命名
+				filePath := fmt.Sprintf("public/job_%d.html", punCompanyJob.Id) // 注意字段是 ID，不是 Id（Go 命名习惯）
+
+				// 创建输出文件
+				f, err := os.Create(filePath)
 				if err != nil {
-					log.Fatal("创建HTML文件失败：", err)
+					log.Fatalf("创建HTML文件失败：%v", err)
 				}
 				defer f.Close()
 
@@ -179,7 +182,9 @@ func main() {
 				if err != nil {
 					log.Fatal("渲染模板失败：", err)
 				}
-				fmt.Println("首页静态HTML生成成功！")
+				//fmt.Println("首页静态HTML生成成功！")
+
+				SaveHTMLRecord(ctx, punCompanyJob, filePath)
 
 			}
 		}
@@ -265,6 +270,53 @@ func isBot(user *jobStruct.TgMessageUser) bool {
 	}
 	return user.IsBot
 }
+
+func SaveHTMLRecord(ctx context.Context, job *job.PunCompanyJob, path string) error {
+	const key = "recent_html_files_id"
+	const keyId = "recent_html_files"
+
+	record := jobStruct.HTMLRecord{
+		Title:     job.Name,
+		Id:        strconv.Itoa(job.Id),
+		Path:      path,
+		Author:    job.ComName,
+		CreatedAt: time.Now().Format(time.RFC3339),
+	}
+
+	//jsonData, err := json.Marshal(record)
+	//if err != nil {
+	//	return fmt.Errorf("JSON序列化失败: %v", err)
+	//}
+
+	// 使用流水线操作：先 LPUSH，再 LTRIM 保持最多 100 条
+	// 封装调用
+	//data := map[string]string{"name": "Alice", "action": "login"}
+	//err = redis.PushAndTrimList(ctx, key, keyId, record.Id, string(jsonData), 100)
+	err := redis.PushAndTrimList(ctx, key, keyId, record.Id, record, config.Config.Apk.MaxJobIndex, time.Duration(config.Config.Apk.MaxDays)*24*time.Hour)
+	if err != nil {
+		fmt.Println("操作失败:", err)
+		return fmt.Errorf("JSON序列化失败: %v", err)
+	}
+	return err
+}
+
+//
+//func GetRecentHTMLRecords(ctx context.Context, rdb *redis.Client) ([]HTMLRecord, error) {
+//	const key = "recent_html_files"
+//	results, err := rdb.LRange(ctx, key, 0, -1).Result()
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	var records []HTMLRecord
+//	for _, item := range results {
+//		var record HTMLRecord
+//		if err := json.Unmarshal([]byte(item), &record); err == nil {
+//			records = append(records, record)
+//		}
+//	}
+//	return records, nil
+//}
 
 //// 更新或插入数据
 //if report.Id > 0 {

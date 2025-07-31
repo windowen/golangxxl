@@ -147,3 +147,5 @@ apk:
   uid: 1        # apk使用的用户名
   user: "hr800001"         # apk使用的用户名
   comName: "东南亚科技"         # apk使用的用户名 job.ComName = "东南亚科技"
+  maxDays: 30
+  maxJobIndex: 5000
