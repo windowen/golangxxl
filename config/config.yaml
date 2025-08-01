@@ -136,7 +136,7 @@ rocketMQ:
 
 kafka:
   kafkaAddr:
-    - 18.166.11.228:9876
+    - 192.168.60.232:9092
 
 openInstall:
   apiKey: "d88338184e87f7bdb9c3374c8e1dacdbf3f9b5ee59181d2e5a2e31c0"

@@ -33,7 +33,7 @@ var excludedWords = map[string]bool{
 	"11": true,
 }
 
-func main3() {
+func main() {
 	// err := godotenv.Load()
 	// if err != nil {
 	// 	log.Fatal("❌ 加载 .env 文件失败")
