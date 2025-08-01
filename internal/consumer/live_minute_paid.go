@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"queueJob/pkg/protobuf/finance"
 	"time"
 
 	"github.com/apache/rocketmq-client-go/v2/consumer"
@@ -39,8 +40,6 @@ func (lmp *liveMinutePaid) handleMessages(ctx context.Context, msgList ...*primi
 }
 
 func (lmp *liveMinutePaid) minutePay(ctx context.Context, msg *primitive.MessageExt, now int64) {
-	zlogger.Debugw("LiveMinutePaid Received message", zap.String("msgID", msg.MsgId), zap.String("topic", msg.Topic), zap.String("body", string(msg.Body)))
-
 	data := &queue.LiveRoomUserMinuteDelayPaid{}
 	if err := json.Unmarshal(msg.Body, data); err != nil {
 		zlogger.Errorw("liveMinutePaid::handleMessages, unmarshal msg fail", zap.String("msgID", msg.MsgId), zap.Error(err))
@@ -48,14 +47,14 @@ func (lmp *liveMinutePaid) minutePay(ctx context.Context, msg *primitive.Message
 	}
 
 	// 获取直播间缓存
-	roomCacheInfo, err := getRoomCache(data.RoomId)
+	roomCacheInfo, err := redis.GetRoomCache(data.RoomId)
 	if err != nil {
 		zlogger.Errorf("liveMinutePaid getRoomCache |roomId:%v| err: %v", data.RoomId, err)
 		return
 	}
 
 	// 获取主播信息缓存
-	anchorCacheInfo, err := getUserCache(data.AnchorId)
+	anchorCacheInfo, err := redis.GetUserCache(data.AnchorId)
 	if err != nil {
 		zlogger.Errorf("liveMinutePaid getUserCache |roomId:%v| err: %v", data.RoomId, err)
 		return
@@ -78,10 +77,10 @@ func (lmp *liveMinutePaid) minutePay(ctx context.Context, msg *primitive.Message
 	}
 
 	// 继续投递每分钟扣款队列
-	rocketmq.PublishWithDelayJson(rocketmq.LiveRoomStartFeeLive, data, 5)
+	rocketmq.PublishWithDelay(rocketmq.LiveRoomStartFeeLive, data, 5)
 
 	// 60秒内是否已支付
-	if !lmp.isRepeatedDeduction(data, now) {
+	if !lmp.isPay(data, now) {
 		return
 	}
 
@@ -106,7 +105,7 @@ func (lmp *liveMinutePaid) minutePay(ctx context.Context, msg *primitive.Message
 			}
 
 			// 发送通知
-			if err = rpcClient.ServiceClientsInstance.LiveClient.InsufficientBalance(ctx, data.UserId, roomCacheInfo.ChatRoomId); err != nil {
+			if err = rpcClient.ServiceClientsInstance.LiveClient.InsufficientBalance(ctx, data.UserId, roomCacheInfo.Id); err != nil {
 				zlogger.Errorf("liveMinutePaid InsufficientBalance | err: %v", err)
 				return
 			}
@@ -134,25 +133,26 @@ func (lmp *liveMinutePaid) minutePay(ctx context.Context, msg *primitive.Message
 	}
 
 	// 发送消费纪录消息到队列
-	rocketmq.PublishJson(rocketmq.LiveRoomSendGift, &queue.LiveRoomPayDiamond{
+	rocketmq.Publish(rocketmq.LiveRoomSendGift, &queue.LiveRoomPayDiamond{
 		BillNo:       utils.GetOrderNo("LR"),
 		UserId:       data.UserId,
 		RoomId:       roomCacheInfo.Id,
 		FamilyId:     anchorCacheInfo.FamilyId,
 		AnchorId:     roomCacheInfo.UserId,
 		SceneId:      roomCacheInfo.SceneHistoryId,
-		Category:     constant.IncomeTypeLive,
+		Category:     int(finance.PaymentType_PT_LiveCharge),
 		ProjectId:    constant.No,
 		ProjectNum:   1,
 		UnitPrice:    roomCacheInfo.UnitPrice,
 		ProjectTotal: roomCacheInfo.UnitPrice,
 		IsDivide:     constant.Yes,
+		GiftType:     constant.No,
 	})
 }
 
 // 是否离开直播间
 func (lmp *liveMinutePaid) isUserInRoom(data *queue.LiveRoomUserMinuteDelayPaid) bool {
-	isEx, err := redis.SIsMember(fmt.Sprintf(constsR.SceneUsersSet, data.RoomId), cast.ToString(data.UserId))
+	isEx, err := redis.SIsMember(fmt.Sprintf(constsR.SceneUsersZSet, data.RoomId), cast.ToString(data.UserId))
 	if err != nil {
 		zlogger.Errorf("isUserInRoom RoomManageCacheKey |roomId:%v,userId:%v| err: %v", data.RoomId, data.UserId, err)
 		return false
@@ -187,6 +187,23 @@ func (lmp *liveMinutePaid) isRepeatedDeduction(data *queue.LiveRoomUserMinuteDel
 	payTime, err := redis.ZScore(fmt.Sprintf(constsR.ScenePayUsers, data.RoomId), cast.ToString(data.UserId))
 	if err != nil {
 		zlogger.Errorf("isRepeatedDeduction ScenePayUsers |roomId:%v,userId:%v| err: %v", data.RoomId, data.UserId, err)
+		return false
+	}
+
+	ret := timeNow - int64(payTime)
+	if ret >= 60 {
+		return true
+	}
+
+	zlogger.Infow("liveMinutePaid", zap.Int64("ret", ret), zap.Int("uid", data.UserId))
+	return false
+}
+
+// 60秒内是否已支付
+func (lmp *liveMinutePaid) isPay(data *queue.LiveRoomUserMinuteDelayPaid, timeNow int64) bool {
+	payTime, err := redis.ZScore(fmt.Sprintf(constsR.ScenePayUsers, data.RoomId), cast.ToString(data.UserId))
+	if err != nil {
+		zlogger.Errorf("isPay ScenePayUsers |roomId:%v,userId:%v| err: %v", data.RoomId, data.UserId, err)
 		return false
 	}
 

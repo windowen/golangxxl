@@ -17,13 +17,11 @@ func Init() {
 		rocketmq.LiveRoomStop:            live.handleMessages,                // 添加下播消费
 		rocketmq.SiteUserRegister:        userReg.handleMessages,             // 添加用户注册消费
 		rocketmq.SiteMessage:             notify.handleMessages,              // 站点消息通知
-		rocketmq.LiveRoomStartFeeLive:    liveMPaid.handleMessages,           // 直播间分钟扣费延迟队列
+		rocketmq.LiveRoomStartFeeLive:    liveMPaid.handleMessages,           // 直播间分钟扣费--延迟队列
 		rocketmq.VipLevelUp:              vipLevel.handleMessages,            // 处理vip升级队列
-		rocketmq.FinanceCancel:           fCancel.handleMessages,             // 用户未按时支付订单
-		rocketmq.LiveRoomTransferPayLive: liveRoomTransferPay.handleMessages, // 主播转付费
-		rocketmq.StreamerReceiveDiamond:  receiveDiamond.handleMessages,      // 主播累积收到钻石
-		rocketmq.LiveRoomRobotDelay:      liveRoomRobot.handleMessages,       // 直播间机器人延迟队列
-		rocketmq.FinanceMoneyChange:      bChange.handleMessages,             // 美元账变记录
+		rocketmq.FinanceCancel:           fCancel.handleMessages,             // 用户未按时支付订单--延迟队列
+		rocketmq.LiveRoomTransferPayLive: liveRoomTransferPay.handleMessages, // 主播转付费--延迟队列
+		rocketmq.LiveRoomRobotDelay:      liveRoomRobot.handleMessages,       // 直播间机器人--延迟队列
 		rocketmq.StatsEvent:              sEvent.handleMessages,              // 统计事件
 	}
 

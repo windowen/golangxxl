@@ -589,7 +589,7 @@ func GetLastWeekTime() (startTime time.Time, endTime time.Time) {
 	return
 }
 
-// 获取上周的索引
+// GetLastWeekIndex 获取上周的索引
 func GetLastWeekIndex() int {
 	// 获取当前时间
 	now := time.Now()
@@ -603,4 +603,23 @@ func GetLastWeekIndex() int {
 	// 将年份和周数组合成 YYYYWW 格式的整数
 	weekIndex := year*100 + week
 	return weekIndex
+}
+
+// IsSameDay 判断两个时间是否是同一天
+func IsSameDay(t1, t2 time.Time) bool {
+	return t1.Year() == t2.Year() &&
+		t1.Month() == t2.Month() &&
+		t1.Day() == t2.Day()
+}
+
+func DaysBetweenDates(t1, t2 time.Time) int {
+	// 只取日期，不要时间
+	date1 := time.Date(t1.Year(), t1.Month(), t1.Day(), 0, 0, 0, 0, t1.Location())
+	date2 := time.Date(t2.Year(), t2.Month(), t2.Day(), 0, 0, 0, 0, t2.Location())
+
+	days := int(date2.Sub(date1).Hours() / 24)
+	if days < 0 {
+		return -days
+	}
+	return days
 }

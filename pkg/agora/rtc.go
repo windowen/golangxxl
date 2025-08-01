@@ -116,7 +116,7 @@ func (rc *rtcClient) RtcKickOutUser(req model.RtcKickOutUserReq) error {
 
 	var rtcKickResp model.RtcKickOutUserResp
 	if err = strhelper.Json2Struct(body, &rtcKickResp); err != nil {
-		zlogger.Errorln("RtcKickOutUser Json2Struct |body:%v| err:", cast.ToString(body), err)
+		zlogger.Errorf("RtcKickOutUser Json2Struct |body:%v| err:%v", cast.ToString(body), err)
 		return err
 	}
 

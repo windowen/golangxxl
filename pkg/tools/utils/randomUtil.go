@@ -3,6 +3,7 @@ package utils
 import (
 	"crypto/rand"
 	"math/big"
+	mathRand "math/rand"
 	"strconv"
 )
 
@@ -15,4 +16,11 @@ func SixDigitNum() string {
 
 	// 确保数字总是六位长
 	return strconv.FormatInt(num.Int64()+100000, 10)
+}
+
+// Random 获取随机时间
+func Random(min, max int) int {
+	randInt := min + mathRand.Intn(max-min+1)
+
+	return randInt
 }

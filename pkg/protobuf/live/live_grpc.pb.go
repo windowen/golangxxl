@@ -44,6 +44,7 @@ const (
 	LiveServer_GetChatRoomOnlineUsers_FullMethodName    = "/proto.LiveServer/GetChatRoomOnlineUsers"
 	LiveServer_GetSDKOnlineUserStatus_FullMethodName    = "/proto.LiveServer/GetSDKOnlineUserStatus"
 	LiveServer_GetSDKChatRoomUsers_FullMethodName       = "/proto.LiveServer/GetSDKChatRoomUsers"
+	LiveServer_QueueUserJoinRoom_FullMethodName         = "/proto.LiveServer/QueueUserJoinRoom"
 	LiveServer_FindLiveRoomInfo_FullMethodName          = "/proto.LiveServer/FindLiveRoomInfo"
 	LiveServer_RoomStartBroadcast_FullMethodName        = "/proto.LiveServer/RoomStartBroadcast"
 	LiveServer_RoomManageList_FullMethodName            = "/proto.LiveServer/RoomManageList"
@@ -121,6 +122,7 @@ type LiveServerClient interface {
 	GetChatRoomOnlineUsers(ctx context.Context, in *GetChatRoomOnlineUserReq, opts ...grpc.CallOption) (*GetChatRoomOnlineUserResp, error)
 	GetSDKOnlineUserStatus(ctx context.Context, in *GetSDKOnlineUserStatusReq, opts ...grpc.CallOption) (*GetSDKOnlineUserStatusResp, error)
 	GetSDKChatRoomUsers(ctx context.Context, in *GetSDKChatRoomUsersReq, opts ...grpc.CallOption) (*GetSDKChatRoomUsersResp, error)
+	QueueUserJoinRoom(ctx context.Context, in *QueueUserJoinRoomReq, opts ...grpc.CallOption) (*common.Empty, error)
 	// 主播
 	FindLiveRoomInfo(ctx context.Context, in *common.Empty, opts ...grpc.CallOption) (*LiveRoomsDetailsResp, error)
 	RoomStartBroadcast(ctx context.Context, in *RoomStartBroadcastReq, opts ...grpc.CallOption) (*RoomStartBroadcastResp, error)
@@ -411,6 +413,16 @@ func (c *liveServerClient) GetSDKChatRoomUsers(ctx context.Context, in *GetSDKCh
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetSDKChatRoomUsersResp)
 	err := c.cc.Invoke(ctx, LiveServer_GetSDKChatRoomUsers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *liveServerClient) QueueUserJoinRoom(ctx context.Context, in *QueueUserJoinRoomReq, opts ...grpc.CallOption) (*common.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(common.Empty)
+	err := c.cc.Invoke(ctx, LiveServer_QueueUserJoinRoom_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -888,6 +900,7 @@ type LiveServerServer interface {
 	GetChatRoomOnlineUsers(context.Context, *GetChatRoomOnlineUserReq) (*GetChatRoomOnlineUserResp, error)
 	GetSDKOnlineUserStatus(context.Context, *GetSDKOnlineUserStatusReq) (*GetSDKOnlineUserStatusResp, error)
 	GetSDKChatRoomUsers(context.Context, *GetSDKChatRoomUsersReq) (*GetSDKChatRoomUsersResp, error)
+	QueueUserJoinRoom(context.Context, *QueueUserJoinRoomReq) (*common.Empty, error)
 	// 主播
 	FindLiveRoomInfo(context.Context, *common.Empty) (*LiveRoomsDetailsResp, error)
 	RoomStartBroadcast(context.Context, *RoomStartBroadcastReq) (*RoomStartBroadcastResp, error)
@@ -1015,6 +1028,9 @@ func (UnimplementedLiveServerServer) GetSDKOnlineUserStatus(context.Context, *Ge
 }
 func (UnimplementedLiveServerServer) GetSDKChatRoomUsers(context.Context, *GetSDKChatRoomUsersReq) (*GetSDKChatRoomUsersResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSDKChatRoomUsers not implemented")
+}
+func (UnimplementedLiveServerServer) QueueUserJoinRoom(context.Context, *QueueUserJoinRoomReq) (*common.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueueUserJoinRoom not implemented")
 }
 func (UnimplementedLiveServerServer) FindLiveRoomInfo(context.Context, *common.Empty) (*LiveRoomsDetailsResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindLiveRoomInfo not implemented")
@@ -1597,6 +1613,24 @@ func _LiveServer_GetSDKChatRoomUsers_Handler(srv interface{}, ctx context.Contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LiveServerServer).GetSDKChatRoomUsers(ctx, req.(*GetSDKChatRoomUsersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LiveServer_QueueUserJoinRoom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueueUserJoinRoomReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LiveServerServer).QueueUserJoinRoom(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LiveServer_QueueUserJoinRoom_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LiveServerServer).QueueUserJoinRoom(ctx, req.(*QueueUserJoinRoomReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2495,6 +2529,10 @@ var LiveServer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSDKChatRoomUsers",
 			Handler:    _LiveServer_GetSDKChatRoomUsers_Handler,
+		},
+		{
+			MethodName: "QueueUserJoinRoom",
+			Handler:    _LiveServer_QueueUserJoinRoom_Handler,
 		},
 		{
 			MethodName: "FindLiveRoomInfo",

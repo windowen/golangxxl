@@ -2,6 +2,7 @@ package rocketmq
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"github.com/apache/rocketmq-client-go/v2"
@@ -54,6 +55,28 @@ func (c *Consumer) Start() {
 		zap.String("topic", c.topic),
 	)
 	return
+}
+
+// SendAsyncWithDelayJson 生产异步延时消息(json)
+func (p *Producer) SendAsyncWithDelayJson(topic string, st interface{}, delayLevel int) (err error) {
+	data, err := json.Marshal(st)
+	if err != nil {
+		zlogger.Errorw("SendAsyncWithDelayJson async producer marshal pb failed.", zap.String("topic", topic), zap.Int("len", len(data)),
+			zap.Error(err))
+		return err
+	}
+	return p.SendAsyncWithDelay(topic, data, delayLevel)
+}
+
+// SendAsyncJsonWithSeconds 生产延时精确到秒的异步消息(json)
+func (p *Producer) SendAsyncJsonWithSeconds(topic string, st interface{}, seconds int) (err error) {
+	data, err := json.Marshal(st)
+	if err != nil {
+		zlogger.Errorw("SendAsyncJsonWithSeconds async producer marshal pb failed.", zap.String("topic", topic), zap.Int("len", len(data)),
+			zap.Error(err))
+		return err
+	}
+	return p.SendAsyncWithSeconds(topic, data, seconds)
 }
 
 func (c *Consumer) Stop() {

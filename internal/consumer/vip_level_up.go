@@ -131,7 +131,7 @@ func (o *vipLevelUp) handleMessages(ctx context.Context, msgList ...*primitive.M
 		// 发送房间升级通知
 		roomCache, err := getRoomCache(pMessage.RoomId)
 		if err == nil {
-			if err = rpcClient.ServiceClientsInstance.LiveClient.UpgradeNotifyWrap(ctx, pMessage.UserId, accLevel, roomCache.ChatRoomId); err != nil {
+			if err = rpcClient.ServiceClientsInstance.LiveClient.UpgradeNotifyWrap(ctx, pMessage.UserId, accLevel, roomCache.Id); err != nil {
 				zlogger.Errorw("vipLevelUp::handleMessages, notify error", zap.Int("userId", pMessage.UserId), zap.Error(err))
 				continue
 			}

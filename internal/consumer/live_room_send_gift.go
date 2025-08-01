@@ -3,6 +3,8 @@ package consumer
 import (
 	"context"
 	"encoding/json"
+	"queueJob/pkg/kafka"
+	"strconv"
 	"time"
 
 	"github.com/apache/rocketmq-client-go/v2/consumer"
@@ -12,7 +14,6 @@ import (
 	"queueJob/pkg/db/mysql"
 	"queueJob/pkg/db/table"
 	"queueJob/pkg/queue"
-	"queueJob/pkg/rocketmq"
 	"queueJob/pkg/tools/utils"
 	"queueJob/pkg/zlogger"
 )
@@ -115,7 +116,7 @@ func (o *giftConsumer) sendGift(ctx context.Context, msg *primitive.MessageExt) 
 		return
 	}
 
-	rocketmq.PublishJson(rocketmq.StreamerReceiveDiamond, &queue.StreamerReceiveDiamond{
+	kafka.PublicKey(strconv.Itoa(jsonData.AnchorId), kafka.StreamerReceiveDiamond, &queue.StreamerReceiveDiamond{
 		AnchorId:     jsonData.AnchorId,
 		RoomId:       jsonData.RoomId,
 		ProjectTotal: jsonData.ProjectTotal,

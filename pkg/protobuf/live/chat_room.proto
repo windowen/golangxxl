@@ -50,8 +50,8 @@ message JoinRoomReq {
 }
 
 message RobotJoinRoomReq {
-  int64  userId = 1;
-  string chatRoomId = 2;
+  int32  userId = 1;
+  int32 roomId = 2;
 }
 
 message JoinRoomResp {
@@ -105,8 +105,9 @@ message ToggleLikeResp{
 }
 
 message LeaveRoomReq {
-  string chatRoomId = 1;
+  int32 roomId = 1;
   int32 userId = 2;
+  int32 leaveNotify = 3; //是否发离开通知，0发其它不发
 }
 
 message LeaveRoomResp {
@@ -164,7 +165,7 @@ message GetChatRoomInfoResp {
 }
 
 message InsufficientBalanceNoticeReq {
-  string chatRoomId = 1;
+  int32 roomId = 1;
   int32 userId = 2;
 }
 
@@ -195,7 +196,7 @@ message GetChatRoomOnlineUserResp{
 }
 
 message UpgradeNotifyReq{
-  string chatRoomId = 1;
+  int32 roomId = 1;
   int32 userId = 2;
   int32 level = 3;
 }
@@ -227,4 +228,11 @@ message chatRoomUsers {
 message GetSDKChatRoomUsersResp {
   repeated chatRoomUsers list = 1;
   int64 total = 2;
+}
+
+// 用户加入直播间请求
+message QueueUserJoinRoomReq {
+  int32  roomId = 1;
+  int32  userId = 2;
+  int32  isTraveler = 3;
 }

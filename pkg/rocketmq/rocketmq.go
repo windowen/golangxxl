@@ -13,8 +13,11 @@ const (
 	VipLevelUp              = "vip_level_up"                 // vip升级 topic
 	FinanceCancel           = "finance_order_cancel"         // 充值订单取消 topic
 	LiveRoomTransferPayLive = "live_room_transfer_pay_delay" // 主播转付费 topic
-	StreamerReceiveDiamond  = "streamer_receive_diamond"     // 主播累积收到钻石
 	LiveRoomRobotDelay      = "live_room_robot_delay"        // 直播间机器人延迟队列 topic
-	FinanceMoneyChange      = "finance_money_change"         // 美元账变记录 topic
+	LiveRoomRobotEnter      = "live_room_robot_enter"        // 直播间机器人延迟进入队列 topic
+	LiveRoomRobotLeave      = "live_room_robot_leave"        // 直播间机器人延迟退出队列 topic
 	StatsEvent              = "live_stats_event"             // 统计事件 topic
+	ActCheck                = "activity_involve_check"       // 活动参与检查 topic
+	SiteBlackMonitor        = "site_black_monitor"           // 黑名单监控 topic
+	SystemStats             = "live_system_stats"            // 系统统计事件 topic
 )

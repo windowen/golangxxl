@@ -6,15 +6,14 @@ import (
 	"os/signal"
 	"queueJob/internal/kafkaconsumer"
 	"queueJob/pkg/kafka"
+	"queueJob/pkg/rocketmq"
 	"runtime"
 	"syscall"
 
-	"queueJob/internal/consumer"
 	"queueJob/pkg/agora"
 	"queueJob/pkg/common/config"
 	"queueJob/pkg/db/mysql"
 	"queueJob/pkg/db/redisdb/redis"
-	"queueJob/pkg/rocketmq"
 	liveRpc "queueJob/pkg/rpcclient"
 	"queueJob/pkg/service"
 	"queueJob/pkg/tools/component"
@@ -71,7 +70,7 @@ func main() {
 	rocketmq.Init()
 
 	// 初始化 RocketMQ 消费者
-	consumer.Init()
+	//consumer.Init()
 
 	// 初始化 kafka 消费者
 	kafkaconsumer.Init()

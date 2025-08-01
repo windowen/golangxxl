@@ -9,6 +9,10 @@ type LiveRoomStop struct {
 	SceneId  int `json:"scene_id"`  // 直播场次id
 }
 
+func (l LiveRoomStop) String() string {
+	return fmt.Sprintf("LiveRoomStop{RoomId: %d, AnchorId: %d, SceneId: %d}", l.RoomId, l.AnchorId, l.SceneId)
+}
+
 // LiveRoomUserMinuteDelayPaid 付费直播分钟扣款延迟队列
 type LiveRoomUserMinuteDelayPaid struct {
 	RoomId   int `json:"roomId"`   // 直播间id
@@ -19,18 +23,22 @@ type LiveRoomUserMinuteDelayPaid struct {
 
 // LiveRoomPayDiamond 直播房间钻石消费
 type LiveRoomPayDiamond struct {
-	BillNo       string `json:"bill_no"`       // 订单号
-	UserId       int    `json:"user_id"`       // 用户ID
-	RoomId       int    `json:"room_id"`       // 房间ID
-	FamilyId     int    `json:"family_id"`     // 家族ID
-	AnchorId     int    `json:"anchor_id"`     // 主播ID
-	SceneId      int    `json:"scene_id"`      // 场景历史ID
-	Category     int    `json:"category"`      // 收入类型
-	ProjectId    int    `json:"project_id"`    // 项目ID
-	ProjectNum   int    `json:"project_num"`   // 项目数量
-	UnitPrice    int    `json:"unit_price"`    // 单价
-	ProjectTotal int    `json:"project_total"` // 总金额
-	IsDivide     int    `json:"is_divide"`     // 是否分成
+	BillNo       string `json:"bill_no"`                // 订单号
+	UserId       int    `json:"user_id"`                // 用户ID
+	RoomId       int    `json:"room_id"`                // 房间ID
+	FamilyId     int    `json:"family_id"`              // 家族ID
+	AnchorId     int    `json:"anchor_id"`              // 主播ID
+	SceneId      int    `json:"scene_id"`               // 场景历史ID
+	Category     int    `json:"category"`               // 收入类型
+	ProjectId    int    `json:"project_id"`             // 项目ID
+	ProjectNum   int    `json:"project_num"`            // 项目数量
+	UnitPrice    int    `json:"unit_price"`             // 单价
+	ProjectTotal int    `json:"project_total"`          // 总金额
+	IsDivide     int    `json:"is_divide"`              // 是否分成
+	AnchorRatio  int    `json:"anchor_ratio,omitempty"` // 主播抽成比例  实际*100
+	PlatRatio    int    `json:"plat_ratio,omitempty"`   // 平台抽成比例  实际*100
+	FamilyRatio  int    `json:"family_ratio,omitempty"` // 家族抽成比例  实际*100
+	GiftType     int    `json:"gift_type,omitempty"`    // 礼物类型 0需要花钻石购买的礼物 1系统赠送的礼物
 }
 
 type PayInCache struct {
@@ -59,11 +67,23 @@ type StreamerReceiveDiamond struct {
 	ProjectTotal int `json:"projectTotal"` // 总金额
 }
 
+func (n StreamerReceiveDiamond) String() string {
+	return fmt.Sprintf("AnchorId: %d, ProjectTotal: %d, RoomId: %d", n.AnchorId, n.ProjectTotal, n.RoomId)
+}
+
 type LiveRoomRobotDelayReq struct {
 	RoomId  int `json:"roomId"`  // 直播间id
 	SceneId int `json:"sceneId"` // 直播场次id
 }
 
-func (n StreamerReceiveDiamond) String() string {
-	return fmt.Sprintf("AnchorId: %d, ProjectTotal: %d, RoomId: %d", n.AnchorId, n.ProjectTotal, n.RoomId)
+type LiveRoomEnterReq struct {
+	RoomId    int `json:"roomId"`    // 直播间id
+	SceneId   int `json:"sceneId"`   // 直播场次id
+	LeaveTime int `json:"leaveTime"` // 停留秒数
+}
+
+type LiveRoomLeaveReq struct {
+	RoomId  int `json:"roomId"`  // 直播间id
+	SceneId int `json:"sceneId"` // 直播场次id
+	RobotId int `json:"robotId"` // 机器人id
 }

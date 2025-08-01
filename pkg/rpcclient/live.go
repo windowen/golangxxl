@@ -14,6 +14,7 @@ import (
 	"queueJob/pkg/gozero/discov"
 	"queueJob/pkg/gozero/zrpc"
 	"queueJob/pkg/protobuf/live"
+	"queueJob/pkg/queue"
 	"queueJob/pkg/tools/cast"
 	"queueJob/pkg/tools/errs"
 	"queueJob/pkg/tools/mw"
@@ -50,10 +51,10 @@ func (l *LiveClient) CreateUserChatUuid(ctx context.Context, UserId int) (string
 }
 
 // InsufficientBalance 余额不足通知
-func (l *LiveClient) InsufficientBalance(ctx context.Context, userId int, chatRoomId string) error {
+func (l *LiveClient) InsufficientBalance(ctx context.Context, userId, roomId int) error {
 	_, err := l.InsufficientBalanceNotice(ctx, &live.InsufficientBalanceNoticeReq{
-		UserId:     cast.ToInt32(userId),
-		ChatRoomId: chatRoomId,
+		UserId: cast.ToInt32(userId),
+		RoomId: cast.ToInt32(roomId),
 	})
 	if err := errs.Unwrap(err); err != nil {
 		zlogger.Errorf("InsufficientBalance InsufficientBalanceNotice |userId:%v| err: %v", userId, err)
@@ -65,11 +66,11 @@ func (l *LiveClient) InsufficientBalance(ctx context.Context, userId int, chatRo
 }
 
 // UpgradeNotifyWrap 升级通知
-func (l *LiveClient) UpgradeNotifyWrap(ctx context.Context, userId, level int, chatRoomId string) error {
+func (l *LiveClient) UpgradeNotifyWrap(ctx context.Context, userId, level, roomId int) error {
 	_, err := l.UpgradeNotify(ctx, &live.UpgradeNotifyReq{
-		ChatRoomId: chatRoomId,
-		UserId:     int32(userId),
-		Level:      int32(level),
+		RoomId: cast.ToInt32(roomId),
+		UserId: cast.ToInt32(userId),
+		Level:  cast.ToInt32(level),
 	})
 
 	if err = errs.Unwrap(err); err != nil {
@@ -99,14 +100,14 @@ func (l *LiveClient) LiveMinutePaidIncomeNotify(ctx context.Context, roomId, anc
 }
 
 // RobotJoinChatRoom 加入房间
-func (l *LiveClient) RobotJoinChatRoom(ctx context.Context, userId int, chatRoomId string) error {
+func (l *LiveClient) RobotJoinChatRoom(ctx context.Context, userId, roomId int) error {
 	_, err := l.RobotJoinRoom(ctx, &live.RobotJoinRoomReq{
-		ChatRoomId: chatRoomId,
-		UserId:     cast.ToInt64(userId),
+		RoomId: cast.ToInt32(roomId),
+		UserId: cast.ToInt32(userId),
 	})
 
 	if err = errs.Unwrap(err); err != nil {
-		zlogger.Errorf("RobotJoinChatRoom RobotJoinRoom |userId:%v,chatRoomId:%v| err: %v", userId, chatRoomId, err)
+		zlogger.Errorf("RobotJoinChatRoom RobotJoinRoom |userId:%v,roomId:%v| err: %v", userId, roomId, err)
 		return err
 	}
 
@@ -114,14 +115,33 @@ func (l *LiveClient) RobotJoinChatRoom(ctx context.Context, userId int, chatRoom
 }
 
 // RobotQuitChatRoom 退出房间
-func (l *LiveClient) RobotQuitChatRoom(ctx context.Context, userId int, chatRoomId string) error {
+func (l *LiveClient) RobotQuitChatRoom(ctx context.Context, userId, roomId int, leaveNotify bool) error {
 	_, err := l.InternalLeaveRoom(ctx, &live.LeaveRoomReq{
-		ChatRoomId: chatRoomId,
-		UserId:     cast.ToInt32(userId),
+		RoomId:      cast.ToInt32(roomId),
+		UserId:      cast.ToInt32(userId),
+		LeaveNotify: cast.ToInt32(leaveNotify),
+	})
+
+	//	opts := options.Find().SetSort(bson.D{{"createtime", bson.D{{"$numberLong", -1}}}}).SetLimit(limit).SetSkip(skip)
+
+	if err = errs.Unwrap(err); err != nil {
+		zlogger.Errorf("RobotQuitChatRoom InternalLeaveRoom |userId:%v,chatRoomId:%v| err: %v", userId, roomId, err)
+		return err
+	}
+
+	return nil
+}
+
+// UserJoinRoom 加入房间
+func (l *LiveClient) UserJoinRoom(ctx context.Context, req *queue.LiveRoomUserJoinReq) error {
+	_, err := l.QueueUserJoinRoom(ctx, &live.QueueUserJoinRoomReq{
+		RoomId:     cast.ToInt32(req.RoomId),
+		UserId:     cast.ToInt32(req.UserId),
+		IsTraveler: cast.ToInt32(req.IsTraveler),
 	})
 
 	if err = errs.Unwrap(err); err != nil {
-		zlogger.Errorf("RobotQuitChatRoom InternalLeaveRoom |userId:%v,chatRoomId:%v| err: %v", userId, chatRoomId, err)
+		zlogger.Errorf("UserJoinRoom QueueUserJoinRoom |userId:%v,roomId:%v| err: %v", req.UserId, req.RoomId, err)
 		return err
 	}
 

@@ -3,10 +3,14 @@ package rocketmq
 import (
 	"encoding/json"
 	"errors"
+	"github.com/apache/rocketmq-client-go/v2/primitive"
+
+	//"queueJob/pkg/rocketmq-client-go/primitive"
+
+	"github.com/apache/rocketmq-client-go/v2/producer"
+	//"time"
 
 	"github.com/apache/rocketmq-client-go/v2"
-	"github.com/apache/rocketmq-client-go/v2/primitive"
-	"github.com/apache/rocketmq-client-go/v2/producer"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"
 
@@ -230,6 +234,30 @@ func (p *Producer) SendAsyncPbWithDelayJson(topic string, st interface{}, delayL
 		return err
 	}
 	return p.SendAsyncWithDelay(topic, data, delayLevel)
+}
+
+// SendAsyncWithSeconds 异步发送延时精确到秒的消息
+func (p *Producer) SendAsyncWithSeconds(topic string, msg []byte, seconds int) error {
+	message := &primitive.Message{
+		Topic: topic,
+		Body:  msg,
+	}
+	// 设置消息的延时时间
+	//message.WithDelayTimestamp(time.Now().Add(time.Duration(seconds) * time.Second))
+
+	// 定义回调函数
+	callback := func(ctx context.Context, result *primitive.SendResult, err error) {
+		if err != nil {
+			// 处理发送错误
+			zlogger.Errorf("SendAsyncWithSeconds callback | message=%s | Err=%v", message.String(), err.Error())
+		}
+	}
+
+	err := p.producer.SendAsync(p.ctx, callback, message)
+	if err != nil {
+		zlogger.Errorw("failed to send message", zap.Error(err))
+	}
+	return err
 }
 
 func (p *Producer) Stop() {

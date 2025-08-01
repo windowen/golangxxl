@@ -3,18 +3,21 @@ package consumer
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"runtime"
 	"time"
+
+	"go.uber.org/zap"
 
 	"github.com/apache/rocketmq-client-go/v2/consumer"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
-	"go.uber.org/zap"
+	"queueJob/pkg/db/redisdb/redis"
 
 	"queueJob/pkg/agora"
 	"queueJob/pkg/agora/model"
 	"queueJob/pkg/constant"
 	constsR "queueJob/pkg/constant/redis"
-	"queueJob/pkg/db/redisdb/redis"
 	"queueJob/pkg/queue"
 	"queueJob/pkg/tools/cast"
 	"queueJob/pkg/zlogger"
@@ -25,6 +28,15 @@ var liveRoomTransferPay = &liveTransferPay{}
 type liveTransferPay struct{}
 
 func (ur *liveTransferPay) handleMessages(ctx context.Context, msgList ...*primitive.MessageExt) (consumer.ConsumeResult, error) {
+	defer func() {
+		if err := recover(); err != nil {
+			var buf [4096]byte
+			n := runtime.Stack(buf[:], false)
+			tmpStr := fmt.Sprintf("err=%v panic ==> %s\n", err, string(buf[:n]))
+			zlogger.Error(tmpStr) // 记录到日志
+		}
+	}()
+
 	for _, msg := range msgList {
 		zlogger.Debugw("LiveTransferPay Received message", zap.String("msgID", msg.MsgId), zap.String("topic", msg.Topic), zap.String("body", string(msg.Body)))
 
@@ -36,14 +48,14 @@ func (ur *liveTransferPay) handleMessages(ctx context.Context, msgList ...*primi
 
 		// 加锁防止重复处理
 		lockSign := fmt.Sprintf("room_start_delay_%d_%d_%d", data.RoomId, data.AnchorId, data.SceneId)
-		isLock, retFun := tryGetDistributedLock(lockSign, lockSign, 10000, 10000)
+		isLock, retFun := redis.TryGetDistributedLock(lockSign, lockSign, 10000, 10000)
 		if !isLock {
 			zlogger.Errorf("LiveTransferPay tryGetDistributedLock |roomId:%v,sceneId:%v| err: failed to acquire lock", data.RoomId, data.SceneId)
 			continue
 		}
 
 		// 获取直播间缓存
-		roomCacheInfo, err := getRoomCache(data.RoomId)
+		roomCacheInfo, err := redis.GetRoomCache(data.RoomId)
 		if err != nil {
 			// 释放锁
 			retFun()
@@ -58,8 +70,8 @@ func (ur *liveTransferPay) handleMessages(ctx context.Context, msgList ...*primi
 			continue
 		}
 
-		// 查询直播间使用
-		ids, err := redis.SMembers(fmt.Sprintf(constsR.SceneUsersSet, data.RoomId))
+		// 查询直播间真实用户
+		ids, err := redis.ZRange(fmt.Sprintf(constsR.SceneRealUsersZSet, data.RoomId), 0, -1)
 		if err != nil {
 			// 释放锁
 			retFun()
@@ -74,13 +86,30 @@ func (ur *liveTransferPay) handleMessages(ctx context.Context, msgList ...*primi
 		}
 
 		for _, userId := range ids {
+			// 是否主播
+			if cast.ToInt(userId) == roomCacheInfo.UserId {
+				continue
+			}
+
+			// 是否房管
+			if ur.isRoomManager(data.RoomId, cast.ToInt(userId)) {
+				continue
+			}
+
 			// 获取扣费时间
-			payTime, err := redis.ZScore(fmt.Sprintf(constsR.ScenePayUsers, data.RoomId), cast.ToString(userId))
-			if err != nil {
+			payTime, err := redis.ZScore(fmt.Sprintf(constsR.ScenePayUsers, data.RoomId), userId)
+			if err != nil && !errors.Is(err, redis.Nil) {
 				zlogger.Errorf("LiveTransferPay ZScore ScenePayUsers |roomId:%v,userId:%v| err: %v", roomCacheInfo.Id, userId, err)
 				continue
 			}
 
+			if errors.Is(err, redis.Nil) {
+				payTime = constant.Zero
+			}
+
+			zlogger.Debugw("付费时间",
+				zap.Float64("payTime", payTime), zap.Int64("now", time.Now().Unix()), zap.String("uid", userId),
+				zap.Int("roomCacheInfo uid", roomCacheInfo.UserId))
 			// 60内未扣费
 			if cast.ToInt64(payTime) < time.Now().Add(-60*time.Second).Unix() {
 				// 踢出直播
@@ -101,4 +130,20 @@ func (ur *liveTransferPay) handleMessages(ctx context.Context, msgList ...*primi
 	}
 
 	return consumer.ConsumeSuccess, nil
+}
+
+// 是否房管
+func (ur *liveTransferPay) isRoomManager(roomId, userId int) bool {
+	isRoomManage, err := redis.SIsMember(fmt.Sprintf(constsR.RoomManageCacheKey, roomId), cast.ToString(userId))
+	if err != nil {
+		zlogger.Errorf("isRoomManager RoomManageCacheKey |roomId:%v,userId:%v| err: %v", roomId, userId, err)
+		return false
+	}
+
+	if isRoomManage {
+		zlogger.Infof("isRoomManager RoomManageCacheKey |roomId:%v,userId:%v| user is the house manager", roomId, userId)
+		return true
+	}
+
+	return false
 }

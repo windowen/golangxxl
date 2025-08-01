@@ -60,6 +60,7 @@ service LiveServer {
   rpc GetChatRoomOnlineUsers(GetChatRoomOnlineUserReq)returns (GetChatRoomOnlineUserResp); //在线用户列表
   rpc GetSDKOnlineUserStatus(GetSDKOnlineUserStatusReq)returns (GetSDKOnlineUserStatusResp); //在线用记状态
   rpc GetSDKChatRoomUsers(GetSDKChatRoomUsersReq)returns (GetSDKChatRoomUsersResp); //在线用户
+  rpc QueueUserJoinRoom(QueueUserJoinRoomReq)returns (Empty); //用户加入直播间-job调用
 
   // 主播
   rpc FindLiveRoomInfo(Empty) returns (LiveRoomsDetailsResp); // 查询直播间信息
