@@ -150,3 +150,5 @@ apk:
   comName: "东南亚科技"         # apk使用的用户名 job.ComName = "东南亚科技"
   maxDays: 30
   maxJobIndex: 2000
+  templateJob: "./template/job.html"
+  templateJobOne: "./template/job.html"

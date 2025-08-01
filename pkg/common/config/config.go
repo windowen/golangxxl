@@ -142,11 +142,13 @@ var Config struct {
 		ActiveBaseURL string `yaml:"activeBaseURL"`
 	} `yaml:"openInstall"`
 	Apk struct {
-		UId         int    `yaml:"uid"`
-		User        string `yaml:"user"`
-		ComName     string `yaml:"comName"`
-		MaxDays     int    `yaml:"maxDays"`     //工作内容保存到redis中的最大天数
-		MaxJobIndex int64  `yaml:"maxJobIndex"` //redis中首页保存的条数
+		UId            int    `yaml:"uid"`
+		User           string `yaml:"user"`
+		ComName        string `yaml:"comName"`
+		MaxDays        int    `yaml:"maxDays"`     //工作内容保存到redis中的最大天数
+		MaxJobIndex    int64  `yaml:"maxJobIndex"` //redis中首页保存的条数
+		TemplateJob    string `yaml:"templateJob"`
+		TemplateJobOne string `yaml:"templateJobOne"`
 	} `yaml:"apk"`
 }
 

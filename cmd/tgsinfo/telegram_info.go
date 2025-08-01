@@ -157,7 +157,7 @@ func main() {
 				}
 
 				// 3. 加载模板
-				tmpl, err := template.ParseFiles("./template/job.html")
+				tmpl, err := template.ParseFiles(config.Config.Apk.TemplateJob)
 				if err != nil {
 					log.Fatal("加载模板失败：", err)
 				}
@@ -169,7 +169,7 @@ func main() {
 				}
 
 				// 构造文件路径，使用 punCompanyJob.Id 命名
-				filePath := fmt.Sprintf("public/job_%d.html", punCompanyJob.Id) // 注意字段是 ID，不是 Id（Go 命名习惯）
+				filePath := fmt.Sprintf(config.Config.Apk.TemplateJobOne, punCompanyJob.Id) // 注意字段是 ID，不是 Id（Go 命名习惯）
 
 				// 创建输出文件
 				f, err := os.Create(filePath)
