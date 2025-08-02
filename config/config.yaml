@@ -46,8 +46,8 @@ redis:
 
 # XXL-JOB配置
 xxlJob:
-  adminServer: http://127.0.0.1/xxl-job-admin
-  accessToken:
+  adminServer: http://127.0.0.1:39270/xxl-job-admin
+  accessToken: 0xdAC17F958D2ee
   executorName: worldExecutor
   executorIp: 127.0.0.1
   executorPort: 9999
@@ -151,4 +151,6 @@ apk:
   maxDays: 30
   maxJobIndex: 2000
   templateJob: "./template/job.html"
-  templateJobOne: "./template/job.html"
+  templateJobOne: "public/job_%d.html"
+  templateJobIndex: "template/job_index.html"
+  templateJobIndexOne: "public/job_index_%s.html"
