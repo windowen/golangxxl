@@ -42,7 +42,7 @@ func JobGenerateIndex(cxt *context.Context, _ *xxl.RunReq) (msg string) {
 	}
 
 	// 确保目录存在
-	err = os.MkdirAll("public", os.ModePerm)
+	err = os.MkdirAll(config.Config.Apk.TemplateJobIndexOneDir, os.ModePerm)
 	if err != nil {
 		zlogger.Errorf("request error: %v", err)
 	}
@@ -54,7 +54,8 @@ func JobGenerateIndex(cxt *context.Context, _ *xxl.RunReq) (msg string) {
 	}
 
 	// 构造文件路径，使用 punCompanyJob.Id 命名
-	filePath := fmt.Sprintf(config.Config.Apk.TemplateJobIndexOne, currentDate) // 注意字段是 ID，不是 Id（Go 命名习惯）
+	fileName := fmt.Sprintf(config.Config.Apk.TemplateJobIndexOneFile, currentDate)
+	filePath := filepath.Join(config.Config.Apk.TemplateJobIndexOneDir, fileName) // 注意字段是 ID，不是 Id（Go 命名习惯）
 
 	// 创建输出文件
 	f, err := os.Create(filePath)

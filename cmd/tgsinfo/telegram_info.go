@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"log"
 	"os"
+	"path/filepath"
 	"queueJob/pkg/common/config"
 	redisKey "queueJob/pkg/constant/redis"
 	"queueJob/pkg/db/mysql"
@@ -163,13 +164,14 @@ func main() {
 				}
 
 				// 确保目录存在
-				err = os.MkdirAll("public", os.ModePerm)
+				err = os.MkdirAll(config.Config.Apk.TemplateJobOneDir, os.ModePerm)
 				if err != nil {
 					log.Fatal("创建目录失败：", err)
 				}
 
 				// 构造文件路径，使用 punCompanyJob.Id 命名
-				filePath := fmt.Sprintf(config.Config.Apk.TemplateJobOne, punCompanyJob.Id) // 注意字段是 ID，不是 Id（Go 命名习惯）
+				fileName := fmt.Sprintf(config.Config.Apk.TemplateJobOneFile, punCompanyJob.Id)
+				filePath := filepath.Join(config.Config.Apk.TemplateJobOneDir, fileName) // 注意字段是 ID，不是 Id（Go 命名习惯）
 
 				// 创建输出文件
 				f, err := os.Create(filePath)
