@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>常用网站导航</title>
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .site-item {
+            list-style: none;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .site-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .sitelink {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .sitelink:hover {
+            background-color: #f0f0f0;
+        }
+
+        .icon-site {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    {{ range $id, $record := . }}
+    <li class="js_site-item site-item" data-status="1" title="{{ $record.Title}}" data-id="{{ $record.Id}}">
+        <a class="sitelink js_text icon-site"
+           href="{{ $record.Path}}"
+           style="background-image:url('{{ $record.Author}}')"
+           hidefocus="true">
+            {{ $record.Title}}
+        </a>
+    </li>
+    {{end}}
+</ul>
+</body>
+</html>

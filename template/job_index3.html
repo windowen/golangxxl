@@ -151,22 +151,32 @@
     </div>
     <!-- 可添加搜索图标等 -->
 </div>
+
 <ul class="job-grid">
     {{ range $id, $record := . }}
-    <li class="job-card js_site-item" data-status="1" data-id="{{ $record.Id }}">
-        <a class="job-link" href="{{ $record.Path }}" tabindex="-1">
+    <li class="job-card js_site-item" data-status="1" data-id="{{ $record.Id}}">
+        <a class="job-link" href="{{ $record.Path}}" hidefocus="true">
             <!-- 公司LOGO（使用Author字段作为图片URL） -->
-            <img class="job-logo" src="{{ $record.Author || '' }}" alt="{{ $record.Title }} logo"
-                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNjY2MiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xOSAyMWEyIDIgMCAwIDAgMi0yVjhhMiAyIDAgMCAwLTItMkg1YTIgMiAwIDAgMC0yIDJ2MTFhMiAyIDAgMCAwIDIgMloiPjwvcGF0aD48cGF0aCBkPSJNMyAxMGwxMCA3LjRMNSAxMCI+PC9wYXRoPjwvc3ZnPg=='">
+            <img class="job-logo" src="{{ $record.Author}}" alt="{{ $record.Title}} logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNjY2MiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xOSAyMWEyIDIgMCAwIDAgMi0yVjhhMiAyIDAgMCAwLTItMkg1YTIgMiAwIDAgMC0yIDJ2MTFhMiAyIDAgMCAwIDIgMloiPjwvcGF0aD48cGF0aCBkPSJNMyAxMGwxMCA3LjRMNSAxMCI+PC9wYXRoPjwvc3ZnPg=='">
 
             <div class="job-info">
-                <h3 class="job-title">{{ $record.Title }}</h3>
-                <div class="job-company">{{ $record.Company || "知名企业" }}</div>
-                <div class="job-salary">{{ $record.Salary || "面议" }}</div>
+                <h3 class="job-title">{{ $record.Title}}</h3>
+                <div class="job-company">{{ $record.Company | default "知名企业" }}</div>
+                <div class="job-salary">{{ $record.Salary | default "面议" }}</div>
 
+                <div class="job-tags">
+                    {{ if $record.Tags }}
+                    {{ range split $record.Tags "," }}
+                    <span class="tag">{{ . }}</span>
+                    {{ end }}
+                    {{ else }}
+                    <span class="tag">急聘</span>
+                    <span class="tag">五险一金</span>
+                    {{ end }}
+                </div>
 
                 <div class="job-actions">
-                    <span class="time">{{ $record.Time || "刚刚发布" }}</span>
+                    <span class="time">{{ $record.Time | default "刚刚发布" }}</span>
                     <button class="apply-btn" type="button">立即沟通</button>
                 </div>
             </div>
