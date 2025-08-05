@@ -222,10 +222,10 @@ func ConvertToPunCompanyJob(text string) *job.PunCompanyJob {
 	re := regexp.MustCompile(`岗位名称：(.+)\n工作地点：(.+)\n薪资范围：(.+)\n人数需求：(.+)人`)
 	matches := re.FindStringSubmatch(text)
 	if len(matches) >= 5 {
-		job.Name = strings.TrimSpace(matches[1]) // 岗位名称
-		//location := strings.TrimSpace(matches[2])  // 工作地点
-		salary := strings.TrimSpace(matches[3])    // 薪资范围
-		headcount := strings.TrimSpace(matches[4]) // 人数需求
+		job.Name = strings.TrimSpace(matches[1])        // 岗位名称
+		job.Description = strings.TrimSpace(matches[2]) // 工作地点
+		salary := strings.TrimSpace(matches[3])         // 薪资范围
+		headcount := strings.TrimSpace(matches[4])      // 人数需求
 
 		// 处理工作地点 - 暂时直接存储，实际应该解析为地区ID
 		//job.ComName = location
@@ -251,8 +251,8 @@ func ConvertToPunCompanyJob(text string) *job.PunCompanyJob {
 		if len(parts) >= 2 {
 			responsibilities := strings.TrimSpace(parts[0])
 			requirements := strings.TrimSpace(parts[1])
-			job.Description = fmt.Sprintf("岗位职责:\n%s\n\n岗位要求:\n%s",
-				responsibilities, requirements)
+			job.Description = fmt.Sprintf("岗位职责:\n%s\n\n岗位要求:\n%s位置:\n%s",
+				responsibilities, requirements, job.Description)
 
 			// 从要求中提取经验年限
 			if expMatch := regexp.MustCompile(`(\d+)年以上`).FindStringSubmatch(requirements); len(expMatch) > 1 {
