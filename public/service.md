@@ -87,3 +87,19 @@ StandardError=null
 
 [Install]
 WantedBy=multi-user.target
+
+
+### 服务查找
+2. 检查进程
+root@de233:~# ps aux | grep coder_job_html
+root        2743  0.0  0.1 1242084 22688 ?       Ssl  Aug04   0:05 /home/hroot/jenkins/run-config/workspace/go_server_dev/bin/coder_job_html -config config.yaml
+root       65219  0.0  0.0   3328  1388 pts/0    S+   10:37   0:00 grep coder_job_html
+
+如何查找关联的 service？
+1. 检查 systemd 服务
+   运行以下命令查找是否有对应的 systemd 服务：
+2. systemctl list-units --type=service | grep -i coder_job_html
+
+或检查所有 service 文件：
+root@de233:~# grep -l "coder_job_html" /etc/systemd/system/*.service /lib/systemd/system/coder* 2>/dev/null
+/lib/systemd/system/coder-job233.service
