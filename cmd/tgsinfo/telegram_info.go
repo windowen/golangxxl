@@ -251,7 +251,7 @@ func ConvertToPunCompanyJob(text string) *job.PunCompanyJob {
 		if len(parts) >= 2 {
 			responsibilities := strings.TrimSpace(parts[0])
 			requirements := strings.TrimSpace(parts[1])
-			job.Description = fmt.Sprintf("岗位职责:\n%s\n\n岗位要求:\n%s位置:\n%s",
+			job.Description = fmt.Sprintf("岗位职责:\n%s\n\n岗位要求:\n%s \n位置:\n%s",
 				responsibilities, requirements, job.Description)
 
 			// 从要求中提取经验年限
