@@ -19,9 +19,10 @@ type TgMessage struct {
 }
 
 type HTMLRecord struct {
-	Title     string `json:"title,omitempty"`
-	Id        string `json:"id"`
-	Path      string `json:"path"`
-	Author    string `json:"author"`
-	CreatedAt string `json:"created_at"`
+	Title       string `json:"title,omitempty"`
+	Id          string `json:"id"`
+	Path        string `json:"path"`
+	Author      string `json:"author"`
+	Description string `json:"description"` // 职位描述（支持HTML）
+	CreatedAt   string `json:"created_at"`
 }

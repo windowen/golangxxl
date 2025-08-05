@@ -277,11 +277,12 @@ func isBot(user *jobStruct.TgMessageUser) bool {
 func SaveHTMLRecord(ctx context.Context, job *job.PunCompanyJob, path string) error {
 
 	record := jobStruct.HTMLRecord{
-		Title:     job.Name,
-		Id:        strconv.Itoa(job.Id),
-		Path:      path,
-		Author:    job.ComName,
-		CreatedAt: time.Now().Format(time.RFC3339),
+		Title:       job.Name,
+		Id:          strconv.Itoa(job.Id),
+		Path:        path,
+		Description: job.Description,
+		Author:      job.ComName,
+		CreatedAt:   time.Now().Format(time.RFC3339),
 	}
 
 	//jsonData, err := json.Marshal(record)
